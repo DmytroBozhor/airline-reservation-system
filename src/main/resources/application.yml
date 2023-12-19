@@ -7,8 +7,26 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
+    show-sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  flyway:
+    locations: filesystem:.\src\main\resources\db\migration
+    enabled: true
+    clean-disabled: true
+    baseline-on-migrate: true
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/airline_reservation
+    user: postgres
+    password: 1
+    schemas: public
+    default-schema: public
 
 logging:
   level:
     org:
+      springframework: info
       hibernate: info
+      flywaydb: info
+    com:
+      dmytrobozhor.airlinereservationservice: info

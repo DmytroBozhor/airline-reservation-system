@@ -6,7 +6,7 @@ create table if not exists "flight_details"
     "departure_date_time"  timestamp    not null,
     "arrival_date_time"    timestamp    not null,
     "airplane_type"        varchar(255) not null,
-    constraint "id_pk" primary key ("id"),
+    constraint "flight_details_id_pk" primary key ("id"),
     constraint "source_airport_id_fk" foreign key ("source_airport_id") references "airport" ("id"),
     constraint "destination_airport_id_fk" foreign key (destination_airport_id) references "airport" ("id"),
     constraint "date_check" check ("departure_date_time" < "arrival_date_time"),
