@@ -4,6 +4,6 @@ create table if not exists "travel_class"
     "name"     varchar(255) not null,
     "capacity" int          not null,
     constraint "travel_class_id_pk" primary key ("id"),
-    constraint "name_check" check ( "name" in ('First Class', 'Business Class', 'Premium Economy', 'Economy Class',
-                                               'Basic Economy'))
+    constraint "name_check" check ( "name" in ('FIRST_CLASS', 'BUSINESS_CLASS', 'PREMIUM_ECONOMY', 'ECONOMY_CLASS',
+                                               'BASIC_ECONOMY'))
 );

@@ -1,5 +1,6 @@
 package com.dmytrobozhor.airlinereservationservice.util.enums;
 
 public enum AirplaneType {
-    AirbusA380, Boeing747;
+    AIRBUS_A380,
+    BOEING_747;
 }
