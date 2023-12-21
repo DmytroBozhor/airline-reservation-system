@@ -1,6 +1,6 @@
 package com.dmytrobozhor.airlinereservationservice.domain;
 
-import com.dmytrobozhor.airlinereservationservice.util.enums.TravelClassName;
+import com.dmytrobozhor.airlinereservationservice.util.enums.ServiceName;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "travel_class")
+@Table(name = "flight_service")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TravelClass {
+public class FlightService {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,21 +21,18 @@ public class TravelClass {
     private Integer id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "name")
-    private TravelClassName name;
+    @Column(name = "service_name")
+    private ServiceName serviceName;
 
-    @Column(name = "capacity")
-    private Integer capacity;
-
-    @ManyToMany(targetEntity = FlightService.class,
+    @ManyToMany(targetEntity = TravelClass.class,
             fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "service_offering",
-            joinColumns = {@JoinColumn(name = "travel_class_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "flight_service_id", referencedColumnName = "id")})
+            joinColumns = {@JoinColumn(name = "flight_service_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "travel_class_id", referencedColumnName = "id")})
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @Builder.Default
-    private List<FlightService> flightServices = new ArrayList<>();
+    private List<TravelClass> travelClasses = new ArrayList<>();
 
 }
