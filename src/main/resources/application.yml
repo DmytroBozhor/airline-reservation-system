@@ -6,13 +6,13 @@ spring:
     password: 1
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
     show-sql: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
   flyway:
     locations: filesystem:.\src\main\resources\db\migration
-    enabled: true
+    enabled: false
     clean-disabled: true
     baseline-on-migrate: true
     driver-class-name: org.postgresql.Driver
