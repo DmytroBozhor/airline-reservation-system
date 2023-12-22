@@ -23,14 +23,18 @@ public class ServiceOffering {
     @ManyToOne(targetEntity = TravelClass.class,
             fetch = FetchType.EAGER,
             cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "travel_class_id", referencedColumnName = "id")
+    @JoinColumn(name = "travel_class_id", referencedColumnName = "id",
+            insertable = false,
+            updatable = false)
     @MapsId(value = "travelClassId")
     private TravelClass travelClass;
 
     @ManyToOne(targetEntity = TravelClass.class,
             fetch = FetchType.EAGER,
             cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinColumn(name = "flight_service_id", referencedColumnName = "id")
+    @JoinColumn(name = "flight_service_id", referencedColumnName = "id",
+            insertable = false,
+            updatable = false)
     @MapsId(value = "flightServiceId")
     private FlightService flightService;
 

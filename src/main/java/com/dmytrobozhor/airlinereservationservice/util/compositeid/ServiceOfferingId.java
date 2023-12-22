@@ -1,20 +1,23 @@
 package com.dmytrobozhor.airlinereservationservice.util.compositeid;
 
-import com.dmytrobozhor.airlinereservationservice.domain.FlightService;
-import com.dmytrobozhor.airlinereservationservice.domain.TravelClass;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 
 @Embeddable
-@EqualsAndHashCode
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ServiceOfferingId implements Serializable {
+
+    @Column(name = "travel_class_id")
     private Integer travelClassId;
+
+    @Column(name = "flight_service_id")
     private Integer flightServiceId;
+
 }
 

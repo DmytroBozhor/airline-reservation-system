@@ -1,22 +1,24 @@
 package com.dmytrobozhor.airlinereservationservice.util.compositeid;
 
-import com.dmytrobozhor.airlinereservationservice.domain.Calendar;
-import com.dmytrobozhor.airlinereservationservice.domain.FlightService;
-import com.dmytrobozhor.airlinereservationservice.domain.TravelClass;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.*;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 @Embeddable
-@EqualsAndHashCode
-@Getter
-@Setter
-@ToString
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class FlightCostId implements Serializable {
-    private Integer validFromDateId;
-    private Integer validToDateId;
+
+    @Column(name = "valid_from_date_id")
+    private Date validFromDateId;
+
+    @Column(name = "valid_to_date_id")
+    private Date validToDateId;
+
 }
 

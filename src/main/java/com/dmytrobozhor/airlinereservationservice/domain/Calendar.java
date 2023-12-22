@@ -17,7 +17,7 @@ import java.sql.Date;
 public class Calendar {
 
     @Id
-    @Column(name = "date")
+    @Column(name = "day_date")
     private Date date;
 
     @Column(name = "business_day")
