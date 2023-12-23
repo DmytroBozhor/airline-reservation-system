@@ -41,5 +41,4 @@ public class PaymentStatus {
     @JoinColumn(name = "reservation_id", referencedColumnName = "id")
     private Reservation reservation;
 
-
 }

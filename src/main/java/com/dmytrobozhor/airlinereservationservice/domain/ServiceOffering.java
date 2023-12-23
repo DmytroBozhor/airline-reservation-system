@@ -20,6 +20,15 @@ public class ServiceOffering {
     @EmbeddedId
     private ServiceOfferingId id;
 
+    @Column(name = "offered")
+    private Boolean offered;
+
+    @Column(name = "from_date")
+    private Timestamp formDate;
+
+    @Column(name = "to_date")
+    private Timestamp toDate;
+
     @ManyToOne(targetEntity = TravelClass.class,
             fetch = FetchType.EAGER,
             cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
@@ -38,12 +47,4 @@ public class ServiceOffering {
     @MapsId(value = "flightServiceId")
     private FlightService flightService;
 
-    @Column(name = "offered")
-    private Boolean offered;
-
-    @Column(name = "from_date")
-    private Timestamp formDate;
-
-    @Column(name = "to_date")
-    private Timestamp toDate;
 }

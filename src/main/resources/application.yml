@@ -6,13 +6,13 @@ spring:
     password: 1
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
     show-sql: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
   flyway:
     locations: filesystem:.\src\main\resources\db\migration
-    enabled: false
+    enabled: true
     clean-disabled: true
     baseline-on-migrate: true
     driver-class-name: org.postgresql.Driver
@@ -30,3 +30,6 @@ logging:
       flywaydb: info
     com:
       dmytrobozhor.airlinereservationservice: info
+
+server:
+  port: 8080
