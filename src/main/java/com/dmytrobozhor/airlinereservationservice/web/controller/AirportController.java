@@ -20,8 +20,6 @@ public class AirportController {
 
     private final AirportService airportService;
 
-
-    //    TODO: make logging for controllers
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<Airport> getAllAirports() {
