@@ -2,7 +2,6 @@ package com.dmytrobozhor.airlinereservationservice.service;
 
 import com.dmytrobozhor.airlinereservationservice.domain.Airport;
 import com.dmytrobozhor.airlinereservationservice.repository.AirportRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -12,7 +11,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class AirportServiceBean implements AirportService {
+public class AirportService implements AbstractAirportService {
 
     private final AirportRepository airportRepository;
 

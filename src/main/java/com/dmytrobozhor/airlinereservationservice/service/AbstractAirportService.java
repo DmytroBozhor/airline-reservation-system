@@ -4,7 +4,7 @@ import com.dmytrobozhor.airlinereservationservice.domain.Airport;
 
 import java.util.List;
 
-public interface AirportService {
+public interface AbstractAirportService {
 
     List<Airport> findAll();
 

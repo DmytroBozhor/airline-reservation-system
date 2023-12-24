@@ -1,7 +1,7 @@
 package com.dmytrobozhor.airlinereservationservice.web.controller;
 
 import com.dmytrobozhor.airlinereservationservice.domain.Airport;
-import com.dmytrobozhor.airlinereservationservice.service.AirportService;
+import com.dmytrobozhor.airlinereservationservice.service.AbstractAirportService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -18,7 +18,7 @@ import java.util.List;
 @Slf4j
 public class AirportController {
 
-    private final AirportService airportService;
+    private final AbstractAirportService airportService;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
