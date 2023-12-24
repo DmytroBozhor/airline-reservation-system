@@ -14,33 +14,36 @@ import java.time.LocalDateTime;
 @Aspect
 @Component
 @Slf4j
-public class ServiceLoggingAspect {
+public class LoggingAspect {
 
     private LocalDateTime start;
 
     @Before(value = "com.dmytrobozhor.airlinereservationservice.util" +
-            ".aspects.pointcuts.ServicePointcutHolder.allServiceMethod()")
+            ".aspects.pointcuts.GeneralPointcutHolder.anyPublicMethodWithinPackage()")
     public void logBeforeAdvice(JoinPoint joinPoint) {
         start = LocalDateTime.now();
         String methodName = joinPoint.getSignature().getName();
+        String className = joinPoint.getSignature().getDeclaringType().getSimpleName();
         Object[] args = joinPoint.getArgs();
-        log.debug("Service: " + methodName + " - start. Args count - " + args.length);
+        log.debug(className + ": " + methodName + " - start. Args count: " + args.length);
     }
 
     @AfterReturning(value = "com.dmytrobozhor.airlinereservationservice.util" +
-            ".aspects.pointcuts.ServicePointcutHolder.allServiceMethod()")
+            ".aspects.pointcuts.GeneralPointcutHolder.anyPublicMethodWithinPackage()")
     public void logAfterReturningAdvice(JoinPoint joinPoint) {
         String methodName = joinPoint.getSignature().getName();
-        long result = Duration.between(LocalDateTime.now(), start).toMillis();
-        log.debug("Service: " + methodName + " - end. Execution time: " + result);
+        String className = joinPoint.getSignature().getDeclaringType().getSimpleName();
+        long result = Duration.between(start, LocalDateTime.now()).toMillis();
+        log.debug(className + ": " + methodName + " - end. Execution time: " + result);
     }
 
     @AfterThrowing(value = "com.dmytrobozhor.airlinereservationservice.util" +
-            ".aspects.pointcuts.ServicePointcutHolder.allServiceMethod()",
+            ".aspects.pointcuts.GeneralPointcutHolder.anyPublicMethodWithinPackage()",
             throwing = "throwable")
     public void logAfterThrowingAdvice(JoinPoint joinPoint, Throwable throwable) {
         String methodName = joinPoint.getSignature().getName();
-        log.debug("Service: " + methodName + " - throws exception.", throwable);
+        String className = joinPoint.getSignature().getDeclaringType().getSimpleName();
+        log.debug(className + ": " + methodName + " - throws exception.", throwable);
     }
 
 }

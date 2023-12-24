@@ -29,7 +29,7 @@ logging:
       hibernate: info
       flywaydb: info
     com:
-      dmytrobozhor.airlinereservationservice: info
+      dmytrobozhor.airlinereservationservice: debug
 
 server:
   port: 8080
