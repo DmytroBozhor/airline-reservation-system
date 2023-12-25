@@ -8,4 +8,6 @@ public interface AbstractAirportService {
 
     List<Airport> findAll();
 
+    Airport save(Airport airport);
+
 }

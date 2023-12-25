@@ -10,10 +10,6 @@ public class ServicePointcutHolder implements AbstractPointcutHolder {
     public void withinPath() {
     }
 
-    @Pointcut(value = "execution(public * *(..))")
-    public void anyPublicMethod() {
-    }
-
     @Pointcut(value = "anyPublicMethod() && withinPath()")
     public void anyPublicMethodWithinPath() {
     }
