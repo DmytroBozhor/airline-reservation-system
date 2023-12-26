@@ -12,4 +12,5 @@ public interface AbstractAirportService {
 
     void deleteById(Integer id);
 
+    void delete(Airport airport);
 }

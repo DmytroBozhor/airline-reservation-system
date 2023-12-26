@@ -1,7 +1,7 @@
 package com.dmytrobozhor.airlinereservationservice.web.controller;
 
 import com.dmytrobozhor.airlinereservationservice.domain.Airport;
-import com.dmytrobozhor.airlinereservationservice.dto.AirportCreateDto;
+import com.dmytrobozhor.airlinereservationservice.dto.AirportDto;
 import com.dmytrobozhor.airlinereservationservice.service.AbstractAirportService;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.AirportMapper;
 import jakarta.validation.Valid;
@@ -30,9 +30,16 @@ public class AirportController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Airport createAirport(@RequestBody @Valid AirportCreateDto airportDto) {
+    public Airport createAirport(@RequestBody @Valid AirportDto airportDto) {
         Airport airport = airportMapper.toAirport(airportDto);
         return airportService.save(airport);
+    }
+
+    @DeleteMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteAirport(@RequestBody @Valid AirportDto airportDto) {
+        Airport airport = airportMapper.toAirport(airportDto);
+        airportService.delete(airport);
     }
 
     @DeleteMapping("/{id}")

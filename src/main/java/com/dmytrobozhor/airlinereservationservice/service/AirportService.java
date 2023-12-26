@@ -33,4 +33,8 @@ public class AirportService implements AbstractAirportService {
         airportRepository.deleteById(id);
     }
 
+    @Override
+    public void delete(Airport airport) {
+        airportRepository.delete(airport);
+    }
 }
