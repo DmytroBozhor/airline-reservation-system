@@ -35,4 +35,10 @@ public class AirportController {
         return airportService.save(airport);
     }
 
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteAirportById(@PathVariable Integer id) {
+        airportService.deleteById(id);
+    }
+
 }

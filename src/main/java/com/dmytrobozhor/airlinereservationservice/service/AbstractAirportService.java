@@ -10,4 +10,6 @@ public interface AbstractAirportService {
 
     Airport save(Airport airport);
 
+    void deleteById(Integer id);
+
 }
