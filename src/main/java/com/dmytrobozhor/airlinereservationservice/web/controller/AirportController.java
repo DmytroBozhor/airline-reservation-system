@@ -56,14 +56,16 @@ public class AirportController {
 
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Airport updateAirport(@RequestBody @Valid AirportDto airportDto, @PathVariable Integer id){
+    public Airport updateAirport(@RequestBody @Valid AirportDto airportDto,
+                                 @PathVariable Integer id) {
         var airport = airportMapper.toAirport(airportDto);
         return airportService.updateById(id, airport);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Airport updateOrCreateAirport(@RequestBody @Valid AirportDto airportDto, @PathVariable Integer id){
+    public Airport updateOrCreateAirport(@RequestBody @Valid AirportDto airportDto,
+                                         @PathVariable Integer id) {
         var airport = airportMapper.toAirport(airportDto);
         return airportService.updateOrCreateById(id, airport);
     }

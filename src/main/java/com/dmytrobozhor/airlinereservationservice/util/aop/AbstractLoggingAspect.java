@@ -31,6 +31,7 @@ public class AbstractLoggingAspect {
     public void logAfterThrowingAdvice(JoinPoint joinPoint, Throwable throwable) {
         String methodName = joinPoint.getSignature().getName();
         String className = joinPoint.getSignature().getDeclaringType().getSimpleName();
+//        TODO: make log write the error message too
         log.debug(LogColorConstants.ANSI_CYAN + className + ": "
                 + methodName + " - throws exception." + LogColorConstants.ANSI_RESET, throwable);
     }
