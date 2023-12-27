@@ -13,4 +13,11 @@ public interface AbstractAirportService {
     void deleteById(Integer id);
 
     void delete(Airport airport);
+
+    Airport findById(Integer id);
+
+    Airport updateById(Integer id, Airport airport);
+
+    Airport updateOrCreateById(Integer id, Airport airport);
+
 }
