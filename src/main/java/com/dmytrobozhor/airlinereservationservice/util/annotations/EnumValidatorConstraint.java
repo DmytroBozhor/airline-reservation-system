@@ -7,12 +7,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class EnumValidatorConstraint implements ConstraintValidator<EnumValidator, String> {
+public class EnumValidatorConstraint implements ConstraintValidator<EnumBasedStringValidator, String> {
 
     private Set<String> values;
 
     @Override
-    public void initialize(EnumValidator constraintAnnotation) {
+    public void initialize(EnumBasedStringValidator constraintAnnotation) {
         ConstraintValidator.super.initialize(constraintAnnotation);
         values = Stream.of(constraintAnnotation.enumClass().getEnumConstants())
                 .map(Enum::name)
@@ -21,6 +21,6 @@ public class EnumValidatorConstraint implements ConstraintValidator<EnumValidato
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        return values.contains(value.toUpperCase());
+        return values.contains(value);
     }
 }

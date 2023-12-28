@@ -1,7 +1,7 @@
 package com.dmytrobozhor.airlinereservationservice.dto;
 
 import com.dmytrobozhor.airlinereservationservice.domain.Airport;
-import com.dmytrobozhor.airlinereservationservice.util.annotations.EnumValidator;
+import com.dmytrobozhor.airlinereservationservice.util.annotations.EnumBasedStringValidator;
 import com.dmytrobozhor.airlinereservationservice.util.enums.AirplaneType;
 import jakarta.validation.constraints.NotNull;
 
@@ -17,15 +17,23 @@ public record FlightDetailDto(
 
 //        TODO: somehow validate the enums
         @NotNull
-        @EnumValidator(enumClass = AirplaneType.class)
-        AirplaneType airplaneType,
+        @EnumBasedStringValidator(enumClass = AirplaneType.class)
+        String airplaneType,
 
 //        TODO: replace with dto
         @NotNull
         Airport sourceAirport,
 
+//        @NotNull
+//        @Valid
+//        AirportDto sourceAirport,
+
         @NotNull
         Airport destinationAirport
+
+//        @Valid
+//        AirportDto destinationAirport
+//        AirportDto destinationAirport
 
 ) {
 }
