@@ -32,15 +32,11 @@ public class FlightDetail {
     @Column(name = "airplane_type")
     private AirplaneType airplaneType;
 
-    @ManyToOne(targetEntity = Airport.class,
-            fetch = FetchType.EAGER,
-            cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "source_airport_id", referencedColumnName = "id")
     private Airport sourceAirport;
 
-    @ManyToOne(targetEntity = Airport.class,
-            fetch = FetchType.EAGER,
-            cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "destination_airport_id", referencedColumnName = "id")
     private Airport destinationAirport;
 

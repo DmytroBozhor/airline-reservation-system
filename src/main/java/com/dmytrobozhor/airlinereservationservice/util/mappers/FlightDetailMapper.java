@@ -9,7 +9,10 @@ import org.mapstruct.Mappings;
 @Mapper(componentModel = "spring")
 public interface FlightDetailMapper {
 
-    @Mappings({@Mapping(source = "flightDetailDto.airplaneType", target = "airplaneType")})
+    @Mappings({
+            @Mapping(source = "flightDetailDto.airplaneType", target = "airplaneType"),
+            @Mapping(source = "flightDetailDto.sourceAirport", target = "sourceAirport"),
+            @Mapping(source = "flightDetailDto.destinationAirport", target = "destinationAirport")})
     FlightDetail toFlightDetail(FlightDetailDto flightDetailDto);
 
 }

@@ -7,7 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.EmptyStackException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -35,13 +37,15 @@ public class FlightDetailService implements AbstractFlightDetailService {
         flightDetailRepository.delete(flightDetail);
     }
 
-    //    TODO: throw EntityNotFoundException if entity does not exist
     @Override
     public void delete(FlightDetail flightDetail) {
-        flightDetailRepository.delete(flightDetail);
+        FlightDetail persistedFlightDetail = flightDetailRepository
+                .findByAllFields(flightDetail).orElseThrow(EmptyStackException::new);
+        flightDetailRepository.delete(persistedFlightDetail);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public FlightDetail findById(Integer id) {
         return flightDetailRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
@@ -70,4 +74,5 @@ public class FlightDetailService implements AbstractFlightDetailService {
         originalFlightDetail.setSourceAirport(flightDetail.getSourceAirport());
         originalFlightDetail.setDestinationAirport(flightDetail.getDestinationAirport());
     }
+
 }

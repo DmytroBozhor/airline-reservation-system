@@ -1,39 +1,34 @@
 package com.dmytrobozhor.airlinereservationservice.dto;
 
-import com.dmytrobozhor.airlinereservationservice.domain.Airport;
 import com.dmytrobozhor.airlinereservationservice.util.annotations.EnumBasedStringValidator;
 import com.dmytrobozhor.airlinereservationservice.util.enums.AirplaneType;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
 import java.sql.Timestamp;
 
 public record FlightDetailDto(
 
+//        TODO: make constraints as like in database
         @NotNull
         Timestamp departureDateTime,
 
         @NotNull
         Timestamp arrivalDateTime,
 
-//        TODO: somehow validate the enums
+        //TODO: make the value of the airplaneType to uppercase using annotation and beanPostProcessor
         @NotNull
         @EnumBasedStringValidator(enumClass = AirplaneType.class)
         String airplaneType,
 
-//        TODO: replace with dto
+//        TODO: if airport already exists then use existing and not inserting a new one to the database
         @NotNull
-        Airport sourceAirport,
-
-//        @NotNull
-//        @Valid
-//        AirportDto sourceAirport,
+        @Valid
+        AirportDto sourceAirport,
 
         @NotNull
-        Airport destinationAirport
-
-//        @Valid
-//        AirportDto destinationAirport
-//        AirportDto destinationAirport
+        @Valid
+        AirportDto destinationAirport
 
 ) {
 }

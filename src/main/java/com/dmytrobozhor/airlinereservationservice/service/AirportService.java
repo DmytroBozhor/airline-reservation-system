@@ -40,10 +40,11 @@ public class AirportService implements AbstractAirportService {
         airportRepository.delete(airport);
     }
 
-    //    TODO: throw EntityNotFoundException if entity does not exist
     @Override
     public void delete(Airport airport) {
-        airportRepository.delete(airport);
+        Airport persistedAirport = airportRepository
+                .findByAllFields(airport).orElseThrow(EntityNotFoundException::new);
+        airportRepository.delete(persistedAirport);
     }
 
     @Override
@@ -71,9 +72,15 @@ public class AirportService implements AbstractAirportService {
         }).orElse(airportRepository.save(airport));
     }
 
-    private static void updateAirport(Airport airport, Airport originalAirport) {
+    private void updateAirport(Airport airport, Airport originalAirport) {
         originalAirport.setName(airport.getName());
         originalAirport.setCity(airport.getCity());
         originalAirport.setCountry(airport.getCountry());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Airport> findByAllFields(Airport airport) {
+        return airportRepository.findByAllFields(airport);
     }
 }

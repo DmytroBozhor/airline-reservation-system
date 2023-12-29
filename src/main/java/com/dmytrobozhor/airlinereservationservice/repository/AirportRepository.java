@@ -6,24 +6,35 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface AirportRepository extends JpaRepository<Airport, Integer> {
 
-    @Override
+//    @Override
 //    @EntityGraph(type = EntityGraph.EntityGraphType.FETCH, value = "user_entity-graph")
-    <S extends Airport> S save(S entity);
+//    <S extends Airport> S save(S entity);
+//
+//    @Override
+//    @Query(nativeQuery = true, value = "delete from airport where id = :integer")
+//    @Modifying(flushAutomatically = true, clearAutomatically = true)
+//    void deleteById(Integer integer);
+//
+//    @Override
+//    @Query(nativeQuery = true,
+//            value = "delete from airport " +
+//            "where name = :#{#entity.getName()} " +
+//            "and city = :#{#entity.getCity()} " +
+//            "and country = :#{#entity.getCountry()}")
+//    @Modifying(flushAutomatically = true, clearAutomatically = true)
+//    void delete(Airport entity);
 
-    @Override
-    @Query(nativeQuery = true, value = "delete from airport where id = :integer")
-    @Modifying(flushAutomatically = true, clearAutomatically = true)
-    void deleteById(Integer integer);
 
-    @Override
     @Query(nativeQuery = true,
-            value = "delete from airport " +
-            "where name = :#{#entity.getName()} " +
-            "and city = :#{#entity.getCity()} " +
-            "and country = :#{#entity.getCountry()}")
-    @Modifying(flushAutomatically = true, clearAutomatically = true)
-    void delete(Airport entity);
+            value = "select * from airport " +
+                    "where name = :#{#airport.getName()} " +
+                    "and city = :#{#airport.getCity()} " +
+                    "and country = :#{#airport.getCountry()}")
+    Optional<Airport> findByAllFields(Airport airport);
+
 }
