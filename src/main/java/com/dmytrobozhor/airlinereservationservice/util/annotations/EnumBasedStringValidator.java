@@ -1,24 +1,30 @@
 package com.dmytrobozhor.airlinereservationservice.util.annotations;
 
-import jakarta.validation.Constraint;
-import jakarta.validation.Payload;
+import jakarta.validation.ConstraintValidator;
+import jakarta.validation.ConstraintValidatorContext;
 
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-import static java.lang.annotation.ElementType.*;
+public class EnumBasedStringValidator implements ConstraintValidator<EnumBasedString, String> {
 
-@Target({FIELD})
-@Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = EnumValidatorConstraint.class)
-public @interface EnumBasedStringValidator {
+    private Set<String> values;
 
-    Class<? extends Enum<?>> enumClass();
+    @Override
+    public void initialize(EnumBasedString constraintAnnotation) {
+        ConstraintValidator.super.initialize(constraintAnnotation);
+        values = Stream.of(constraintAnnotation.enumClass().getEnumConstants())
+                .map(Enum::name)
+                .collect(Collectors.toSet());
+    }
 
-    String message() default "must be a constant of a required type";
+    @Override
+    public boolean isValid(String value, ConstraintValidatorContext context) {
+        Optional<String> optionalValue = Optional.ofNullable(value);
+        if (optionalValue.isEmpty()) return true;
+        return values.contains(optionalValue.get());
+    }
 
-    Class<?>[] groups() default {};
-
-    Class<? extends Payload>[] payload() default {};
 }

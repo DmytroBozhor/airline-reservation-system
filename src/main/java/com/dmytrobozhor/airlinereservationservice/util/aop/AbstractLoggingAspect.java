@@ -33,7 +33,8 @@ public class AbstractLoggingAspect {
         String className = joinPoint.getSignature().getDeclaringType().getSimpleName();
 //        TODO: make log write the error message too
         log.debug(LogColorConstants.ANSI_CYAN + className + ": "
-                + methodName + " - throws exception." + LogColorConstants.ANSI_RESET, throwable);
+                + methodName + " - throws exception. \n Message: {}" +
+                LogColorConstants.ANSI_RESET, throwable.getMessage());
     }
 
 }

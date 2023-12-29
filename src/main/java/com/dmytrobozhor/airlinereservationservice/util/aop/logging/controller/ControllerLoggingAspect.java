@@ -24,11 +24,11 @@ public class ControllerLoggingAspect extends AbstractLoggingAspect {
         super.logAfterReturningAdvice(joinPoint);
     }
 
-    @Override
+    /*@Override
     @AfterThrowing(value = "ControllerPointcutHolder.anyPublicMethodWithinPath()",
             throwing = "throwable")
     public void logAfterThrowingAdvice(JoinPoint joinPoint, Throwable throwable) {
         super.logAfterThrowingAdvice(joinPoint, throwable);
-    }
+    }*/
 
 }

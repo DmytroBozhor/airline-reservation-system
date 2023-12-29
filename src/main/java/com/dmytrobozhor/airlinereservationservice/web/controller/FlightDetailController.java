@@ -2,7 +2,6 @@ package com.dmytrobozhor.airlinereservationservice.web.controller;
 
 import com.dmytrobozhor.airlinereservationservice.domain.Airport;
 import com.dmytrobozhor.airlinereservationservice.domain.FlightDetail;
-import com.dmytrobozhor.airlinereservationservice.dto.AirportDto;
 import com.dmytrobozhor.airlinereservationservice.dto.FlightDetailDto;
 import com.dmytrobozhor.airlinereservationservice.service.AbstractAirportService;
 import com.dmytrobozhor.airlinereservationservice.service.AbstractFlightDetailService;
@@ -14,7 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.function.Consumer;
 
 @RestController
 @RequestMapping("/fright-details")
