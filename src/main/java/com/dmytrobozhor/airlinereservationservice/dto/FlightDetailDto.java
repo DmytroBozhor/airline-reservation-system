@@ -13,14 +13,13 @@ import java.sql.Timestamp;
 @AirportConstraint
 public record FlightDetailDto(
 
-//        TODO: make constraints as like in database
         @NotNull
         Timestamp departureDateTime,
 
         @NotNull
         Timestamp arrivalDateTime,
 
-        //TODO: make the value of the airplaneType to uppercase using annotation and beanPostProcessor
+        //TODO: * make the value of the airplaneType to uppercase using annotation and beanPostProcessor
         @NotNull
         @EnumBasedString(enumClass = AirplaneType.class)
         String airplaneType,

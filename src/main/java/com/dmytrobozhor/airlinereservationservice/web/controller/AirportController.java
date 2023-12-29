@@ -15,7 +15,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/airports")
 @RequiredArgsConstructor
-@Slf4j
 public class AirportController {
 
     private final AbstractAirportService airportService;

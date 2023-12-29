@@ -16,7 +16,6 @@ import java.util.function.Supplier;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 @Transactional
 public class AirportService implements AbstractAirportService {
 
@@ -54,21 +53,20 @@ public class AirportService implements AbstractAirportService {
                 .orElseThrow(EntityNotFoundException::new);
     }
 
-
     //    TODO: make an opportunity to make partial updates if some of the properties are null
     @Override
     public Airport updateById(Integer id, Airport airport) {
-        return airportRepository.findById(id).map(originalAirport -> {
-            updateAirport(airport, originalAirport);
-            return airportRepository.save(originalAirport);
+        return airportRepository.findById(id).map(persistedAirport -> {
+            updateAirport(airport, persistedAirport);
+            return airportRepository.save(persistedAirport);
         }).orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
     public Airport updateOrCreateById(Integer id, Airport airport) {
-        return airportRepository.findById(id).map(originalAirport -> {
-            updateAirport(airport, originalAirport);
-            return airportRepository.save(originalAirport);
+        return airportRepository.findById(id).map(persistedAirport -> {
+            updateAirport(airport, persistedAirport);
+            return airportRepository.save(persistedAirport);
         }).orElse(airportRepository.save(airport));
     }
 

@@ -34,10 +34,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorDetail handleMethodArgumentNotValidException(
             MethodArgumentNotValidException ex, WebRequest request) {
-        Map<String, String> errors = new HashMap<>();
-        ex.getFieldErrors().forEach(fieldError -> errors.
-                put(fieldError.getField(), fieldError.getDefaultMessage()));
-        return new ErrorDetail(errors.toString(), new Date(), request.getDescription(true));
+        return new ErrorDetail(ex.getMessage(), new Date(), request.getDescription(true));
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)

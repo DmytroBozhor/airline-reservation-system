@@ -18,7 +18,6 @@ public class FlightDetailService implements AbstractFlightDetailService {
 
     private final FlightDetailRepository flightDetailRepository;
 
-
     @Override
     @Transactional(readOnly = true)
     public List<FlightDetail> findAll() {
@@ -53,17 +52,17 @@ public class FlightDetailService implements AbstractFlightDetailService {
 
     @Override
     public FlightDetail updateById(Integer id, FlightDetail flightDetail) {
-        return flightDetailRepository.findById(id).map(originalFlightDetail -> {
-            updateFlightDetail(flightDetail, originalFlightDetail);
-            return flightDetailRepository.save(originalFlightDetail);
+        return flightDetailRepository.findById(id).map(persistedFlightDetail -> {
+            updateFlightDetail(flightDetail, persistedFlightDetail);
+            return flightDetailRepository.save(persistedFlightDetail);
         }).orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
     public FlightDetail updateOrCreateById(Integer id, FlightDetail flightDetail) {
-        return flightDetailRepository.findById(id).map(originalFlightDetail -> {
-            updateFlightDetail(flightDetail, originalFlightDetail);
-            return flightDetailRepository.save(originalFlightDetail);
+        return flightDetailRepository.findById(id).map(persistedFlightDetail -> {
+            updateFlightDetail(flightDetail, persistedFlightDetail);
+            return flightDetailRepository.save(persistedFlightDetail);
         }).orElse(flightDetailRepository.save(flightDetail));
     }
 
