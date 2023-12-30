@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -75,5 +76,10 @@ public class PassengerService implements AbstractPassengerService {
             updatePassenger(passenger, persistedPassenger);
             return passengerRepository.save(persistedPassenger);
         }).orElse(passengerRepository.save(passenger));
+    }
+
+    @Override
+    public Optional<Passenger> findByPhoneNumber(String phoneNumber) {
+        return passengerRepository.findPassengerByPhoneNumber(phoneNumber);
     }
 }

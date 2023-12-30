@@ -25,4 +25,6 @@ public interface PassengerRepository extends JpaRepository<Passenger, Integer> {
                     "and country = :#{#passenger.getCountry()}")
     Optional<Passenger> findByAllFields(Passenger passenger);
 
+    Optional<Passenger> findPassengerByPhoneNumber(String phoneNumber);
+
 }

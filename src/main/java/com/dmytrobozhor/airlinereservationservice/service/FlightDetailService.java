@@ -39,7 +39,7 @@ public class FlightDetailService implements AbstractFlightDetailService {
     @Override
     public void delete(FlightDetail flightDetail) {
         FlightDetail persistedFlightDetail = flightDetailRepository
-                .findByAllFields(flightDetail).orElseThrow(EmptyStackException::new);
+                .findByAllFields(flightDetail).orElseThrow(EntityNotFoundException::new);
         flightDetailRepository.delete(persistedFlightDetail);
     }
 

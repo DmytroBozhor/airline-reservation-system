@@ -6,6 +6,7 @@ import com.dmytrobozhor.airlinereservationservice.dto.FlightDetailDto;
 import com.dmytrobozhor.airlinereservationservice.service.AbstractAirportService;
 import com.dmytrobozhor.airlinereservationservice.service.AbstractFlightDetailService;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.FlightDetailMapper;
+import jakarta.persistence.EntityManager;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,24 +27,25 @@ public class FlightDetailController {
 
     private final FlightDetailMapper flightDetailMapper;
 
+//    TODO: return dto instead of actual entities in all controllers
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<FlightDetail> getAllFlightDetails() {
         return flightDetailService.findAll();
     }
 
+
+    //    TODO: implement annotation @CheckIfPersisted to check
+    //     if the nested objects are already stored in the database
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public FlightDetail saveFlightDetail(@RequestBody @Valid FlightDetailDto flightDetailDto) {
         var flightDetail = flightDetailMapper.toFlightDetail(flightDetailDto);
-        Airport sourceAirport = flightDetail.getSourceAirport();
-        Airport destinationAirport = flightDetail.getDestinationAirport();
-        log.debug("Checking if the airports already exist in the database.");
-        airportService.findByAllFields(sourceAirport).ifPresent(flightDetail::setSourceAirport);
-        airportService.findByAllFields(destinationAirport).ifPresent(flightDetail::setDestinationAirport);
         return flightDetailService.save(flightDetail);
     }
 
+    //    TODO: refactor code so we dont need to query the database
+    //     to check if airports exist (use annotation as above or use entity manager maybe)
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteFlightDetail(@RequestBody @Valid FlightDetailDto flightDetailDto) {
@@ -57,6 +59,7 @@ public class FlightDetailController {
         return flightDetailService.findById(id);
     }
 
+//    TODO: return something other than void in all controllers
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteFlightDetailById(@PathVariable Integer id) {
