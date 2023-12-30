@@ -3,6 +3,7 @@ package com.dmytrobozhor.airlinereservationservice.web.controller;
 import com.dmytrobozhor.airlinereservationservice.domain.Airport;
 import com.dmytrobozhor.airlinereservationservice.domain.FlightDetail;
 import com.dmytrobozhor.airlinereservationservice.dto.FlightDetailDto;
+import com.dmytrobozhor.airlinereservationservice.dto.FlightDetailUpdateDto;
 import com.dmytrobozhor.airlinereservationservice.service.AbstractAirportService;
 import com.dmytrobozhor.airlinereservationservice.service.AbstractFlightDetailService;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.FlightDetailMapper;
@@ -23,25 +24,21 @@ public class FlightDetailController {
 
     private final AbstractFlightDetailService flightDetailService;
 
-    private final AbstractAirportService airportService;
-
     private final FlightDetailMapper flightDetailMapper;
 
-//    TODO: return dto instead of actual entities in all controllers
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<FlightDetail> getAllFlightDetails() {
-        return flightDetailService.findAll();
+    public List<FlightDetailDto> getAllFlightDetails() {
+        return flightDetailMapper.toFlightDetailDto(flightDetailService.findAll());
     }
-
 
     //    TODO: implement annotation @CheckIfPersisted to check
     //     if the nested objects are already stored in the database
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public FlightDetail saveFlightDetail(@RequestBody @Valid FlightDetailDto flightDetailDto) {
+    public FlightDetailDto saveFlightDetail(@RequestBody @Valid FlightDetailDto flightDetailDto) {
         var flightDetail = flightDetailMapper.toFlightDetail(flightDetailDto);
-        return flightDetailService.save(flightDetail);
+        return flightDetailMapper.toFlightDetailDto(flightDetailService.save(flightDetail));
     }
 
     //    TODO: refactor code so we dont need to query the database
@@ -55,11 +52,11 @@ public class FlightDetailController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public FlightDetail getFlightDetail(@PathVariable Integer id) {
-        return flightDetailService.findById(id);
+    public FlightDetailDto getFlightDetail(@PathVariable Integer id) {
+        return flightDetailMapper.toFlightDetailDto(flightDetailService.findById(id));
     }
 
-//    TODO: return something other than void in all controllers
+    //    TODO: return something other than void in all controllers
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteFlightDetailById(@PathVariable Integer id) {
@@ -68,18 +65,18 @@ public class FlightDetailController {
 
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public FlightDetail updateFlightDetail(@RequestBody @Valid FlightDetailDto flightDetailDto,
-                                           @PathVariable Integer id) {
+    public FlightDetailDto updateFlightDetail(@RequestBody @Valid FlightDetailUpdateDto flightDetailDto,
+                                              @PathVariable Integer id) {
         var flightDetail = flightDetailMapper.toFlightDetail(flightDetailDto);
-        return flightDetailService.updateById(id, flightDetail);
+        return flightDetailMapper.toFlightDetailDto(flightDetailService.updateById(id, flightDetail));
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public FlightDetail updateOrCreateFlightDetail(@RequestBody @Valid FlightDetailDto flightDetailDto,
-                                                   @PathVariable Integer id) {
+    public FlightDetailDto updateOrCreateFlightDetail(@RequestBody @Valid FlightDetailDto flightDetailDto,
+                                                      @PathVariable Integer id) {
         var flightDetail = flightDetailMapper.toFlightDetail(flightDetailDto);
-        return flightDetailService.updateOrCreateById(id, flightDetail);
+        return flightDetailMapper.toFlightDetailDto(flightDetailService.updateOrCreateById(id, flightDetail));
     }
 
 }

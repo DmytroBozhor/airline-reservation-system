@@ -1,11 +1,10 @@
 package com.dmytrobozhor.airlinereservationservice.web.controller;
 
-import com.dmytrobozhor.airlinereservationservice.domain.Airport;
 import com.dmytrobozhor.airlinereservationservice.domain.Passenger;
-import com.dmytrobozhor.airlinereservationservice.dto.AirportDto;
 import com.dmytrobozhor.airlinereservationservice.dto.PassengerDto;
+import com.dmytrobozhor.airlinereservationservice.dto.PassengerCreateDto;
+import com.dmytrobozhor.airlinereservationservice.dto.PassengerUpdateDto;
 import com.dmytrobozhor.airlinereservationservice.service.AbstractPassengerService;
-import com.dmytrobozhor.airlinereservationservice.util.mappers.AirportMapper;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.PassengerMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,15 +24,15 @@ public class PassengerController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Passenger> getAllPassengers() {
-        return passengerService.findAll();
+    public List<PassengerDto> getAllPassengers() {
+        return passengerMapper.toPassengerDto(passengerService.findAll());
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Passenger savePassenger(@RequestBody @Valid PassengerDto passengerDto) {
+    public PassengerDto savePassenger(@RequestBody @Valid PassengerCreateDto passengerDto) {
         var passenger = passengerMapper.toPassenger(passengerDto);
-        return passengerService.save(passenger);
+        return passengerMapper.toPassengerDto(passengerService.save(passenger));
     }
 
     @DeleteMapping
@@ -45,8 +44,8 @@ public class PassengerController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Passenger getPassenger(@PathVariable Integer id) {
-        return passengerService.findById(id);
+    public PassengerDto getPassenger(@PathVariable Integer id) {
+        return passengerMapper.toPassengerDto(passengerService.findById(id));
     }
 
     @DeleteMapping("/{id}")
@@ -57,18 +56,18 @@ public class PassengerController {
 
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Passenger updatePassenger(@RequestBody @Valid PassengerDto passengerDto,
-                                     @PathVariable Integer id) {
+    public PassengerDto updatePassenger(@RequestBody @Valid PassengerUpdateDto passengerDto,
+                                        @PathVariable Integer id) {
         var passenger = passengerMapper.toPassenger(passengerDto);
-        return passengerService.updateById(id, passenger);
+        return passengerMapper.toPassengerDto(passengerService.updateById(id, passenger));
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Passenger updateOrCreatePassenger(@RequestBody @Valid PassengerDto passengerDto,
-                                             @PathVariable Integer id) {
+    public PassengerDto updateOrCreatePassenger(@RequestBody @Valid PassengerCreateDto passengerDto,
+                                                @PathVariable Integer id) {
         var passenger = passengerMapper.toPassenger(passengerDto);
-        return passengerService.updateOrCreateById(id, passenger);
+        return passengerMapper.toPassengerDto(passengerService.updateOrCreateById(id, passenger));
     }
 
 }

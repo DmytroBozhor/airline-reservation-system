@@ -2,6 +2,7 @@ package com.dmytrobozhor.airlinereservationservice.service;
 
 import com.dmytrobozhor.airlinereservationservice.domain.Passenger;
 import com.dmytrobozhor.airlinereservationservice.repository.PassengerRepository;
+import com.dmytrobozhor.airlinereservationservice.util.mappers.PassengerMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,8 @@ import java.util.Optional;
 public class PassengerService implements AbstractPassengerService {
 
     private final PassengerRepository passengerRepository;
+
+    private final PassengerMapper passengerMapper;
 
     @Override
     @Transactional(readOnly = true)
@@ -52,33 +55,21 @@ public class PassengerService implements AbstractPassengerService {
     @Override
     public Passenger updateById(Integer id, Passenger passenger) {
         return passengerRepository.findById(id).map(persistedPassenger -> {
-            updatePassenger(passenger, persistedPassenger);
+            passengerMapper.updatePassengerPartial(persistedPassenger, passenger);
             return passengerRepository.save(persistedPassenger);
         }).orElseThrow(EntityNotFoundException::new);
-    }
-
-    //    TODO: refactor the code below in all classes
-    private void updatePassenger(Passenger passenger, Passenger persistedPassenger) {
-        persistedPassenger.setFirstName(passenger.getFirstName());
-        persistedPassenger.setLastName(passenger.getLastName());
-        persistedPassenger.setEmail(passenger.getEmail());
-        persistedPassenger.setPhoneNumber(passenger.getPhoneNumber());
-        persistedPassenger.setAddress(passenger.getAddress());
-        persistedPassenger.setCity(passenger.getCity());
-        persistedPassenger.setState(passenger.getState());
-        persistedPassenger.setZipcode(passenger.getZipcode());
-        persistedPassenger.setCountry(passenger.getCountry());
     }
 
     @Override
     public Passenger updateOrCreateById(Integer id, Passenger passenger) {
         return passengerRepository.findById(id).map(persistedPassenger -> {
-            updatePassenger(passenger, persistedPassenger);
+            passengerMapper.updatePassengerPartial(persistedPassenger, passenger);
             return passengerRepository.save(persistedPassenger);
         }).orElse(passengerRepository.save(passenger));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Passenger> findByPhoneNumber(String phoneNumber) {
         return passengerRepository.findPassengerByPhoneNumber(phoneNumber);
     }

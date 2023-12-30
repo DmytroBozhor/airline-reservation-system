@@ -19,4 +19,5 @@ public class UniqueValidator implements ConstraintValidator<Unique, String> {
         Optional<Passenger> passenger = passengerService.findByPhoneNumber(value);
         return passenger.isEmpty();
     }
+
 }

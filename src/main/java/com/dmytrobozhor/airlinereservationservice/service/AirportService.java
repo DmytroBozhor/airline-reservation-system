@@ -2,6 +2,7 @@ package com.dmytrobozhor.airlinereservationservice.service;
 
 import com.dmytrobozhor.airlinereservationservice.domain.Airport;
 import com.dmytrobozhor.airlinereservationservice.repository.AirportRepository;
+import com.dmytrobozhor.airlinereservationservice.util.mappers.AirportMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,8 @@ import java.util.function.Supplier;
 public class AirportService implements AbstractAirportService {
 
     private final AirportRepository airportRepository;
+
+    private final AirportMapper airportMapper;
 
     @Override
     @Transactional(readOnly = true)
@@ -57,7 +60,7 @@ public class AirportService implements AbstractAirportService {
     @Override
     public Airport updateById(Integer id, Airport airport) {
         return airportRepository.findById(id).map(persistedAirport -> {
-            updateAirport(airport, persistedAirport);
+            airportMapper.updateAirportPartial(persistedAirport, airport);
             return airportRepository.save(persistedAirport);
         }).orElseThrow(EntityNotFoundException::new);
     }
@@ -65,15 +68,9 @@ public class AirportService implements AbstractAirportService {
     @Override
     public Airport updateOrCreateById(Integer id, Airport airport) {
         return airportRepository.findById(id).map(persistedAirport -> {
-            updateAirport(airport, persistedAirport);
+            airportMapper.updateAirportPartial(persistedAirport, airport);
             return airportRepository.save(persistedAirport);
         }).orElse(airportRepository.save(airport));
-    }
-
-    private void updateAirport(Airport airport, Airport originalAirport) {
-        originalAirport.setName(airport.getName());
-        originalAirport.setCity(airport.getCity());
-        originalAirport.setCountry(airport.getCountry());
     }
 
     @Override

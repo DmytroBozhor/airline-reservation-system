@@ -2,6 +2,7 @@ package com.dmytrobozhor.airlinereservationservice.service;
 
 import com.dmytrobozhor.airlinereservationservice.domain.FlightDetail;
 import com.dmytrobozhor.airlinereservationservice.repository.FlightDetailRepository;
+import com.dmytrobozhor.airlinereservationservice.util.mappers.FlightDetailMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,8 @@ import java.util.Optional;
 public class FlightDetailService implements AbstractFlightDetailService {
 
     private final FlightDetailRepository flightDetailRepository;
+
+    private final FlightDetailMapper flightDetailMapper;
 
     @Override
     @Transactional(readOnly = true)
@@ -53,7 +56,7 @@ public class FlightDetailService implements AbstractFlightDetailService {
     @Override
     public FlightDetail updateById(Integer id, FlightDetail flightDetail) {
         return flightDetailRepository.findById(id).map(persistedFlightDetail -> {
-            updateFlightDetail(flightDetail, persistedFlightDetail);
+            flightDetailMapper.updateFlightDetailPartial(persistedFlightDetail, flightDetail);
             return flightDetailRepository.save(persistedFlightDetail);
         }).orElseThrow(EntityNotFoundException::new);
     }
@@ -61,17 +64,9 @@ public class FlightDetailService implements AbstractFlightDetailService {
     @Override
     public FlightDetail updateOrCreateById(Integer id, FlightDetail flightDetail) {
         return flightDetailRepository.findById(id).map(persistedFlightDetail -> {
-            updateFlightDetail(flightDetail, persistedFlightDetail);
+            flightDetailMapper.updateFlightDetailPartial(persistedFlightDetail, flightDetail);
             return flightDetailRepository.save(persistedFlightDetail);
         }).orElse(flightDetailRepository.save(flightDetail));
-    }
-
-    private void updateFlightDetail(FlightDetail flightDetail, FlightDetail originalFlightDetail) {
-        originalFlightDetail.setDepartureDateTime(flightDetail.getDepartureDateTime());
-        originalFlightDetail.setArrivalDateTime(flightDetail.getArrivalDateTime());
-        originalFlightDetail.setAirplaneType(flightDetail.getAirplaneType());
-        originalFlightDetail.setSourceAirport(flightDetail.getSourceAirport());
-        originalFlightDetail.setDestinationAirport(flightDetail.getDestinationAirport());
     }
 
 }
