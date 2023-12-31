@@ -24,8 +24,7 @@ public class FlightService {
     @Column(name = "service_name")
     private ServiceName serviceName;
 
-    @ManyToMany(targetEntity = TravelClass.class,
-            fetch = FetchType.LAZY,
+    @ManyToMany(fetch = FetchType.LAZY,
             cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(name = "service_offering",
             joinColumns = {@JoinColumn(name = "flight_service_id", referencedColumnName = "id")},

@@ -19,15 +19,11 @@ public class SeatDetail {
     @Column(name = "id")
     private Integer id;
 
-    @ManyToOne(targetEntity = TravelClass.class,
-            fetch = FetchType.EAGER,
-            cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "travel_class_id", referencedColumnName = "id")
     private TravelClass travelClass;
 
-    @ManyToOne(targetEntity = FlightDetail.class,
-            fetch = FetchType.EAGER,
-            cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "flight_details_id", referencedColumnName = "id")
     private FlightDetail flightDetail;
 

@@ -22,15 +22,11 @@ public class Reservation {
     @Column(name = "id")
     private Integer id;
 
-    @ManyToOne(targetEntity = Passenger.class,
-            fetch = FetchType.EAGER,
-            cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "passenger_id", referencedColumnName = "id")
     private Passenger passenger;
 
-    @ManyToOne(targetEntity = SeatDetail.class,
-            fetch = FetchType.EAGER,
-            cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "seat_details_id", referencedColumnName = "id")
     private SeatDetail seatDetail;
 

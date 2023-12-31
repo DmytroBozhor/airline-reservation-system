@@ -35,8 +35,7 @@ public class PaymentStatus {
     @Column(name = "amount")
     private BigDecimal amount;
 
-    @ManyToOne(targetEntity = Reservation.class,
-            fetch = FetchType.EAGER,
+    @ManyToOne(fetch = FetchType.EAGER,
             cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "reservation_id", referencedColumnName = "id")
     private Reservation reservation;

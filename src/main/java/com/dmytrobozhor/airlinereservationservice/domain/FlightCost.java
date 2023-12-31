@@ -26,15 +26,13 @@ public class FlightCost {
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "valid_from_date_id", referencedColumnName = "day_date",
-            insertable = false,
-            updatable = false)
+            insertable = false, updatable = false)
     @MapsId(value = "validFromDateId")
     private Calendar validFromDate;
 
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinColumn(name = "valid_to_date_id", referencedColumnName = "day_date",
-            insertable = false,
-            updatable = false)
+            insertable = false, updatable = false)
     @MapsId(value = "validToDateId")
     private Calendar validToDate;
 

@@ -11,6 +11,8 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface FlightDetailMapper {
 
+
+    //    TODO: fix the repeating mappings
     @Mappings({
             @Mapping(source = "flightDetailDto.airplaneType", target = "airplaneType"),
             @Mapping(source = "flightDetailDto.sourceAirport", target = "sourceAirport"),
@@ -26,16 +28,17 @@ public interface FlightDetailMapper {
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateFlightDetailPartial(@MappingTarget FlightDetail persistedFlightDetail, FlightDetail flightDetail);
 
+    //    TODO: find out how to map lists
     @Mappings({
-            @Mapping(target = "flightDetailDto.airplaneType", source = "airplaneType"),
-            @Mapping(target = "flightDetailDto.sourceAirport", source = "sourceAirport"),
-            @Mapping(target = "flightDetailDto.destinationAirport", source = "destinationAirport")})
+            @Mapping(source = "flightDetail.airplaneType", target = "airplaneType"),
+            @Mapping(source = "flightDetail.sourceAirport", target = "sourceAirport"),
+            @Mapping(source = "flightDetail.destinationAirport", target = "destinationAirport")})
     List<FlightDetailDto> toFlightDetailDto(List<FlightDetail> flightDetails);
 
     @Mappings({
-            @Mapping(target = "flightDetailDto.airplaneType", source = "airplaneType"),
-            @Mapping(target = "flightDetailDto.sourceAirport", source = "sourceAirport"),
-            @Mapping(target = "flightDetailDto.destinationAirport", source = "destinationAirport")})
+            @Mapping(source = "flightDetail.airplaneType", target = "airplaneType"),
+            @Mapping(source = "flightDetail.sourceAirport", target = "sourceAirport"),
+            @Mapping(source = "flightDetail.destinationAirport", target = "destinationAirport")})
     FlightDetailDto toFlightDetailDto(FlightDetail flightDetail);
 
 }

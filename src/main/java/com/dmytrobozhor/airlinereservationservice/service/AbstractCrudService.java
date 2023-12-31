@@ -4,6 +4,7 @@ import java.util.List;
 
 public interface AbstractCrudService<T, ID> {
 
+    //    TODO: * generates a lot of queries. find a way do fix it
     List<T> findAll();
 
     T save(T entity);
