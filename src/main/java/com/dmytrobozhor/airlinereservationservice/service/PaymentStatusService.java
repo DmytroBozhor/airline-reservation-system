@@ -20,6 +20,7 @@ public class PaymentStatusService implements AbstractPaymentStatusService {
     private final PaymentStatusMapper paymentStatusMapper;
 
     @Override
+    @Transactional(readOnly = true)
     public List<PaymentStatus> findAll() {
         return paymentStatusRepository.findAll();
     }
@@ -44,6 +45,7 @@ public class PaymentStatusService implements AbstractPaymentStatusService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public PaymentStatus findById(Integer id) {
         return paymentStatusRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
