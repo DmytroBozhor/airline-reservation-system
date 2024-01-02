@@ -6,6 +6,7 @@ import com.dmytrobozhor.airlinereservationservice.util.annotations.EnumBasedStri
 import com.dmytrobozhor.airlinereservationservice.util.enums.AirplaneType;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Length;
 
 import java.sql.Timestamp;
 
@@ -17,6 +18,7 @@ public record FlightDetailUpdateDto(
 
         Timestamp arrivalDateTime,
 
+        @Length(max = 255)
         @EnumBasedString(enumClass = AirplaneType.class)
         String airplaneType,
 

@@ -7,6 +7,9 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.sql.Timestamp;
+import java.time.Instant;
+
 public record ReservationDto(
 
         @NotNull
@@ -15,7 +18,10 @@ public record ReservationDto(
 
         @NotNull
         @Valid
-        SeatDetailDto seatDetail
+        SeatDetailDto seatDetail,
+
+        @NotNull
+        Timestamp reservationDateTime
 
 ) {
 }

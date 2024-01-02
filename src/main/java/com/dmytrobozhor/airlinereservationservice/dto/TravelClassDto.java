@@ -11,7 +11,7 @@ public record TravelClassDto(
         @NotBlank
         @Length(max = 255)
         @EnumBasedString(enumClass = TravelClassName.class)
-        String travelClassName,
+        String name,
 
         @NotNull
         Integer capacity
