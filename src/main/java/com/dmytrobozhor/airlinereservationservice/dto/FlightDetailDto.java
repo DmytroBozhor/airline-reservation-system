@@ -5,6 +5,7 @@ import com.dmytrobozhor.airlinereservationservice.util.annotations.DateConstrain
 import com.dmytrobozhor.airlinereservationservice.util.annotations.EnumBasedString;
 import com.dmytrobozhor.airlinereservationservice.util.enums.AirplaneType;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.sql.Timestamp;
@@ -20,7 +21,7 @@ public record FlightDetailDto(
         Timestamp arrivalDateTime,
 
         //TODO: * make the value of the airplaneType to uppercase using annotation and beanPostProcessor
-        @NotNull
+        @NotBlank
         @EnumBasedString(enumClass = AirplaneType.class)
         String airplaneType,
 
