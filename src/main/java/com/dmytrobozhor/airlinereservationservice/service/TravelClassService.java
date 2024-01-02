@@ -46,6 +46,7 @@ public class TravelClassService implements AbstractTravelClassService {
         travelClassRepository.delete(persistedTravelClass);
     }
 
+    //    TODO: learn about @Transactional
     @Override
     @Transactional(readOnly = true)
     public TravelClass findById(Integer id) {

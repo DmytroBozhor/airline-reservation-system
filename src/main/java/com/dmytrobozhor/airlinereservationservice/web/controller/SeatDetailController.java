@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/travel-classes")
+@RequestMapping("/seat-details")
 @RequiredArgsConstructor
 public class SeatDetailController {
 
@@ -57,7 +57,7 @@ public class SeatDetailController {
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public SeatDetailDto updateSeatDetail(@RequestBody @Valid SeatDetailUpdateDto seatDetailDto,
-                                           @PathVariable Integer id) {
+                                          @PathVariable Integer id) {
         var seatDetail = seatDetailMapper.toSeatDetail(seatDetailDto);
         return seatDetailMapper.toSeatDetailDto(seatDetailService.updateById(id, seatDetail));
     }
@@ -65,7 +65,7 @@ public class SeatDetailController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public SeatDetailDto updateOrCreateSeatDetail(@RequestBody @Valid SeatDetailDto seatDetailDto,
-                                                   @PathVariable Integer id) {
+                                                  @PathVariable Integer id) {
         var seatDetail = seatDetailMapper.toSeatDetail(seatDetailDto);
         return seatDetailMapper.toSeatDetailDto(seatDetailService.updateOrCreateById(id, seatDetail));
     }
