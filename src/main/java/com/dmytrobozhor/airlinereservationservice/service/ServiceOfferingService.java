@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.function.Function;
 
 @Service
 @Transactional
@@ -21,6 +20,7 @@ public class ServiceOfferingService implements AbstractServiceOfferingService {
     private final ServiceOfferingMapper serviceOfferingMapper;
 
     @Override
+    @Transactional(readOnly = true)
     public List<ServiceOffering> findAll() {
         return serviceOfferingRepository.findAll();
     }
@@ -45,6 +45,7 @@ public class ServiceOfferingService implements AbstractServiceOfferingService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public ServiceOffering findById(Integer id) {
         return serviceOfferingRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
