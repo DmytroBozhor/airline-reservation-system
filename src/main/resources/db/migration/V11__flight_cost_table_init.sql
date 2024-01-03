@@ -8,5 +8,5 @@ create table if not exists "flight_cost"
     constraint "valid_from_date_id_fk" foreign key ("valid_from_date_id") references "calendar" ("day_date"),
     constraint "valid_to_date_id_fk" foreign key ("valid_to_date_id") references "calendar" ("day_date"),
     constraint "seat_details_id_valid_from_date_id_pk" primary key ("seat_details_id", "valid_from_date_id"),
-    constraint "valid_from_date_id_valid_to_date_id_check" check ( valid_from_date_id < flight_cost.valid_to_date_id )
+    constraint "valid_from_date_id_valid_to_date_id_check" check ( "valid_from_date_id" < "valid_to_date_id" )
 );

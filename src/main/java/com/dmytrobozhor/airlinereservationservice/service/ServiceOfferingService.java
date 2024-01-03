@@ -30,6 +30,7 @@ public class ServiceOfferingService implements AbstractServiceOfferingService {
         return serviceOfferingRepository.save(serviceOffering);
     }
 
+    //    TODO: change id type from integer to ServiceOfferingId
     @Override
     public void deleteById(Integer id) {
         ServiceOffering serviceOffering = serviceOfferingRepository

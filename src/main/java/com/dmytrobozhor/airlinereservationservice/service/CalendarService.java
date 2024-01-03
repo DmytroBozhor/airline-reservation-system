@@ -8,8 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
 import java.util.List;
-import java.util.function.Function;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +21,7 @@ public class CalendarService implements AbstractCalendarService {
     private final CalendarMapper calendarMapper;
 
     @Override
+    @Transactional(readOnly = true)
     public List<Calendar> findAll() {
         return calendarRepository.findAll();
     }
@@ -31,7 +32,7 @@ public class CalendarService implements AbstractCalendarService {
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public void deleteById(Date id) {
         Calendar calendar = calendarRepository
                 .findById(id).orElseThrow(EntityNotFoundException::new);
         calendarRepository.delete(calendar);
@@ -45,12 +46,13 @@ public class CalendarService implements AbstractCalendarService {
     }
 
     @Override
-    public Calendar findById(Integer id) {
+    @Transactional(readOnly = true)
+    public Calendar findById(Date id) {
         return calendarRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
-    public Calendar updateById(Integer id, Calendar calendar) {
+    public Calendar updateById(Date id, Calendar calendar) {
         return calendarRepository.findById(id).map(persistedCalendar -> {
             calendarMapper.updateCalendarPartial(persistedCalendar, calendar);
             return calendarRepository.save(persistedCalendar);
@@ -58,10 +60,11 @@ public class CalendarService implements AbstractCalendarService {
     }
 
     @Override
-    public Calendar updateOrCreateById(Integer id, Calendar calendar) {
+    public Calendar updateOrCreateById(Date id, Calendar calendar) {
         return calendarRepository.findById(id).map(persistedCalendar -> {
             calendarMapper.updateCalendarPartial(persistedCalendar, calendar);
             return calendarRepository.save(persistedCalendar);
         }).orElse(calendarRepository.save(calendar));
     }
+
 }

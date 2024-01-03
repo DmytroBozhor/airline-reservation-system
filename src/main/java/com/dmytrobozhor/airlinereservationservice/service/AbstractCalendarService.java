@@ -2,8 +2,8 @@ package com.dmytrobozhor.airlinereservationservice.service;
 
 import com.dmytrobozhor.airlinereservationservice.domain.Calendar;
 
-import java.util.Optional;
+import java.sql.Date;
 
-public interface AbstractCalendarService extends AbstractCrudService<Calendar, Integer> {
+public interface AbstractCalendarService extends AbstractCrudService<Calendar, Date> {
 
 }

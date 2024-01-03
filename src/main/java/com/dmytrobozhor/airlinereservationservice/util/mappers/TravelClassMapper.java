@@ -13,19 +13,19 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface TravelClassMapper {
 
-    @Mappings({@Mapping(source = "travelClassDto.travelClassName", target = "name")})
+    @Mappings({@Mapping(source = "travelClassDto.name", target = "name")})
     TravelClass toTravelClass(TravelClassDto travelClassDto);
 
-    @Mappings({@Mapping(source = "travelClassDto.travelClassName", target = "name")})
+    @Mappings({@Mapping(source = "travelClassDto.name", target = "name")})
     TravelClass toTravelClass(TravelClassUpdateDto travelClassDto);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateTravelClassPartial(@MappingTarget TravelClass persistedTravelClass, TravelClass travelClass);
 
-    @Mappings(@Mapping(source = "travelClass.name", target = "travelClassName"))
+    @Mappings(@Mapping(source = "travelClass.name", target = "name"))
     List<TravelClassDto> toTravelClassDto(List<TravelClass> travelClasses);
 
-    @Mappings(@Mapping(source = "travelClass.name", target = "travelClassName"))
+    @Mappings(@Mapping(source = "travelClass.name", target = "name"))
     TravelClassDto toTravelClassDto(TravelClass travelClass);
 
 }
