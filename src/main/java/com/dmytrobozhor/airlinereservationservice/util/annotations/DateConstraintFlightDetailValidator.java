@@ -7,7 +7,7 @@ import jakarta.validation.ConstraintValidatorContext;
 import java.sql.Timestamp;
 import java.util.Optional;
 
-public class DateConstraintValidator implements ConstraintValidator<DateConstraint, FlightDetailDto> {
+public class DateConstraintFlightDetailValidator implements ConstraintValidator<DateConstraint, FlightDetailDto> {
 
     @Override
     public boolean isValid(FlightDetailDto value, ConstraintValidatorContext context) {
