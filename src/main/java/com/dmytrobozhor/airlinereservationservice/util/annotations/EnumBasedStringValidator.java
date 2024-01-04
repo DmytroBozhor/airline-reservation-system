@@ -23,8 +23,7 @@ public class EnumBasedStringValidator implements ConstraintValidator<EnumBasedSt
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
         Optional<String> optionalValue = Optional.ofNullable(value);
-        if (optionalValue.isEmpty()) return true;
-        return values.contains(optionalValue.get());
+        return optionalValue.map(s -> values.contains(s)).orElse(true);
     }
 
 }

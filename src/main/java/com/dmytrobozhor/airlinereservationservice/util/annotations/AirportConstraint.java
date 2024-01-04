@@ -10,7 +10,9 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy = AirportConstraintValidator.class)
+@Constraint(validatedBy = {
+        AirportConstraintValidator.class,
+        AirportConstraintUpdateDtoValidator.class})
 public @interface AirportConstraint {
 
     String message() default "the source and destination airports must differ";

@@ -1,13 +1,11 @@
 package com.dmytrobozhor.airlinereservationservice.web.controller;
 
-import com.dmytrobozhor.airlinereservationservice.domain.Airport;
 import com.dmytrobozhor.airlinereservationservice.dto.AirportDto;
 import com.dmytrobozhor.airlinereservationservice.dto.AirportUpdateDto;
 import com.dmytrobozhor.airlinereservationservice.service.AbstractAirportService;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.AirportMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,16 +54,16 @@ public class AirportController {
 
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public AirportDto updateAirport(@RequestBody @Valid AirportUpdateDto airportDto,
-                                    @PathVariable Integer id) {
+    public AirportDto updateAirport(
+            @RequestBody @Valid AirportUpdateDto airportDto, @PathVariable Integer id) {
         var airport = airportMapper.toAirport(airportDto);
         return airportMapper.toAirportDto(airportService.updateById(id, airport));
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public AirportDto updateOrCreateAirport(@RequestBody @Valid AirportDto airportDto,
-                                            @PathVariable Integer id) {
+    public AirportDto updateOrCreateAirport(
+            @RequestBody @Valid AirportDto airportDto, @PathVariable Integer id) {
         var airport = airportMapper.toAirport(airportDto);
         return airportMapper.toAirportDto(airportService.updateOrCreateById(id, airport));
     }

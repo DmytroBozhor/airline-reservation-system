@@ -1,6 +1,5 @@
 package com.dmytrobozhor.airlinereservationservice.util.annotations;
 
-import com.dmytrobozhor.airlinereservationservice.domain.Passenger;
 import com.dmytrobozhor.airlinereservationservice.service.PassengerService;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
@@ -15,9 +14,9 @@ public class UniqueValidator implements ConstraintValidator<Unique, String> {
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        if (value == null) return true;
-        Optional<Passenger> passenger = passengerService.findByPhoneNumber(value);
-        return passenger.isEmpty();
+        Optional<String> valueOptional = Optional.ofNullable(value);
+        return valueOptional.map(s -> passengerService
+                .findByPhoneNumber(value).isEmpty()).orElse(true);
     }
 
 }

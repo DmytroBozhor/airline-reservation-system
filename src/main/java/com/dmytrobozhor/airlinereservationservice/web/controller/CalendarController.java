@@ -1,3 +1,4 @@
+/*
 package com.dmytrobozhor.airlinereservationservice.web.controller;
 
 import com.dmytrobozhor.airlinereservationservice.dto.AirportDto;
@@ -72,3 +73,4 @@ public class CalendarController {
     }
 
 }
+*/

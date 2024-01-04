@@ -7,7 +7,6 @@ import com.dmytrobozhor.airlinereservationservice.dto.FlightDetailUpdateDto;
 import com.dmytrobozhor.airlinereservationservice.service.AbstractAirportService;
 import com.dmytrobozhor.airlinereservationservice.service.AbstractFlightDetailService;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.FlightDetailMapper;
-import jakarta.persistence.EntityManager;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Consumer;
 
 @RestController
 @RequestMapping("/fright-details")
@@ -23,6 +24,8 @@ import java.util.List;
 public class FlightDetailController {
 
     private final AbstractFlightDetailService flightDetailService;
+
+    private final AbstractAirportService airportService;
 
     private final FlightDetailMapper flightDetailMapper;
 
@@ -38,6 +41,7 @@ public class FlightDetailController {
     @ResponseStatus(HttpStatus.CREATED)
     public FlightDetailDto saveFlightDetail(@RequestBody @Valid FlightDetailDto flightDetailDto) {
         var flightDetail = flightDetailMapper.toFlightDetail(flightDetailDto);
+        fetchAirportsIfExist(flightDetail);
         return flightDetailMapper.toFlightDetailDto(flightDetailService.save(flightDetail));
     }
 
@@ -47,6 +51,7 @@ public class FlightDetailController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteFlightDetail(@RequestBody @Valid FlightDetailDto flightDetailDto) {
         var flightDetail = flightDetailMapper.toFlightDetail(flightDetailDto);
+        fetchAirportsIfExist(flightDetail);
         flightDetailService.delete(flightDetail);
     }
 
@@ -63,20 +68,39 @@ public class FlightDetailController {
         flightDetailService.deleteById(id);
     }
 
+    //    TODO: update does not work because airports can be null -> we get exception
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public FlightDetailDto updateFlightDetail(@RequestBody @Valid FlightDetailUpdateDto flightDetailDto,
-                                              @PathVariable Integer id) {
+    public FlightDetailDto updateFlightDetail(
+            @RequestBody @Valid FlightDetailUpdateDto flightDetailDto, @PathVariable Integer id) {
         var flightDetail = flightDetailMapper.toFlightDetail(flightDetailDto);
+        fetchAirportsIfExist(flightDetail);
         return flightDetailMapper.toFlightDetailDto(flightDetailService.updateById(id, flightDetail));
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public FlightDetailDto updateOrCreateFlightDetail(@RequestBody @Valid FlightDetailDto flightDetailDto,
-                                                      @PathVariable Integer id) {
+    public FlightDetailDto updateOrCreateFlightDetail(
+            @RequestBody @Valid FlightDetailDto flightDetailDto, @PathVariable Integer id) {
         var flightDetail = flightDetailMapper.toFlightDetail(flightDetailDto);
+        fetchAirportsIfExist(flightDetail);
         return flightDetailMapper.toFlightDetailDto(flightDetailService.updateOrCreateById(id, flightDetail));
+    }
+
+    private void fetchAirportsIfExist(FlightDetail flightDetail) {
+        Airport sourceAirport = flightDetail.getSourceAirport();
+        Airport destinationAirport = flightDetail.getDestinationAirport();
+        log.debug("Checking if airports exist");
+        Optional<Airport> sourceAirportOptional = airportService.findByAllFields(sourceAirport);
+        Optional<Airport> destinationAirportOptional = airportService.findByAllFields(destinationAirport);
+        sourceAirportOptional.ifPresent(airport -> {
+            log.debug("The source airport already exists. Fetching...");
+            flightDetail.setSourceAirport(airport);
+        });
+        destinationAirportOptional.ifPresent(airport -> {
+            log.debug("The destination airport already exists. Fetching...");
+            flightDetail.setDestinationAirport(airport);
+        });
     }
 
 }

@@ -1,4 +1,4 @@
-package com.dmytrobozhor.airlinereservationservice.util.aop.logging.service;
+package com.dmytrobozhor.airlinereservationservice.util.aop.logging;
 
 import com.dmytrobozhor.airlinereservationservice.util.aop.AbstractPointcutHolder;
 import org.aspectj.lang.annotation.Pointcut;

@@ -12,7 +12,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = {
         DateConstraintFlightDetailValidator.class,
-        DateConstraintServiceOfferingValidator.class})
+        DateConstraintServiceOfferingValidator.class,
+        DateConstraintFlightDetailUpdateDtoValidator.class})
 public @interface DateConstraint {
 
     String message() default "the departure date should be less than arrival date";

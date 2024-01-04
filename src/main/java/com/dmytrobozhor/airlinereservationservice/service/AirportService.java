@@ -56,7 +56,6 @@ public class AirportService implements AbstractAirportService {
                 .orElseThrow(EntityNotFoundException::new);
     }
 
-    //    TODO: make an opportunity to make partial updates if some of the properties are null
     @Override
     public Airport updateById(Integer id, Airport airport) {
         return airportRepository.findById(id).map(persistedAirport -> {

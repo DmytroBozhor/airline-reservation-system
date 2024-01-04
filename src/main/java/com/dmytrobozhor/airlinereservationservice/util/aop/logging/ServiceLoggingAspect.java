@@ -1,4 +1,4 @@
-package com.dmytrobozhor.airlinereservationservice.util.aop.logging.controller;
+package com.dmytrobozhor.airlinereservationservice.util.aop.logging;
 
 import com.dmytrobozhor.airlinereservationservice.util.aop.AbstractLoggingAspect;
 import org.aspectj.lang.JoinPoint;
@@ -10,25 +10,25 @@ import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
-public class ControllerLoggingAspect extends AbstractLoggingAspect {
+public class ServiceLoggingAspect extends AbstractLoggingAspect {
 
     @Override
-    @Before(value = "ControllerPointcutHolder.anyPublicMethodWithinPath()")
+    @Before(value = "ServicePointcutHolder.anyPublicMethodWithinPath()")
     public void logBeforeAdvice(JoinPoint joinPoint) {
         super.logBeforeAdvice(joinPoint);
     }
 
     @Override
-    @AfterReturning(value = "ControllerPointcutHolder.anyPublicMethodWithinPath()")
+    @AfterReturning(value = "ServicePointcutHolder.anyPublicMethodWithinPath()")
     public void logAfterReturningAdvice(JoinPoint joinPoint) {
         super.logAfterReturningAdvice(joinPoint);
     }
 
-    /*@Override
-    @AfterThrowing(value = "ControllerPointcutHolder.anyPublicMethodWithinPath()",
+    @Override
+    @AfterThrowing(value = "ServicePointcutHolder.anyPublicMethodWithinPath()",
             throwing = "throwable")
     public void logAfterThrowingAdvice(JoinPoint joinPoint, Throwable throwable) {
         super.logAfterThrowingAdvice(joinPoint, throwable);
-    }*/
+    }
 
 }
