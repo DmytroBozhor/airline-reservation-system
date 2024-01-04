@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.util.List;
+import java.util.function.Supplier;
 
 @Service
 @RequiredArgsConstructor
@@ -64,7 +65,7 @@ public class CalendarService implements AbstractCalendarService {
         return calendarRepository.findById(id).map(persistedCalendar -> {
             calendarMapper.updateCalendarPartial(persistedCalendar, calendar);
             return calendarRepository.save(persistedCalendar);
-        }).orElse(calendarRepository.save(calendar));
+        }).orElseGet(() -> calendarRepository.save(calendar));
     }
 
 }

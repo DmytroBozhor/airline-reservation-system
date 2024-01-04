@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 @Service
 @Transactional
@@ -64,6 +65,6 @@ public class ReservationService implements AbstractReservationService {
         return reservationRepository.findById(id).map(persistedReservation -> {
             reservationMapper.updateReservationPartial(persistedReservation, reservation);
             return reservationRepository.save(persistedReservation);
-        }).orElse(reservationRepository.save(reservation));
+        }).orElseGet(() -> reservationRepository.save(reservation));
     }
 }

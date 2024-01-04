@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 @Service
 @RequiredArgsConstructor
@@ -64,6 +65,6 @@ public class PaymentStatusService implements AbstractPaymentStatusService {
         return paymentStatusRepository.findById(id).map(persistedPaymentStatus -> {
             paymentStatusMapper.updatePaymentStatusPartial(persistedPaymentStatus, paymentStatus);
             return paymentStatusRepository.save(persistedPaymentStatus);
-        }).orElse(paymentStatusRepository.save(paymentStatus));
+        }).orElseGet(() -> paymentStatusRepository.save(paymentStatus));
     }
 }

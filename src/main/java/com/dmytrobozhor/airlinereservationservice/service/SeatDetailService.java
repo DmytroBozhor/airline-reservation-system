@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 @Service
 @Transactional
@@ -63,6 +64,6 @@ public class SeatDetailService implements AbstractSeatDetailService {
         return seatDetailRepository.findById(id).map(persistedSeatDetail -> {
             seatDetailMapper.updateSeatDetailPartial(persistedSeatDetail, seatDetail);
             return seatDetailRepository.save(persistedSeatDetail);
-        }).orElse(seatDetailRepository.save(seatDetail));
+        }).orElseGet(() -> seatDetailRepository.save(seatDetail));
     }
 }

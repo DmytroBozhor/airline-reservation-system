@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 @Service
 @Transactional
@@ -67,6 +68,6 @@ public class TravelClassService implements AbstractTravelClassService {
         return travelClassRepository.findById(id).map(persistedTravelClass -> {
             travelClassMapper.updateTravelClassPartial(persistedTravelClass, travelClass);
             return travelClassRepository.save(persistedTravelClass);
-        }).orElse(travelClassRepository.save(travelClass));
+        }).orElseGet(() -> travelClassRepository.save(travelClass));
     }
 }

@@ -5,16 +5,19 @@ import com.dmytrobozhor.airlinereservationservice.repository.FlightDetailReposit
 import com.dmytrobozhor.airlinereservationservice.util.mappers.FlightDetailMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.EmptyStackException;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class FlightDetailService implements AbstractFlightDetailService {
 
     private final FlightDetailRepository flightDetailRepository;
@@ -66,7 +69,7 @@ public class FlightDetailService implements AbstractFlightDetailService {
         return flightDetailRepository.findById(id).map(persistedFlightDetail -> {
             flightDetailMapper.updateFlightDetailPartial(persistedFlightDetail, flightDetail);
             return flightDetailRepository.save(persistedFlightDetail);
-        }).orElse(flightDetailRepository.save(flightDetail));
+        }).orElseGet(() -> flightDetailRepository.save(flightDetail));
     }
 
 }

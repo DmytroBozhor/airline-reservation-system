@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 @Service
 @Transactional
@@ -65,7 +66,7 @@ public class ServiceOfferingService implements AbstractServiceOfferingService {
         return serviceOfferingRepository.findById(id).map(persistedServiceOffering -> {
             serviceOfferingMapper.updateServiceOfferingPartial(persistedServiceOffering, serviceOffering);
             return serviceOfferingRepository.save(persistedServiceOffering);
-        }).orElse(serviceOfferingRepository.save(serviceOffering));
+        }).orElseGet(() -> serviceOfferingRepository.save(serviceOffering));
     }
 
 }

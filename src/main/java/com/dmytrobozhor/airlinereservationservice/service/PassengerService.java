@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Supplier;
 
 @Service
 @Transactional
@@ -65,7 +66,7 @@ public class PassengerService implements AbstractPassengerService {
         return passengerRepository.findById(id).map(persistedPassenger -> {
             passengerMapper.updatePassengerPartial(persistedPassenger, passenger);
             return passengerRepository.save(persistedPassenger);
-        }).orElse(passengerRepository.save(passenger));
+        }).orElseGet(() -> passengerRepository.save(passenger));
     }
 
     @Override

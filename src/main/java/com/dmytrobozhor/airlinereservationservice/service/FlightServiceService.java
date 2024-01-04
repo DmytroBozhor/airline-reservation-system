@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 @Service
 @RequiredArgsConstructor
@@ -69,7 +70,7 @@ public class FlightServiceService implements AbstractFlightServiceService {
         return flightServiceRepository.findById(id).map(persistedFlightService -> {
             flightServiceMapper.updateFlightServicePartial(persistedFlightService, flightService);
             return flightServiceRepository.save(persistedFlightService);
-        }).orElse(flightServiceRepository.save(flightService));
+        }).orElseGet(() -> flightServiceRepository.save(flightService));
     }
 
 }

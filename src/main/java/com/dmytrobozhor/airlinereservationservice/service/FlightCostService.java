@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 @Service
 @RequiredArgsConstructor
@@ -69,7 +70,7 @@ public class FlightCostService implements AbstractFlightCostService {
         return flightCostRepository.findById(id).map(persistedFlightCost -> {
             flightCostMapper.updateFlightCostPartial(persistedFlightCost, flightCost);
             return flightCostRepository.save(persistedFlightCost);
-        }).orElse(flightCostRepository.save(flightCost));
+        }).orElseGet(() -> flightCostRepository.save(flightCost));
     }
 
 }
