@@ -20,7 +20,7 @@ public record PassengerCreateDto(
         String email,
 
         @NotBlank
-        @Length(min = 10, max = 10)
+        @Length(min = 10, max = 10, message = "length must be 10")
         @Unique
         String phoneNumber,
 
@@ -33,7 +33,7 @@ public record PassengerCreateDto(
         @Length(max = 255)
         String state,
 
-        @Length(min = 5, max = 5)
+        @Length(min = 5, max = 5, message = "length must be 5")
         String zipcode,
 
         @Length(max = 255)

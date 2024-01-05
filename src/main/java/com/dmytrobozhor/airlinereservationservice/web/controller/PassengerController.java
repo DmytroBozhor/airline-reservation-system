@@ -1,6 +1,5 @@
 package com.dmytrobozhor.airlinereservationservice.web.controller;
 
-import com.dmytrobozhor.airlinereservationservice.domain.Passenger;
 import com.dmytrobozhor.airlinereservationservice.dto.PassengerDto;
 import com.dmytrobozhor.airlinereservationservice.dto.PassengerCreateDto;
 import com.dmytrobozhor.airlinereservationservice.dto.PassengerUpdateDto;
@@ -54,18 +53,20 @@ public class PassengerController {
         passengerService.deleteById(id);
     }
 
+    //   TODO: make it not throw exception if the phone number did not change
+    //   TODO: and it also does not throw EntityNotFoundException because @Unique validating annotation does it first
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public PassengerDto updatePassenger(@RequestBody @Valid PassengerUpdateDto passengerDto,
-                                        @PathVariable Integer id) {
+    public PassengerDto updatePassenger(
+            @RequestBody @Valid PassengerUpdateDto passengerDto, @PathVariable Integer id) {
         var passenger = passengerMapper.toPassenger(passengerDto);
         return passengerMapper.toPassengerDto(passengerService.updateById(id, passenger));
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public PassengerDto updateOrCreatePassenger(@RequestBody @Valid PassengerCreateDto passengerDto,
-                                                @PathVariable Integer id) {
+    public PassengerDto updateOrCreatePassenger(
+            @RequestBody @Valid PassengerCreateDto passengerDto, @PathVariable Integer id) {
         var passenger = passengerMapper.toPassenger(passengerDto);
         return passengerMapper.toPassengerDto(passengerService.updateOrCreateById(id, passenger));
     }
