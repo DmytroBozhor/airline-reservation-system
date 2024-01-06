@@ -13,7 +13,7 @@ public interface TravelClassRepository extends JpaRepository<TravelClass, Intege
 
     @Query(nativeQuery = true,
             value = "select * from travel_class " +
-                    "where name = :#{#travelClass.getName()} " +
+                    "where name = :#{#travelClass.getName().toString()} " +
                     "and capacity = :#{#travelClass.getCapacity()} ")
     Optional<TravelClass> findByAllFields(TravelClass travelClass);
 

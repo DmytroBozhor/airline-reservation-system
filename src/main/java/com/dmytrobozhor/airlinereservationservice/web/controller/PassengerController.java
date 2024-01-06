@@ -1,7 +1,6 @@
 package com.dmytrobozhor.airlinereservationservice.web.controller;
 
 import com.dmytrobozhor.airlinereservationservice.dto.PassengerDto;
-import com.dmytrobozhor.airlinereservationservice.dto.PassengerCreateDto;
 import com.dmytrobozhor.airlinereservationservice.dto.PassengerUpdateDto;
 import com.dmytrobozhor.airlinereservationservice.service.AbstractPassengerService;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.PassengerMapper;
@@ -29,7 +28,7 @@ public class PassengerController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public PassengerDto savePassenger(@RequestBody @Valid PassengerCreateDto passengerDto) {
+    public PassengerDto savePassenger(@RequestBody @Valid PassengerDto passengerDto) {
         var passenger = passengerMapper.toPassenger(passengerDto);
         return passengerMapper.toPassengerDto(passengerService.save(passenger));
     }
@@ -66,7 +65,7 @@ public class PassengerController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public PassengerDto updateOrCreatePassenger(
-            @RequestBody @Valid PassengerCreateDto passengerDto, @PathVariable Integer id) {
+            @RequestBody @Valid PassengerDto passengerDto, @PathVariable Integer id) {
         var passenger = passengerMapper.toPassenger(passengerDto);
         return passengerMapper.toPassengerDto(passengerService.updateOrCreateById(id, passenger));
     }

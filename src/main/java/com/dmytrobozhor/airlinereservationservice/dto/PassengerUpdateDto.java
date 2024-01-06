@@ -18,7 +18,6 @@ public record PassengerUpdateDto(
         String email,
 
         @Length(min = 10, max = 10, message = "length must be 10")
-        @Unique
         String phoneNumber,
 
         @Length(max = 255)

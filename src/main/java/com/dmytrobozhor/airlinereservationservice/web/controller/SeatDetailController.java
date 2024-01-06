@@ -22,12 +22,14 @@ public class SeatDetailController {
 
     private final SeatDetailMapper seatDetailMapper;
 
+    //    TODO: makes a lot of queries -> fix
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<SeatDetailDto> getAllSeatDetails() {
         return seatDetailMapper.toSeatDetailDto(seatDetailService.findAll());
     }
 
+    //    TODO: saves the nested entities even if they exist
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public SeatDetailDto saveSeatDetail(@RequestBody @Valid SeatDetailDto seatDetailDto) {
@@ -35,6 +37,9 @@ public class SeatDetailController {
         return seatDetailMapper.toSeatDetailDto(seatDetailService.save(seatDetail));
     }
 
+    //    TODO: does not work because we lack fetching the data
+//    I Think it is better to remove fetching the data at all
+//    So it is better to remove this method from all controllers because findByAllFields may return several entities
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteSeatDetail(@RequestBody @Valid SeatDetailDto seatDetailDto) {
