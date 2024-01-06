@@ -5,14 +5,13 @@ import com.dmytrobozhor.airlinereservationservice.util.annotations.DateConstrain
 import com.dmytrobozhor.airlinereservationservice.util.annotations.EnumBasedString;
 import com.dmytrobozhor.airlinereservationservice.util.enums.AirplaneType;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
 import java.sql.Timestamp;
 
 @DateConstraint
 @AirportConstraint
-public record FlightDetailUpdateDto(
+public record FlightDetailPartialUpdateDto(
 
         Timestamp departureDateTime,
 

@@ -3,18 +3,20 @@ package com.dmytrobozhor.airlinereservationservice.dto;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
-public record SeatDetailDto(
+import java.sql.Timestamp;
 
-        @NotNull
-        Integer id,
-
-        @NotNull
-        @Valid
-        TravelClassDto travelClass,
+public record ReservationSaveDto(
 
         @NotNull
         @Valid
-        FlightDetailDto flightDetail
+        PassengerDto passenger,
+
+        @NotNull
+        @Valid
+        SeatDetailDto seatDetail,
+
+        @NotNull
+        Timestamp reservationDateTime
 
 ) {
 }

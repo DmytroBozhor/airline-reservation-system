@@ -27,17 +27,13 @@ public class TravelClass {
     @Column(name = "capacity")
     private Integer capacity;
 
-//    TODO: decide whether or not I need this functionality.
-//     It does not throw any exceptions or stuff though.
-//     But because of mapstrcut it queries the database every time
-    /*@ManyToMany(fetch = FetchType.LAZY,
-            cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToMany
     @JoinTable(name = "service_offering",
             joinColumns = {@JoinColumn(name = "travel_class_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "flight_service_id", referencedColumnName = "id")})
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     @Builder.Default
-    private List<FlightService> flightServices = new ArrayList<>();*/
+    private List<FlightService> flightServices = new ArrayList<>();
 
 }

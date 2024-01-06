@@ -1,11 +1,9 @@
 package com.dmytrobozhor.airlinereservationservice.util.mappers;
 
-import com.dmytrobozhor.airlinereservationservice.domain.Airport;
 import com.dmytrobozhor.airlinereservationservice.domain.PaymentStatus;
-import com.dmytrobozhor.airlinereservationservice.dto.AirportDto;
-import com.dmytrobozhor.airlinereservationservice.dto.AirportUpdateDto;
 import com.dmytrobozhor.airlinereservationservice.dto.PaymentStatusDto;
-import com.dmytrobozhor.airlinereservationservice.dto.PaymentStatusUpdateDto;
+import com.dmytrobozhor.airlinereservationservice.dto.PaymentStatusPartialUpdateDto;
+import com.dmytrobozhor.airlinereservationservice.dto.PaymentStatusSaveDto;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
@@ -18,7 +16,9 @@ public interface PaymentStatusMapper {
 
     PaymentStatus toPaymentStatus(PaymentStatusDto paymentStatusDto);
 
-    PaymentStatus toPaymentStatus(PaymentStatusUpdateDto paymentStatusDto);
+    PaymentStatus toPaymentStatus(PaymentStatusSaveDto paymentStatusDto);
+
+    PaymentStatus toPaymentStatus(PaymentStatusPartialUpdateDto paymentStatusDto);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updatePaymentStatusPartial(

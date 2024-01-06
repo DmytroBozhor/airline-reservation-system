@@ -29,13 +29,13 @@ public class ServiceOffering {
     @Column(name = "to_date")
     private Timestamp toDate;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "travel_class_id", referencedColumnName = "id",
             insertable = false, updatable = false)
     @MapsId(value = "travelClassId")
     private TravelClass travelClass;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "flight_service_id", referencedColumnName = "id",
             insertable = false, updatable = false)
     @MapsId(value = "flightServiceId")

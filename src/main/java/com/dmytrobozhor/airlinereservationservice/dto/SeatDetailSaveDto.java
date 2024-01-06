@@ -3,17 +3,15 @@ package com.dmytrobozhor.airlinereservationservice.dto;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
-import java.sql.Timestamp;
+public record SeatDetailSaveDto(
 
-public record ReservationUpdateDto(
-
+        @NotNull
         @Valid
-        PassengerDto passenger,
+        TravelClassDto travelClass,
 
+        @NotNull
         @Valid
-        SeatDetailDto seatDetail,
-
-        Timestamp reservationDateTime
+        FlightDetailDto flightDetail
 
 ) {
 }

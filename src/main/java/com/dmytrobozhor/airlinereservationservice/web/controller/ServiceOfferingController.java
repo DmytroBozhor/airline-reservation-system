@@ -1,12 +1,8 @@
 package com.dmytrobozhor.airlinereservationservice.web.controller;
 
-import com.dmytrobozhor.airlinereservationservice.dto.AirportDto;
-import com.dmytrobozhor.airlinereservationservice.dto.AirportUpdateDto;
 import com.dmytrobozhor.airlinereservationservice.dto.ServiceOfferingDto;
 import com.dmytrobozhor.airlinereservationservice.dto.ServiceOfferingUpdateDto;
-import com.dmytrobozhor.airlinereservationservice.service.AbstractAirportService;
 import com.dmytrobozhor.airlinereservationservice.service.AbstractServiceOfferingService;
-import com.dmytrobozhor.airlinereservationservice.util.mappers.AirportMapper;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.ServiceOfferingMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -37,13 +33,6 @@ public class ServiceOfferingController {
         var serviceOffering = serviceOfferingMapper.toServiceOffering(serviceOfferingDto);
         return serviceOfferingMapper.toServiceOfferingDto(
                 serviceOfferingService.save(serviceOffering));
-    }
-
-    @DeleteMapping
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteServiceOffering(@RequestBody @Valid ServiceOfferingDto serviceOfferingDto) {
-        var serviceOffering = serviceOfferingMapper.toServiceOffering(serviceOfferingDto);
-        serviceOfferingService.delete(serviceOffering);
     }
 
     @GetMapping("/{id}")

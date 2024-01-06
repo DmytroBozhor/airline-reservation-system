@@ -78,7 +78,7 @@ public class FlightDetailService implements AbstractFlightDetailService {
 
     @Override
     @Transactional(readOnly = true)
-    public void fetchDatafExist(FlightDetail flightDetail) {
+    public void fetchDataIfExist(FlightDetail flightDetail) {
 
         Optional<Airport> sourceAirportOptional = Optional.ofNullable(flightDetail.getSourceAirport());
         sourceAirportOptional.ifPresent(sourceAirport -> {

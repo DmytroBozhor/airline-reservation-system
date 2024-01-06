@@ -32,11 +32,11 @@ public class FlightDetail {
     @Column(name = "airplane_type")
     private AirplaneType airplaneType;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "source_airport_id", referencedColumnName = "id")
     private Airport sourceAirport;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "destination_airport_id", referencedColumnName = "id")
     private Airport destinationAirport;
 

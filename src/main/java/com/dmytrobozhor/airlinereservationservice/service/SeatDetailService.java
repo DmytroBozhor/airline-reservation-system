@@ -15,8 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 @Service
 @Transactional
@@ -87,7 +85,7 @@ public class SeatDetailService implements AbstractSeatDetailService {
 
         Optional<FlightDetail> flightDetailOptional = Optional.ofNullable(seatDetail.getFlightDetail());
         flightDetailOptional.ifPresent(flightDetail -> {
-            flightDetailService.fetchDatafExist(flightDetail);
+            flightDetailService.fetchDataIfExist(flightDetail);
             Optional<FlightDetail> flightDetailOptional1 = flightDetailRepository.findByAllFields(flightDetail);
             flightDetailOptional1.ifPresent(flightDetail1 -> {
                 log.debug("The flight detail already exists. Fetching...");

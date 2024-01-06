@@ -1,10 +1,13 @@
 package com.dmytrobozhor.airlinereservationservice.web.controller;
 
-import com.dmytrobozhor.airlinereservationservice.dto.AirportDto;
-import com.dmytrobozhor.airlinereservationservice.dto.AirportUpdateDto;
+import com.dmytrobozhor.airlinereservationservice.domain.FlightService;
+import com.dmytrobozhor.airlinereservationservice.domain.TravelClass;
+import com.dmytrobozhor.airlinereservationservice.dto.FlightServiceDto;
 import com.dmytrobozhor.airlinereservationservice.dto.TravelClassDto;
-import com.dmytrobozhor.airlinereservationservice.dto.TravelClassUpdateDto;
+import com.dmytrobozhor.airlinereservationservice.dto.TravelClassSaveDto;
+import com.dmytrobozhor.airlinereservationservice.dto.TravelClassPartialUpdateDto;
 import com.dmytrobozhor.airlinereservationservice.service.AbstractTravelClassService;
+import com.dmytrobozhor.airlinereservationservice.util.mappers.FlightServiceMapper;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.TravelClassMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +25,8 @@ public class TravelClassController {
 
     private final TravelClassMapper travelClassMapper;
 
+    private final FlightServiceMapper flightServiceMapper;
+
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<TravelClassDto> getAllTravelClasses() {
@@ -30,21 +35,14 @@ public class TravelClassController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public TravelClassDto saveTravelClass(@RequestBody @Valid TravelClassDto travelClassDto) {
+    public TravelClassDto saveTravelClass(@RequestBody @Valid TravelClassSaveDto travelClassDto) {
         var travelClass = travelClassMapper.toTravelClass(travelClassDto);
         return travelClassMapper.toTravelClassDto(travelClassService.save(travelClass));
     }
 
-    @DeleteMapping
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteTravelClass(@RequestBody @Valid TravelClassDto travelClassDto) {
-        var travelClass = travelClassMapper.toTravelClass(travelClassDto);
-        travelClassService.delete(travelClass);
-    }
-
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public TravelClassDto getTravelClass(@PathVariable Integer id) {
+    public TravelClassDto getTravelClassById(@PathVariable Integer id) {
         return travelClassMapper.toTravelClassDto(travelClassService.findById(id));
     }
 
@@ -56,18 +54,25 @@ public class TravelClassController {
 
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public TravelClassDto updateTravelClass(@RequestBody @Valid TravelClassUpdateDto travelClassDto,
-                                            @PathVariable Integer id) {
+    public TravelClassDto updateTravelClass(
+            @RequestBody @Valid TravelClassPartialUpdateDto travelClassDto, @PathVariable Integer id) {
         var travelClass = travelClassMapper.toTravelClass(travelClassDto);
         return travelClassMapper.toTravelClassDto(travelClassService.updateById(id, travelClass));
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public TravelClassDto updateOrCreateTravelClass(@RequestBody @Valid TravelClassDto travelClassDto,
-                                                    @PathVariable Integer id) {
+    public TravelClassDto updateOrCreateTravelClass(
+            @RequestBody @Valid TravelClassSaveDto travelClassDto, @PathVariable Integer id) {
         var travelClass = travelClassMapper.toTravelClass(travelClassDto);
         return travelClassMapper.toTravelClassDto(travelClassService.updateOrCreateById(id, travelClass));
+    }
+
+    @GetMapping("/{id}/get-flight-services")
+    @ResponseStatus(HttpStatus.OK)
+    public List<FlightServiceDto> getFlightServicesByTravelClasId(@PathVariable Integer id) {
+        var travelClass = travelClassService.findById(id);
+        return flightServiceMapper.toFlightServiceDto(travelClass.getFlightServices());
     }
 
 }

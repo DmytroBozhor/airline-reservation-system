@@ -1,15 +1,16 @@
 package com.dmytrobozhor.airlinereservationservice.dto;
 
-import com.dmytrobozhor.airlinereservationservice.util.annotations.Unique;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
 
-public record PassengerUpdateDto(
+public record PassengerSaveDto(
 
+        @NotBlank
         @Length(max = 255)
         String firstName,
 
+        @NotBlank
         @Length(max = 255)
         String lastName,
 
@@ -17,6 +18,7 @@ public record PassengerUpdateDto(
         @Length(max = 255)
         String email,
 
+        @NotBlank
         @Length(min = 10, max = 10, message = "length must be 10")
         String phoneNumber,
 

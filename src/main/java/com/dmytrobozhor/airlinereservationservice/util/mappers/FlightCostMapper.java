@@ -1,9 +1,6 @@
 package com.dmytrobozhor.airlinereservationservice.util.mappers;
 
-import com.dmytrobozhor.airlinereservationservice.domain.Airport;
 import com.dmytrobozhor.airlinereservationservice.domain.FlightCost;
-import com.dmytrobozhor.airlinereservationservice.dto.AirportDto;
-import com.dmytrobozhor.airlinereservationservice.dto.AirportUpdateDto;
 import com.dmytrobozhor.airlinereservationservice.dto.FlightCostDto;
 import com.dmytrobozhor.airlinereservationservice.dto.FlightCostUpdateDto;
 import org.mapstruct.BeanMapping;

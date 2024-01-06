@@ -1,9 +1,8 @@
 package com.dmytrobozhor.airlinereservationservice.web.controller;
 
-import com.dmytrobozhor.airlinereservationservice.dto.AirportDto;
-import com.dmytrobozhor.airlinereservationservice.dto.AirportUpdateDto;
 import com.dmytrobozhor.airlinereservationservice.dto.ReservationDto;
-import com.dmytrobozhor.airlinereservationservice.dto.ReservationUpdateDto;
+import com.dmytrobozhor.airlinereservationservice.dto.ReservationPartialUpdateDto;
+import com.dmytrobozhor.airlinereservationservice.dto.ReservationSaveDto;
 import com.dmytrobozhor.airlinereservationservice.service.AbstractReservationService;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.ReservationMapper;
 import jakarta.validation.Valid;
@@ -28,23 +27,18 @@ public class ReservationController {
         return reservationMapper.toReservationDto(reservationService.findAll());
     }
 
+//    TODO: make timestamp field not required (remove @NotNUll in Dto).
+//     I do not fix it now because it throws exception for some reason and I have no time
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ReservationDto saveReservation(@RequestBody @Valid ReservationDto reservationDto) {
+    public ReservationDto saveReservation(@RequestBody @Valid ReservationSaveDto reservationDto) {
         var reservation = reservationMapper.toReservation(reservationDto);
         return reservationMapper.toReservationDto(reservationService.save(reservation));
     }
 
-    @DeleteMapping
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteReservation(@RequestBody @Valid ReservationDto reservationDto) {
-        var reservation = reservationMapper.toReservation(reservationDto);
-        reservationService.delete(reservation);
-    }
-
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ReservationDto getReservation(@PathVariable Integer id) {
+    public ReservationDto getReservationById(@PathVariable Integer id) {
         return reservationMapper.toReservationDto(reservationService.findById(id));
     }
 
@@ -56,16 +50,16 @@ public class ReservationController {
 
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ReservationDto updateReservation(@RequestBody @Valid ReservationUpdateDto reservationDto,
-                                            @PathVariable Integer id) {
+    public ReservationDto updateReservation(
+            @RequestBody @Valid ReservationPartialUpdateDto reservationDto, @PathVariable Integer id) {
         var reservation = reservationMapper.toReservation(reservationDto);
         return reservationMapper.toReservationDto(reservationService.updateById(id, reservation));
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ReservationDto updateOrCreateReservation(@RequestBody @Valid ReservationDto reservationDto,
-                                                    @PathVariable Integer id) {
+    public ReservationDto updateOrCreateReservation(
+            @RequestBody @Valid ReservationSaveDto reservationDto, @PathVariable Integer id) {
         var reservation = reservationMapper.toReservation(reservationDto);
         return reservationMapper.toReservationDto(reservationService.updateOrCreateById(id, reservation));
     }

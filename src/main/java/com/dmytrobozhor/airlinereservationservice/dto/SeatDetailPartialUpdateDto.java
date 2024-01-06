@@ -2,7 +2,7 @@ package com.dmytrobozhor.airlinereservationservice.dto;
 
 import jakarta.validation.Valid;
 
-public record SeatDetailUpdateDto(
+public record SeatDetailPartialUpdateDto(
 
         @Valid
         TravelClassDto travelClass,

@@ -1,11 +1,8 @@
 package com.dmytrobozhor.airlinereservationservice.web.controller;
 
-import com.dmytrobozhor.airlinereservationservice.dto.AirportDto;
-import com.dmytrobozhor.airlinereservationservice.dto.AirportUpdateDto;
 import com.dmytrobozhor.airlinereservationservice.dto.FlightCostDto;
 import com.dmytrobozhor.airlinereservationservice.dto.FlightCostUpdateDto;
 import com.dmytrobozhor.airlinereservationservice.service.AbstractFlightCostService;
-import com.dmytrobozhor.airlinereservationservice.util.mappers.AirportMapper;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.FlightCostMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

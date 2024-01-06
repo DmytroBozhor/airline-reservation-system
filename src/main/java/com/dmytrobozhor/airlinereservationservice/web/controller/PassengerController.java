@@ -1,7 +1,8 @@
 package com.dmytrobozhor.airlinereservationservice.web.controller;
 
 import com.dmytrobozhor.airlinereservationservice.dto.PassengerDto;
-import com.dmytrobozhor.airlinereservationservice.dto.PassengerUpdateDto;
+import com.dmytrobozhor.airlinereservationservice.dto.PassengerPartialUpdateDto;
+import com.dmytrobozhor.airlinereservationservice.dto.PassengerSaveDto;
 import com.dmytrobozhor.airlinereservationservice.service.AbstractPassengerService;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.PassengerMapper;
 import jakarta.validation.Valid;
@@ -28,21 +29,14 @@ public class PassengerController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public PassengerDto savePassenger(@RequestBody @Valid PassengerDto passengerDto) {
+    public PassengerDto savePassenger(@RequestBody @Valid PassengerSaveDto passengerDto) {
         var passenger = passengerMapper.toPassenger(passengerDto);
         return passengerMapper.toPassengerDto(passengerService.save(passenger));
     }
 
-    @DeleteMapping
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletePassenger(@RequestBody @Valid PassengerDto passengerDto) {
-        var passenger = passengerMapper.toPassenger(passengerDto);
-        passengerService.delete(passenger);
-    }
-
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public PassengerDto getPassenger(@PathVariable Integer id) {
+    public PassengerDto getPassengerById(@PathVariable Integer id) {
         return passengerMapper.toPassengerDto(passengerService.findById(id));
     }
 
@@ -52,12 +46,11 @@ public class PassengerController {
         passengerService.deleteById(id);
     }
 
-    //   TODO: make it not throw exception if the phone number did not change
-    //   TODO: and it also does not throw EntityNotFoundException because @Unique validating annotation does it first
+    //   TODO: make hibernate validation for phone number field instead of jpa validation
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public PassengerDto updatePassenger(
-            @RequestBody @Valid PassengerUpdateDto passengerDto, @PathVariable Integer id) {
+            @RequestBody @Valid PassengerPartialUpdateDto passengerDto, @PathVariable Integer id) {
         var passenger = passengerMapper.toPassenger(passengerDto);
         return passengerMapper.toPassengerDto(passengerService.updateById(id, passenger));
     }
@@ -65,7 +58,7 @@ public class PassengerController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public PassengerDto updateOrCreatePassenger(
-            @RequestBody @Valid PassengerDto passengerDto, @PathVariable Integer id) {
+            @RequestBody @Valid PassengerSaveDto passengerDto, @PathVariable Integer id) {
         var passenger = passengerMapper.toPassenger(passengerDto);
         return passengerMapper.toPassengerDto(passengerService.updateOrCreateById(id, passenger));
     }

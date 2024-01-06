@@ -19,11 +19,11 @@ public class SeatDetail {
     @Column(name = "id")
     private Integer id;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "travel_class_id", referencedColumnName = "id")
     private TravelClass travelClass;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "flight_details_id", referencedColumnName = "id")
     private FlightDetail flightDetail;
 

@@ -5,15 +5,18 @@ import com.dmytrobozhor.airlinereservationservice.repository.ReservationReposito
 import com.dmytrobozhor.airlinereservationservice.util.mappers.ReservationMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class ReservationService implements AbstractReservationService {
 
     private final ReservationRepository reservationRepository;
@@ -52,12 +55,17 @@ public class ReservationService implements AbstractReservationService {
                 .orElseThrow(EntityNotFoundException::new);
     }
 
+    //    TODO: test out the commented code below
     @Override
     public Reservation updateById(Integer id, Reservation reservation) {
         return reservationRepository.findById(id).map(persistedReservation -> {
             reservationMapper.updateReservationPartial(persistedReservation, reservation);
             return reservationRepository.save(persistedReservation);
         }).orElseThrow(EntityNotFoundException::new);
+//        return reservationRepository.findById(id)
+//                .map(persistedReservation -> reservationMapper
+//                        .updateReservationPartial(persistedReservation, reservation))
+//                .orElseThrow(EntityNotFoundException::new);
     }
 
     @Override

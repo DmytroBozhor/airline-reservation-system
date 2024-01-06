@@ -10,16 +10,20 @@ import org.hibernate.validator.constraints.Length;
 import java.math.BigDecimal;
 import java.sql.Date;
 
-public record PaymentStatusUpdateDto(
+public record PaymentStatusSaveDto(
 
+        @NotBlank
         @Length(max = 1)
         @EnumBasedString(enumClass = Status.class)
         String status,
 
+        @NotNull
         Date dueDate,
 
+        @NotNull
         BigDecimal amount,
 
+        @NotNull
         @Valid
         ReservationDto reservation
 

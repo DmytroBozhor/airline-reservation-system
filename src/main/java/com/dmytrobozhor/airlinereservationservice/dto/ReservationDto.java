@@ -13,6 +13,9 @@ import java.time.Instant;
 public record ReservationDto(
 
         @NotNull
+        Integer id,
+
+        @NotNull
         @Valid
         PassengerDto passenger,
 

@@ -2,7 +2,7 @@ package com.dmytrobozhor.airlinereservationservice.dto;
 
 import org.hibernate.validator.constraints.Length;
 
-public record AirportUpdateDto(
+public record AirportPartialUpdateDto(
 
         @Length(max = 255)
         String name,

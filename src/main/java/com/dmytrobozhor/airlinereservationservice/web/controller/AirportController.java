@@ -1,7 +1,8 @@
 package com.dmytrobozhor.airlinereservationservice.web.controller;
 
 import com.dmytrobozhor.airlinereservationservice.dto.AirportDto;
-import com.dmytrobozhor.airlinereservationservice.dto.AirportUpdateDto;
+import com.dmytrobozhor.airlinereservationservice.dto.AirportSaveDto;
+import com.dmytrobozhor.airlinereservationservice.dto.AirportPartialUpdateDto;
 import com.dmytrobozhor.airlinereservationservice.service.AbstractAirportService;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.AirportMapper;
 import jakarta.validation.Valid;
@@ -28,21 +29,14 @@ public class AirportController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public AirportDto saveAirport(@RequestBody @Valid AirportDto airportDto) {
+    public AirportDto saveAirport(@RequestBody @Valid AirportSaveDto airportDto) {
         var airport = airportMapper.toAirport(airportDto);
         return airportMapper.toAirportDto(airportService.save(airport));
     }
 
-    @DeleteMapping
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteAirport(@RequestBody @Valid AirportDto airportDto) {
-        var airport = airportMapper.toAirport(airportDto);
-        airportService.delete(airport);
-    }
-
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public AirportDto getAirport(@PathVariable Integer id) {
+    public AirportDto getAirportById(@PathVariable Integer id) {
         return airportMapper.toAirportDto(airportService.findById(id));
     }
 
@@ -55,7 +49,7 @@ public class AirportController {
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public AirportDto updateAirport(
-            @RequestBody @Valid AirportUpdateDto airportDto, @PathVariable Integer id) {
+            @RequestBody @Valid AirportPartialUpdateDto airportDto, @PathVariable Integer id) {
         var airport = airportMapper.toAirport(airportDto);
         return airportMapper.toAirportDto(airportService.updateById(id, airport));
     }
@@ -63,7 +57,7 @@ public class AirportController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public AirportDto updateOrCreateAirport(
-            @RequestBody @Valid AirportDto airportDto, @PathVariable Integer id) {
+            @RequestBody @Valid AirportSaveDto airportDto, @PathVariable Integer id) {
         var airport = airportMapper.toAirport(airportDto);
         return airportMapper.toAirportDto(airportService.updateOrCreateById(id, airport));
     }

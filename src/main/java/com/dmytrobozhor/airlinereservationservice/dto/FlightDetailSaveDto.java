@@ -13,10 +13,7 @@ import java.sql.Timestamp;
 
 @DateConstraint
 @AirportConstraint
-public record FlightDetailDto(
-
-        @NotNull
-        Integer id,
+public record FlightDetailSaveDto(
 
         @NotNull
         Timestamp departureDateTime,
