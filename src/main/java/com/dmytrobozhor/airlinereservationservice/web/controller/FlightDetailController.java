@@ -2,7 +2,6 @@ package com.dmytrobozhor.airlinereservationservice.web.controller;
 
 import com.dmytrobozhor.airlinereservationservice.dto.FlightDetailDto;
 import com.dmytrobozhor.airlinereservationservice.dto.FlightDetailUpdateDto;
-import com.dmytrobozhor.airlinereservationservice.service.AbstractAirportService;
 import com.dmytrobozhor.airlinereservationservice.service.AbstractFlightDetailService;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.FlightDetailMapper;
 import jakarta.validation.Valid;
@@ -21,8 +20,6 @@ public class FlightDetailController {
 
     private final AbstractFlightDetailService flightDetailService;
 
-    private final AbstractAirportService airportService;
-
     private final FlightDetailMapper flightDetailMapper;
 
     @GetMapping
@@ -37,7 +34,7 @@ public class FlightDetailController {
     @ResponseStatus(HttpStatus.CREATED)
     public FlightDetailDto saveFlightDetail(@RequestBody @Valid FlightDetailDto flightDetailDto) {
         var flightDetail = flightDetailMapper.toFlightDetail(flightDetailDto);
-        airportService.fetchAirportsIfExist(flightDetail);
+        flightDetailService.fetchDatafExist(flightDetail);
         return flightDetailMapper.toFlightDetailDto(flightDetailService.save(flightDetail));
     }
 
@@ -47,7 +44,7 @@ public class FlightDetailController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteFlightDetail(@RequestBody @Valid FlightDetailDto flightDetailDto) {
         var flightDetail = flightDetailMapper.toFlightDetail(flightDetailDto);
-        airportService.fetchAirportsIfExist(flightDetail);
+        flightDetailService.fetchDatafExist(flightDetail);
         flightDetailService.delete(flightDetail);
     }
 
@@ -69,7 +66,7 @@ public class FlightDetailController {
     public FlightDetailDto updateFlightDetail(
             @RequestBody @Valid FlightDetailUpdateDto flightDetailDto, @PathVariable Integer id) {
         var flightDetail = flightDetailMapper.toFlightDetail(flightDetailDto);
-        airportService.fetchAirportsIfExist(flightDetail);
+        flightDetailService.fetchDatafExist(flightDetail);
         return flightDetailMapper.toFlightDetailDto(flightDetailService.updateById(id, flightDetail));
     }
 
@@ -78,7 +75,7 @@ public class FlightDetailController {
     public FlightDetailDto updateOrCreateFlightDetail(
             @RequestBody @Valid FlightDetailDto flightDetailDto, @PathVariable Integer id) {
         var flightDetail = flightDetailMapper.toFlightDetail(flightDetailDto);
-        airportService.fetchAirportsIfExist(flightDetail);
+        flightDetailService.fetchDatafExist(flightDetail);
         return flightDetailMapper.toFlightDetailDto(flightDetailService.updateOrCreateById(id, flightDetail));
     }
 

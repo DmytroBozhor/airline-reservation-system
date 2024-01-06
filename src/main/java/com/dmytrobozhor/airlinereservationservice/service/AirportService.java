@@ -80,27 +80,4 @@ public class AirportService implements AbstractAirportService {
         return airportRepository.findByAllFields(airport);
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public void fetchAirportsIfExist(FlightDetail flightDetail) {
-
-        Optional<Airport> sourceAirportOptional = Optional.ofNullable(flightDetail.getSourceAirport());
-        sourceAirportOptional.ifPresent(sourceAirport -> {
-            Optional<Airport> persistedAirportOptional = airportRepository.findByAllFields(sourceAirport);
-            persistedAirportOptional.ifPresent(persistedAirport -> {
-                log.debug("The source airport already exists. Fetching...");
-                flightDetail.setSourceAirport(persistedAirport);
-            });
-        });
-
-        Optional<Airport> destinationAirportOptional = Optional.ofNullable(flightDetail.getDestinationAirport());
-        destinationAirportOptional.ifPresent(destinationAirport -> {
-            Optional<Airport> persistedAirportOptional = airportRepository.findByAllFields(destinationAirport);
-            persistedAirportOptional.ifPresent(persistedAirport -> {
-                log.debug("The destination airport already exists. Fetching...");
-                flightDetail.setDestinationAirport(persistedAirport);
-            });
-        });
-
-    }
 }

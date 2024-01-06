@@ -4,4 +4,6 @@ import com.dmytrobozhor.airlinereservationservice.domain.FlightDetail;
 
 public interface AbstractFlightDetailService extends AbstractCrudService<FlightDetail, Integer> {
 
+    void fetchDatafExist(FlightDetail flightDetail);
+
 }

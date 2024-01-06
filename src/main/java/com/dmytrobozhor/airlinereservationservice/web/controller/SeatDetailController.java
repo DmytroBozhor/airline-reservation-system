@@ -34,16 +34,17 @@ public class SeatDetailController {
     @ResponseStatus(HttpStatus.CREATED)
     public SeatDetailDto saveSeatDetail(@RequestBody @Valid SeatDetailDto seatDetailDto) {
         var seatDetail = seatDetailMapper.toSeatDetail(seatDetailDto);
+        seatDetailService.fetchDataIfExist(seatDetail);
         return seatDetailMapper.toSeatDetailDto(seatDetailService.save(seatDetail));
     }
 
-    //    TODO: does not work because we lack fetching the data
-//    I Think it is better to remove fetching the data at all
-//    So it is better to remove this method from all controllers because findByAllFields may return several entities
+    //    TODO: findByAllFields expected to return on entity but actually may return several
+    //     so either fix it or delete this endpoint in all controllers for good
     @DeleteMapping
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteSeatDetail(@RequestBody @Valid SeatDetailDto seatDetailDto) {
         var seatDetail = seatDetailMapper.toSeatDetail(seatDetailDto);
+        seatDetailService.fetchDataIfExist(seatDetail);
         seatDetailService.delete(seatDetail);
     }
 
@@ -59,19 +60,25 @@ public class SeatDetailController {
         seatDetailService.deleteById(id);
     }
 
+    //    TODO: does not actually update the flight detail and travel class
+    //     but only creates new ones and assign them to the seat detail
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public SeatDetailDto updateSeatDetail(@RequestBody @Valid SeatDetailUpdateDto seatDetailDto,
                                           @PathVariable Integer id) {
         var seatDetail = seatDetailMapper.toSeatDetail(seatDetailDto);
+        seatDetailService.fetchDataIfExist(seatDetail);
         return seatDetailMapper.toSeatDetailDto(seatDetailService.updateById(id, seatDetail));
     }
 
+    //    TODO: does not actually update the flight detail and travel class
+    //     but only creates new ones and assign them to the seat detail
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public SeatDetailDto updateOrCreateSeatDetail(@RequestBody @Valid SeatDetailDto seatDetailDto,
                                                   @PathVariable Integer id) {
         var seatDetail = seatDetailMapper.toSeatDetail(seatDetailDto);
+        seatDetailService.fetchDataIfExist(seatDetail);
         return seatDetailMapper.toSeatDetailDto(seatDetailService.updateOrCreateById(id, seatDetail));
     }
 

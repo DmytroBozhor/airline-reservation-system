@@ -9,6 +9,4 @@ public interface AbstractAirportService extends AbstractCrudService<Airport, Int
 
     Optional<Airport> findByAllFields(Airport airport);
 
-    void fetchAirportsIfExist(FlightDetail flightDetail);
-
 }

@@ -1,24 +1,38 @@
 package com.dmytrobozhor.airlinereservationservice.service;
 
+import com.dmytrobozhor.airlinereservationservice.domain.FlightDetail;
 import com.dmytrobozhor.airlinereservationservice.domain.SeatDetail;
+import com.dmytrobozhor.airlinereservationservice.domain.TravelClass;
+import com.dmytrobozhor.airlinereservationservice.repository.FlightDetailRepository;
 import com.dmytrobozhor.airlinereservationservice.repository.SeatDetailRepository;
+import com.dmytrobozhor.airlinereservationservice.repository.TravelClassRepository;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.SeatDetailMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class SeatDetailService implements AbstractSeatDetailService {
 
     private final SeatDetailRepository seatDetailRepository;
 
     private final SeatDetailMapper seatDetailMapper;
+
+    private final FlightDetailRepository flightDetailRepository;
+
+    private final TravelClassRepository travelClassRepository;
+
+    private final FlightDetailService flightDetailService;
 
     @Override
     @Transactional(readOnly = true)
@@ -65,5 +79,30 @@ public class SeatDetailService implements AbstractSeatDetailService {
             seatDetailMapper.updateSeatDetailPartial(persistedSeatDetail, seatDetail);
             return seatDetailRepository.save(persistedSeatDetail);
         }).orElseGet(() -> seatDetailRepository.save(seatDetail));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public void fetchDataIfExist(SeatDetail seatDetail) {
+
+        Optional<FlightDetail> flightDetailOptional = Optional.ofNullable(seatDetail.getFlightDetail());
+        flightDetailOptional.ifPresent(flightDetail -> {
+            flightDetailService.fetchDatafExist(flightDetail);
+            Optional<FlightDetail> flightDetailOptional1 = flightDetailRepository.findByAllFields(flightDetail);
+            flightDetailOptional1.ifPresent(flightDetail1 -> {
+                log.debug("The flight detail already exists. Fetching...");
+                seatDetail.setFlightDetail(flightDetail1);
+            });
+        });
+
+        Optional<TravelClass> travelClassOptional = Optional.ofNullable(seatDetail.getTravelClass());
+        travelClassOptional.ifPresent(travelClass -> {
+            Optional<TravelClass> travelClassOptional1 = travelClassRepository.findByAllFields(travelClass);
+            travelClassOptional1.ifPresent(travelClass1 -> {
+                log.debug("The travel class already exists. Fetching...");
+                seatDetail.setTravelClass(travelClass1);
+            });
+        });
+
     }
 }

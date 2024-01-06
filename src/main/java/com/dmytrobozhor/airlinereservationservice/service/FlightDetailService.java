@@ -1,6 +1,8 @@
 package com.dmytrobozhor.airlinereservationservice.service;
 
+import com.dmytrobozhor.airlinereservationservice.domain.Airport;
 import com.dmytrobozhor.airlinereservationservice.domain.FlightDetail;
+import com.dmytrobozhor.airlinereservationservice.repository.AirportRepository;
 import com.dmytrobozhor.airlinereservationservice.repository.FlightDetailRepository;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.FlightDetailMapper;
 import jakarta.persistence.EntityNotFoundException;
@@ -23,6 +25,8 @@ public class FlightDetailService implements AbstractFlightDetailService {
     private final FlightDetailRepository flightDetailRepository;
 
     private final FlightDetailMapper flightDetailMapper;
+
+    private final AirportRepository airportRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -70,6 +74,30 @@ public class FlightDetailService implements AbstractFlightDetailService {
             flightDetailMapper.updateFlightDetailPartial(persistedFlightDetail, flightDetail);
             return flightDetailRepository.save(persistedFlightDetail);
         }).orElseGet(() -> flightDetailRepository.save(flightDetail));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public void fetchDatafExist(FlightDetail flightDetail) {
+
+        Optional<Airport> sourceAirportOptional = Optional.ofNullable(flightDetail.getSourceAirport());
+        sourceAirportOptional.ifPresent(sourceAirport -> {
+            Optional<Airport> persistedAirportOptional = airportRepository.findByAllFields(sourceAirport);
+            persistedAirportOptional.ifPresent(persistedAirport -> {
+                log.debug("The source airport already exists. Fetching...");
+                flightDetail.setSourceAirport(persistedAirport);
+            });
+        });
+
+        Optional<Airport> destinationAirportOptional = Optional.ofNullable(flightDetail.getDestinationAirport());
+        destinationAirportOptional.ifPresent(destinationAirport -> {
+            Optional<Airport> persistedAirportOptional = airportRepository.findByAllFields(destinationAirport);
+            persistedAirportOptional.ifPresent(persistedAirport -> {
+                log.debug("The destination airport already exists. Fetching...");
+                flightDetail.setDestinationAirport(persistedAirport);
+            });
+        });
+
     }
 
 }
