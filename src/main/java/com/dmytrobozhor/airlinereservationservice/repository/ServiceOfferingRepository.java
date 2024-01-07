@@ -1,6 +1,7 @@
 package com.dmytrobozhor.airlinereservationservice.repository;
 
 import com.dmytrobozhor.airlinereservationservice.domain.ServiceOffering;
+import com.dmytrobozhor.airlinereservationservice.util.compositeid.ServiceOfferingId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -8,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface ServiceOfferingRepository extends JpaRepository<ServiceOffering, Integer> {
+public interface ServiceOfferingRepository extends JpaRepository<ServiceOffering, ServiceOfferingId> {
 
     @Query(nativeQuery = true,
             value = "select * from service_offering " +

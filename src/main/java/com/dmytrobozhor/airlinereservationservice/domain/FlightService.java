@@ -33,4 +33,10 @@ public class FlightService {
     @Builder.Default
     private List<TravelClass> travelClasses = new ArrayList<>();
 
+//    TODO: sort out the thing below and the one that is in the TravelClass
+//    @OneToMany(mappedBy = "flightService")
+//    @ToString.Exclude
+//    @EqualsAndHashCode.Exclude
+//    private List<ServiceOffering> serviceOfferings;
+
 }

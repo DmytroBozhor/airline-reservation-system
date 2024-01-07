@@ -1,17 +1,18 @@
 package com.dmytrobozhor.airlinereservationservice.util.annotations;
 
-import com.dmytrobozhor.airlinereservationservice.dto.ServiceOfferingDto;
+import com.dmytrobozhor.airlinereservationservice.dto.ServiceOfferingPartialUpdateDto;
+import com.dmytrobozhor.airlinereservationservice.dto.ServiceOfferingSaveDto;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
 import java.sql.Timestamp;
 import java.util.Optional;
 
-public class DateConstraintServiceOfferingValidator implements ConstraintValidator<DateConstraint, ServiceOfferingDto> {
+public class DateConstraintServiceOfferingUpdateDtoValidator
+        implements ConstraintValidator<DateConstraint, ServiceOfferingPartialUpdateDto> {
 
-    //   TODO: generalize the annotation and validators using reflection api
     @Override
-    public boolean isValid(ServiceOfferingDto value, ConstraintValidatorContext context) {
+    public boolean isValid(ServiceOfferingPartialUpdateDto value, ConstraintValidatorContext context) {
         Optional<Timestamp> fromDate = Optional.ofNullable(value.formDate());
         Optional<Timestamp> toDate = Optional.ofNullable(value.toDate());
         if (fromDate.isEmpty() || toDate.isEmpty()) return true;

@@ -2,6 +2,7 @@ package com.dmytrobozhor.airlinereservationservice.service;
 
 import com.dmytrobozhor.airlinereservationservice.domain.ServiceOffering;
 import com.dmytrobozhor.airlinereservationservice.repository.ServiceOfferingRepository;
+import com.dmytrobozhor.airlinereservationservice.util.compositeid.ServiceOfferingId;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.ServiceOfferingMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -31,9 +32,8 @@ public class ServiceOfferingService implements AbstractServiceOfferingService {
         return serviceOfferingRepository.save(serviceOffering);
     }
 
-    //    TODO: change id type from integer to ServiceOfferingId
     @Override
-    public void deleteById(Integer id) {
+    public void deleteById(ServiceOfferingId id) {
         ServiceOffering serviceOffering = serviceOfferingRepository
                 .findById(id).orElseThrow(EntityNotFoundException::new);
         serviceOfferingRepository.delete(serviceOffering);
@@ -48,13 +48,13 @@ public class ServiceOfferingService implements AbstractServiceOfferingService {
 
     @Override
     @Transactional(readOnly = true)
-    public ServiceOffering findById(Integer id) {
+    public ServiceOffering findById(ServiceOfferingId id) {
         return serviceOfferingRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
-    public ServiceOffering updateById(Integer id, ServiceOffering serviceOffering) {
+    public ServiceOffering updateById(ServiceOfferingId id, ServiceOffering serviceOffering) {
         return serviceOfferingRepository.findById(id).map(persistedServiceOffering -> {
             serviceOfferingMapper.updateServiceOfferingPartial(persistedServiceOffering, serviceOffering);
             return serviceOfferingRepository.save(persistedServiceOffering);
@@ -62,7 +62,7 @@ public class ServiceOfferingService implements AbstractServiceOfferingService {
     }
 
     @Override
-    public ServiceOffering updateOrCreateById(Integer id, ServiceOffering serviceOffering) {
+    public ServiceOffering updateOrCreateById(ServiceOfferingId id, ServiceOffering serviceOffering) {
         return serviceOfferingRepository.findById(id).map(persistedServiceOffering -> {
             serviceOfferingMapper.updateServiceOfferingPartial(persistedServiceOffering, serviceOffering);
             return serviceOfferingRepository.save(persistedServiceOffering);

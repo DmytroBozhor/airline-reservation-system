@@ -1,8 +1,10 @@
 package com.dmytrobozhor.airlinereservationservice.web.controller;
 
 import com.dmytrobozhor.airlinereservationservice.dto.ServiceOfferingDto;
-import com.dmytrobozhor.airlinereservationservice.dto.ServiceOfferingUpdateDto;
+import com.dmytrobozhor.airlinereservationservice.dto.ServiceOfferingPartialUpdateDto;
+import com.dmytrobozhor.airlinereservationservice.dto.ServiceOfferingSaveDto;
 import com.dmytrobozhor.airlinereservationservice.service.AbstractServiceOfferingService;
+import com.dmytrobozhor.airlinereservationservice.util.compositeid.ServiceOfferingId;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.ServiceOfferingMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -28,42 +30,55 @@ public class ServiceOfferingController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ServiceOfferingDto saveServiceOffering(
-            @RequestBody @Valid ServiceOfferingDto serviceOfferingDto) {
+    public ServiceOfferingDto saveServiceOffering(@RequestBody @Valid ServiceOfferingSaveDto serviceOfferingDto) {
         var serviceOffering = serviceOfferingMapper.toServiceOffering(serviceOfferingDto);
-        return serviceOfferingMapper.toServiceOfferingDto(
-                serviceOfferingService.save(serviceOffering));
+        var serviceOfferingId = ServiceOfferingId.builder()
+                .travelClassId(serviceOffering.getTravelClass().getId())
+                .flightServiceId(serviceOffering.getFlightService().getId()).build();
+        serviceOffering.setId(serviceOfferingId);
+        return serviceOfferingMapper.toServiceOfferingDto(serviceOfferingService.save(serviceOffering));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/travel-class/{travelClassId}/flight-service/{flightServiceId}")
     @ResponseStatus(HttpStatus.OK)
-    public ServiceOfferingDto getServiceOffering(@PathVariable Integer id) {
-        return serviceOfferingMapper.toServiceOfferingDto(serviceOfferingService.findById(id));
+    public ServiceOfferingDto getServiceOffering(
+            @PathVariable Integer travelClassId, @PathVariable Integer flightServiceId) {
+        var serviceOfferingId = ServiceOfferingId.builder()
+                .travelClassId(travelClassId).flightServiceId(flightServiceId).build();
+        return serviceOfferingMapper.toServiceOfferingDto(serviceOfferingService.findById(serviceOfferingId));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/travel-class/{travelClassId}/flight-service/{flightServiceId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteServiceOfferingById(@PathVariable Integer id) {
-        serviceOfferingService.deleteById(id);
+    public void deleteServiceOfferingById(
+            @PathVariable Integer travelClassId, @PathVariable Integer flightServiceId) {
+        var serviceOfferingId = ServiceOfferingId.builder()
+                .travelClassId(travelClassId).flightServiceId(flightServiceId).build();
+        serviceOfferingService.deleteById(serviceOfferingId);
     }
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/travel-class/{travelClassId}/flight-service/{flightServiceId}")
     @ResponseStatus(HttpStatus.OK)
     public ServiceOfferingDto updateServiceOffering(
-            @RequestBody @Valid ServiceOfferingUpdateDto serviceOfferingDto, @PathVariable Integer id) {
+            @RequestBody @Valid ServiceOfferingPartialUpdateDto serviceOfferingDto,
+            @PathVariable Integer travelClassId, @PathVariable Integer flightServiceId) {
+        var serviceOfferingId = ServiceOfferingId.builder()
+                .travelClassId(travelClassId).flightServiceId(flightServiceId).build();
         var serviceOffering = serviceOfferingMapper.toServiceOffering(serviceOfferingDto);
         return serviceOfferingMapper.toServiceOfferingDto(
-                serviceOfferingService.updateById(id, serviceOffering));
+                serviceOfferingService.updateById(serviceOfferingId, serviceOffering));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/travel-class/{travelClassId}/flight-service/{flightServiceId}")
     @ResponseStatus(HttpStatus.OK)
     public ServiceOfferingDto updateOrCreateServiceOffering(
-            @RequestBody @Valid ServiceOfferingDto serviceOfferingDto,
-            @PathVariable Integer id) {
+            @RequestBody @Valid ServiceOfferingSaveDto serviceOfferingDto,
+            @PathVariable Integer travelClassId, @PathVariable Integer flightServiceId) {
+        var serviceOfferingId = ServiceOfferingId.builder()
+                .travelClassId(travelClassId).flightServiceId(flightServiceId).build();
         var serviceOffering = serviceOfferingMapper.toServiceOffering(serviceOfferingDto);
         return serviceOfferingMapper.toServiceOfferingDto(
-                serviceOfferingService.updateOrCreateById(id, serviceOffering));
+                serviceOfferingService.updateOrCreateById(serviceOfferingId, serviceOffering));
     }
 
 }

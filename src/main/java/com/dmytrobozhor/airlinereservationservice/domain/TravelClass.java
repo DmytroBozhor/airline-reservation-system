@@ -36,4 +36,9 @@ public class TravelClass {
     @Builder.Default
     private List<FlightService> flightServices = new ArrayList<>();
 
+//    @OneToMany(mappedBy = "travelClass")
+//    @ToString.Exclude
+//    @EqualsAndHashCode.Exclude
+//    private List<ServiceOffering> serviceOfferings;
+
 }

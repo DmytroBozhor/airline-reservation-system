@@ -2,7 +2,8 @@ package com.dmytrobozhor.airlinereservationservice.util.mappers;
 
 import com.dmytrobozhor.airlinereservationservice.domain.ServiceOffering;
 import com.dmytrobozhor.airlinereservationservice.dto.ServiceOfferingDto;
-import com.dmytrobozhor.airlinereservationservice.dto.ServiceOfferingUpdateDto;
+import com.dmytrobozhor.airlinereservationservice.dto.ServiceOfferingPartialUpdateDto;
+import com.dmytrobozhor.airlinereservationservice.dto.ServiceOfferingSaveDto;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
@@ -15,7 +16,9 @@ public interface ServiceOfferingMapper {
 
     ServiceOffering toServiceOffering(ServiceOfferingDto serviceOfferingDto);
 
-    ServiceOffering toServiceOffering(ServiceOfferingUpdateDto serviceOfferingDto);
+    ServiceOffering toServiceOffering(ServiceOfferingSaveDto serviceOfferingDto);
+
+    ServiceOffering toServiceOffering(ServiceOfferingPartialUpdateDto serviceOfferingDto);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateServiceOfferingPartial(
