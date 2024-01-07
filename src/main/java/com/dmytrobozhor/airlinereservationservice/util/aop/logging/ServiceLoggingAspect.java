@@ -24,11 +24,10 @@ public class ServiceLoggingAspect extends AbstractLoggingAspect {
         super.logAfterReturningAdvice(joinPoint);
     }
 
-    @Override
-    @AfterThrowing(value = "ServicePointcutHolder.anyPublicMethodWithinPath()",
-            throwing = "throwable")
+    /*@Override
+    @AfterThrowing(value = "ServicePointcutHolder.anyPublicMethodWithinPath()", throwing = "throwable")
     public void logAfterThrowingAdvice(JoinPoint joinPoint, Throwable throwable) {
         super.logAfterThrowingAdvice(joinPoint, throwable);
-    }
+    }*/
 
 }

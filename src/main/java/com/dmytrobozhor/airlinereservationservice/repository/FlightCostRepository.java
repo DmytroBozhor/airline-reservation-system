@@ -1,7 +1,7 @@
 package com.dmytrobozhor.airlinereservationservice.repository;
 
-import com.dmytrobozhor.airlinereservationservice.domain.Airport;
 import com.dmytrobozhor.airlinereservationservice.domain.FlightCost;
+import com.dmytrobozhor.airlinereservationservice.util.compositeid.FlightCostId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface FlightCostRepository extends JpaRepository<FlightCost, Integer> {
+public interface FlightCostRepository extends JpaRepository<FlightCost, FlightCostId> {
 
     @Query(nativeQuery = true,
             value = "select * from flight_cost " +

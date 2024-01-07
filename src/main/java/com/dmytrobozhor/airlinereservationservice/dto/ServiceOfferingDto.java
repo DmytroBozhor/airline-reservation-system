@@ -11,7 +11,8 @@ import java.sql.Timestamp;
 public record ServiceOfferingDto(
 
         @NotNull
-        ServiceOfferingId id,
+        @Valid
+        ServiceOfferingIdDto id,
 
         @NotNull
         Boolean offered,

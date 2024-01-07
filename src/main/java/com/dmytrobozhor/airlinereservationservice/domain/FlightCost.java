@@ -20,20 +20,20 @@ public class FlightCost {
     @EmbeddedId
     private FlightCostId id;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "seat_details_id", referencedColumnName = "id")
+    @MapsId(value = "seatDetailId")
     private SeatDetail seatDetail;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "valid_from_date_id", referencedColumnName = "day_date",
             insertable = false, updatable = false)
     @MapsId(value = "validFromDateId")
     private Calendar validFromDate;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.REFRESH})
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "valid_to_date_id", referencedColumnName = "day_date",
             insertable = false, updatable = false)
-    @MapsId(value = "validToDateId")
     private Calendar validToDate;
 
     @Column(name = "cost")

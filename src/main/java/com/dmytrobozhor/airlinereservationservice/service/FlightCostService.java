@@ -4,6 +4,7 @@ import com.dmytrobozhor.airlinereservationservice.domain.Airport;
 import com.dmytrobozhor.airlinereservationservice.domain.FlightCost;
 import com.dmytrobozhor.airlinereservationservice.repository.AirportRepository;
 import com.dmytrobozhor.airlinereservationservice.repository.FlightCostRepository;
+import com.dmytrobozhor.airlinereservationservice.util.compositeid.FlightCostId;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.AirportMapper;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.FlightCostMapper;
 import jakarta.persistence.EntityNotFoundException;
@@ -36,9 +37,8 @@ public class FlightCostService implements AbstractFlightCostService {
         return flightCostRepository.save(flightCost);
     }
 
-    //    TODO: change integer to FlightCostId id
     @Override
-    public void deleteById(Integer id) {
+    public void deleteById(FlightCostId id) {
         FlightCost flightCost = flightCostRepository
                 .findById(id).orElseThrow(EntityNotFoundException::new);
         flightCostRepository.delete(flightCost);
@@ -53,12 +53,12 @@ public class FlightCostService implements AbstractFlightCostService {
 
     @Override
     @Transactional(readOnly = true)
-    public FlightCost findById(Integer id) {
+    public FlightCost findById(FlightCostId id) {
         return flightCostRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
-    public FlightCost updateById(Integer id, FlightCost flightCost) {
+    public FlightCost updateById(FlightCostId id, FlightCost flightCost) {
         return flightCostRepository.findById(id).map(persistedFlightCost -> {
             flightCostMapper.updateFlightCostPartial(persistedFlightCost, flightCost);
             return flightCostRepository.save(persistedFlightCost);
@@ -66,7 +66,7 @@ public class FlightCostService implements AbstractFlightCostService {
     }
 
     @Override
-    public FlightCost updateOrCreateById(Integer id, FlightCost flightCost) {
+    public FlightCost updateOrCreateById(FlightCostId id, FlightCost flightCost) {
         return flightCostRepository.findById(id).map(persistedFlightCost -> {
             flightCostMapper.updateFlightCostPartial(persistedFlightCost, flightCost);
             return flightCostRepository.save(persistedFlightCost);

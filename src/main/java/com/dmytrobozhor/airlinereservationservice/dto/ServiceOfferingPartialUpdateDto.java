@@ -12,13 +12,7 @@ public record ServiceOfferingPartialUpdateDto(
 
         Timestamp formDate,
 
-        Timestamp toDate,
-
-        @Valid
-        TravelClassDto travelClass,
-
-        @Valid
-        FlightServiceDto flightService
+        Timestamp toDate
 
 ) {
 }

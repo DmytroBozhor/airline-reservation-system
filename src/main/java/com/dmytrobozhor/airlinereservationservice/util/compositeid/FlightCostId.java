@@ -14,11 +14,11 @@ import java.sql.Date;
 @Builder
 public class FlightCostId implements Serializable {
 
+    @Column(name = "seat_details_id")
+    private Integer seatDetailId;
+
     @Column(name = "valid_from_date_id")
     private Date validFromDateId;
-
-    @Column(name = "valid_to_date_id")
-    private Date validToDateId;
 
 }
 

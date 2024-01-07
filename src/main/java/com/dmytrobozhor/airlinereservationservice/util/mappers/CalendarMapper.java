@@ -4,6 +4,7 @@ import com.dmytrobozhor.airlinereservationservice.domain.Airport;
 import com.dmytrobozhor.airlinereservationservice.domain.Calendar;
 import com.dmytrobozhor.airlinereservationservice.dto.AirportDto;
 import com.dmytrobozhor.airlinereservationservice.dto.CalendarDto;
+import com.dmytrobozhor.airlinereservationservice.dto.CalendarPartialUpdateDto;
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
@@ -15,6 +16,8 @@ import java.util.List;
 public interface CalendarMapper {
 
     Calendar toCalendar(CalendarDto calendarDto);
+
+    Calendar toCalendar(CalendarPartialUpdateDto calendarDto);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     void updateCalendarPartial(@MappingTarget Calendar persistedCalendar, Calendar calendar);
