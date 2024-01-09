@@ -21,7 +21,8 @@ public class FlightCost {
     private FlightCostId id;
 
     @ManyToOne(cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "seat_details_id", referencedColumnName = "id")
+    @JoinColumn(name = "seat_details_id", referencedColumnName = "id",
+            insertable = false, updatable = false)
     @MapsId(value = "seatDetailId")
     private SeatDetail seatDetail;
 
@@ -32,8 +33,7 @@ public class FlightCost {
     private Calendar validFromDate;
 
     @ManyToOne(cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "valid_to_date_id", referencedColumnName = "day_date",
-            insertable = false, updatable = false)
+    @JoinColumn(name = "valid_to_date_id", referencedColumnName = "day_date")
     private Calendar validToDate;
 
     @Column(name = "cost")

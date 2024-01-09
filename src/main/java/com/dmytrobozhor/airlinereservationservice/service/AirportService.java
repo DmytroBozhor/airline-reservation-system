@@ -37,6 +37,7 @@ public class AirportService implements AbstractAirportService {
         return airportRepository.save(airport);
     }
 
+//    TODO: replace types with var all over the project
     @Override
     public void deleteById(Integer id) {
         Airport airport = airportRepository.findById(id)

@@ -30,7 +30,6 @@ public class FlightCostController {
         return flightCostMapper.toFlightCostDto(flightCostService.findAll());
     }
 
-    //    TODO: null exception for some reason. checked using debug and everything seems fine 0_0
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public FlightCostDto saveFlightCost(@RequestBody @Valid FlightCostSaveDto flightCostDto) {
@@ -42,6 +41,7 @@ public class FlightCostController {
         return flightCostMapper.toFlightCostDto(flightCostService.save(flightCost));
     }
 
+//  TODO: make and use constants for endpoints replacing this long string
     @GetMapping("/seat-detail/{seatDetailId}/date/{validFromDateId}")
     @ResponseStatus(HttpStatus.OK)
     public FlightCostDto getFlightCost(@PathVariable Integer seatDetailId, @PathVariable Date validFromDateId) {
@@ -66,7 +66,9 @@ public class FlightCostController {
         return flightCostMapper.toFlightCostDto(flightCostService.updateById(flightCostId, flightCost));
     }
 
-    @PutMapping("/seat-detail/{seatDetailId}/date/{validFromDateId}")
+//    TODO: decide whether I need this endpoint or not. It is a little confusing
+//     since the seatDetail and validFromDate are not insertable or updatable.
+    /*@PutMapping("/seat-detail/{seatDetailId}/date/{validFromDateId}")
     @ResponseStatus(HttpStatus.OK)
     public FlightCostDto updateOrCreateFlightCost(
             @RequestBody @Valid FlightCostSaveDto flightCostDto,
@@ -74,6 +76,6 @@ public class FlightCostController {
         var flightCostId = FlightCostId.builder().seatDetailId(seatDetailId).validFromDateId(validFromDateId).build();
         var flightCost = flightCostMapper.toFlightCost(flightCostDto);
         return flightCostMapper.toFlightCostDto(flightCostService.updateOrCreateById(flightCostId, flightCost));
-    }
+    }*/
 
 }
