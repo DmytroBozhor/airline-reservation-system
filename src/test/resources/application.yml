@@ -11,3 +11,6 @@ spring:
 
   flyway:
     enabled: false
+    locations: filesystem:.\src\main\resources\db\migration
+    baseline-on-migrate: true
+    clean-disabled: false

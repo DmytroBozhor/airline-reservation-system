@@ -32,7 +32,9 @@ public class FlightDetail {
     @Column(name = "airplane_type")
     private AirplaneType airplaneType;
 
+    //    TODO: make column validations for correct ddl generation  all over the project
     @ManyToOne(cascade = {CascadeType.MERGE})
+//    @JoinColumn(name = "source_airport_id", referencedColumnName = "id", nullable = false)
     @JoinColumn(name = "source_airport_id", referencedColumnName = "id")
     private Airport sourceAirport;
 

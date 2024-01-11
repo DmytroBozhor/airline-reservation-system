@@ -1,35 +1,22 @@
 package com.dmytrobozhor.airlinereservationservice.repository;
 
 import com.dmytrobozhor.airlinereservationservice.domain.Airport;
-import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.junit.jupiter.api.extension.Extension;
-import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Consumer;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+@Tag("repository-tests")
 @Tag("unit-fast")
 @DisplayName("Airport Repository Test")
-//TODO: will delete it later because it is default
-@TestInstance(TestInstance.Lifecycle.PER_METHOD)
-//TODO: will delete it too because it is anti-pattern
 @TestMethodOrder(MethodOrderer.DisplayName.class)
-//TODO: find out more about this annotation
 @DataJpaTest
-//@ExtendWith(value = {SpringExtension.class})
+//@TestInstance(TestInstance.Lifecycle.PER_METHOD)
+//@Rollback(value = true)
 //@SpringBootTest
 class AirportRepositoryTest {
 
@@ -38,12 +25,13 @@ class AirportRepositoryTest {
     @Autowired
     private AirportRepository airportRepository;
 
+//    @PersistenceContext
+//    private TestEntityManager entityManager;
+
     private Airport airport;
 
-//    TODO: find out why we do not need to remove airports from the db after each test
-
     @BeforeEach
-    void setup() {
+    void setUp() {
         airport = Airport
                 .builder()
                 .name("Northern Airport")
@@ -53,8 +41,8 @@ class AirportRepositoryTest {
     }
 
     @Test
-    @DisplayName("save airport")
-    void saveAirport() {
+    @DisplayName("save airport and return the saved entity")
+    void saveAirport_shouldReturnSavedEntity() {
 
         var savedAirport = airportRepository.save(airport);
 
@@ -67,8 +55,8 @@ class AirportRepositoryTest {
     }
 
     @Test
-    @DisplayName("find airport by id")
-    void findAirportById() {
+    @DisplayName("find airport by existing id")
+    void findAirportById_shouldReturnFoundEntity() {
 
         var savedAirport = airportRepository.save(airport);
 
@@ -76,14 +64,52 @@ class AirportRepositoryTest {
 
         assertAll(
                 () -> assertThat(airportOptional).isNotEmpty(),
-                () -> assertThat(airportOptional.get()).isEqualTo(savedAirport)
+                () -> assertThat(airportOptional).contains(savedAirport)
         );
 
     }
 
     @Test
+    @DisplayName("find airport by not existing id")
+    void findAirportById_shouldReturnNothing() {
+
+        var airportOptional = airportRepository.findById(1);
+
+        assertThat(airportOptional).isEmpty();
+
+    }
+
+    @Test
+    @DisplayName("delete airport by id")
+    void deleteAirportById_shouldSuccessfullyDeleteAirport() {
+
+        var savedAirport = airportRepository.save(airport);
+
+        airportRepository.deleteById(savedAirport.getId());
+
+        var deletedAirportOptional = airportRepository.findById(savedAirport.getId());
+
+        assertThat(deletedAirportOptional).isNotPresent();
+
+    }
+
+    @Test
+    @DisplayName("delete airport")
+    void deleteAirport_shouldSuccessfullyDeleteAirport() {
+
+        var savedAirport = airportRepository.save(airport);
+
+        airportRepository.delete(savedAirport);
+
+        var deletedAirportOptional = airportRepository.findById(savedAirport.getId());
+
+        assertThat(deletedAirportOptional).isNotPresent();
+
+    }
+
+    @Test
     @DisplayName("save all airports")
-    void saveAllAirports() {
+    void saveAllAirports_shouldReturnSavedEntities() {
 
         var airportsForSave = Collections.singletonList(airport);
 
@@ -99,7 +125,7 @@ class AirportRepositoryTest {
 
     @Test
     @DisplayName("find all airports")
-    void findAllAirports() {
+    void findAllAirports_shouldReturnAllEntities() {
 
         var airportsForSave = Collections.singletonList(airport);
         airportRepository.saveAll(airportsForSave);

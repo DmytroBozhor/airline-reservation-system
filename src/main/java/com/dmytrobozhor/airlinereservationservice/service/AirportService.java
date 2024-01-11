@@ -81,4 +81,7 @@ public class AirportService implements AbstractAirportService {
         return airportRepository.findByAllFields(airport);
     }
 
+    public List<Airport> saveAll(List<Airport> airportsForSave) {
+        return airportRepository.saveAll(airportsForSave);
+    }
 }
