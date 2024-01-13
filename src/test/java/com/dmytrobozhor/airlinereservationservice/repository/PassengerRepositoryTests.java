@@ -1,7 +1,6 @@
 package com.dmytrobozhor.airlinereservationservice.repository;
 
 import com.dmytrobozhor.airlinereservationservice.domain.Passenger;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -10,15 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 @Tag("repository-tests")
 @Tag("unit-fast")
-@DisplayName("PassengerRepositoryTest")
+@DisplayName("Passenger Repository Tests")
 @DataJpaTest
 class PassengerRepositoryTests {
 
@@ -58,7 +55,7 @@ class PassengerRepositoryTests {
         var passengerOptional = passengerRepository.findById(savedPassenger.getId());
 
         assertAll(
-                () -> assertThat(passengerOptional).isEmpty(),
+                () -> assertThat(passengerOptional).isPresent(),
                 () -> assertThat(passengerOptional.get()).isEqualTo(savedPassenger)
         );
 
@@ -109,7 +106,7 @@ class PassengerRepositoryTests {
     }
 
     @Test
-    @DisplayName("whenDeleteById_thenReturnNothing")
+    @DisplayName("delete passenger by id")
     void whenDeleteById_thenReturnNothing() {
 
         var savedPassenger = passengerRepository.save(passenger);
@@ -123,7 +120,7 @@ class PassengerRepositoryTests {
     }
 
     @Test
-    @DisplayName("whenDelete_thenReturnNothing")
+    @DisplayName("delete passenger")
     void whenDelete_thenReturnNothing() {
 
         var savedPassenger = passengerRepository.save(passenger);

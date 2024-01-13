@@ -1,4 +1,4 @@
-package com.dmytrobozhor.airlinereservationservice.util.exceptions;
+package com.dmytrobozhor.airlinereservationservice.exceptions;
 
 import lombok.*;
 
