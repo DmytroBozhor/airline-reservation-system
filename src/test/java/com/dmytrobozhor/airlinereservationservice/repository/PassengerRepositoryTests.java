@@ -26,11 +26,13 @@ class PassengerRepositoryTests {
 
     @BeforeEach
     void setUp() {
+
         passenger = Passenger.builder()
                 .firstName("Bile")
                 .lastName("Harrington")
                 .phoneNumber("7452186394")
                 .build();
+
     }
 
     @Test

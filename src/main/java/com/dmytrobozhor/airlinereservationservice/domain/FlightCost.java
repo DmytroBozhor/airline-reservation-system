@@ -36,7 +36,7 @@ public class FlightCost {
     @JoinColumn(name = "valid_to_date_id", referencedColumnName = "day_date", nullable = false)
     private Calendar validToDate;
 
-    @Column(name = "cost", nullable = false)
+    @Column(name = "cost", nullable = false, precision = 12, scale = 2)
     private BigDecimal cost;
 
 }

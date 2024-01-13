@@ -6,11 +6,8 @@ import com.dmytrobozhor.airlinereservationservice.domain.SeatDetail;
 import com.dmytrobozhor.airlinereservationservice.domain.TravelClass;
 import com.dmytrobozhor.airlinereservationservice.util.enums.AirplaneType;
 import com.dmytrobozhor.airlinereservationservice.util.enums.TravelClassName;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.*;
 
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
@@ -29,19 +26,14 @@ class SeatDetailRepositoryTests {
     @Autowired
     private SeatDetailRepository seatDetailRepository;
 
-    @Autowired
-    private TravelClassRepository travelClassRepository;
-
-    @Autowired
-    private AirportRepository airportRepository;
-
-    @Autowired
-    private FlightDetailRepository flightDetailRepository;
-
     private SeatDetail seatDetail;
 
-    @BeforeEach
-    void setUp() {
+    @BeforeAll
+    static void saveDependencies(
+            @Autowired TravelClassRepository travelClassRepository,
+            @Autowired AirportRepository airportRepository,
+            @Autowired FlightDetailRepository flightDetailRepository
+    ) {
 
         TravelClass travelClass = TravelClass.builder()
                 .name(TravelClassName.BUSINESS_CLASS)
@@ -79,9 +71,17 @@ class SeatDetailRepositoryTests {
 
         flightDetailRepository.save(flightDetail);
 
+    }
+
+    @BeforeEach
+    void setUp(
+            @Autowired TravelClassRepository travelClassRepository,
+            @Autowired FlightDetailRepository flightDetailRepository
+    ) {
+
         seatDetail = SeatDetail.builder()
-                .travelClass(travelClass)
-                .flightDetail(flightDetail)
+                .travelClass(travelClassRepository.findAll().stream().findFirst().get())
+                .flightDetail(flightDetailRepository.findAll().stream().findFirst().get())
                 .build();
 
     }
@@ -184,5 +184,16 @@ class SeatDetailRepositoryTests {
 
         assertThat(seatDetailOptional).isEmpty();
 
+    }
+
+    @AfterAll
+    static void clearDatabase(
+            @Autowired TravelClassRepository travelClassRepository,
+            @Autowired AirportRepository airportRepository,
+            @Autowired FlightDetailRepository flightDetailRepository
+    ) {
+        flightDetailRepository.deleteAll();
+        travelClassRepository.deleteAll();
+        airportRepository.deleteAll();
     }
 }

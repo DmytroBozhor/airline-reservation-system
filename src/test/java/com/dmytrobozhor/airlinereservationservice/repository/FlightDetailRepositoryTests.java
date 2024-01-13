@@ -22,13 +22,10 @@ class FlightDetailRepositoryTests {
     @Autowired
     private FlightDetailRepository flightDetailRepository;
 
-    @Autowired
-    private AirportRepository airportRepository;
-
     private FlightDetail flightDetail;
 
-    @BeforeEach
-    void setUp() {
+    @BeforeAll
+    static void saveAirports(@Autowired AirportRepository airportRepository) {
 
         Airport sourceAirport = Airport
                 .builder()
@@ -37,6 +34,8 @@ class FlightDetailRepositoryTests {
                 .country("Molvania")
                 .build();
 
+        airportRepository.save(sourceAirport);
+
         Airport destinationAirport = Airport
                 .builder()
                 .name("Lamba")
@@ -44,16 +43,23 @@ class FlightDetailRepositoryTests {
                 .country("Hovland")
                 .build();
 
-        airportRepository.save(sourceAirport);
         airportRepository.save(destinationAirport);
+
+    }
+
+    @BeforeEach
+    void setUp(@Autowired AirportRepository airportRepository) {
+
+        var sourceAirport = airportRepository.findById(1);
+        var destinationAirport = airportRepository.findById(2);
 
         flightDetail = FlightDetail
                 .builder()
                 .departureDateTime(Timestamp.valueOf("2020-08-09 21:30:00"))
                 .arrivalDateTime(Timestamp.valueOf("2020-08-10 09:30:00"))
                 .airplaneType(AirplaneType.BOEING_747)
-                .sourceAirport(sourceAirport)
-                .destinationAirport(destinationAirport)
+                .sourceAirport(sourceAirport.get())
+                .destinationAirport(destinationAirport.get())
                 .build();
 
     }
@@ -115,7 +121,7 @@ class FlightDetailRepositoryTests {
     }
 
     @Test
-    @DisplayName("whenDeleteById_thenReturnNothing")
+    @DisplayName("delete flight detail by id")
     void whenDeleteById_thenReturnNothing() {
 
         var savedFlightDetail = flightDetailRepository.save(flightDetail);
@@ -129,7 +135,7 @@ class FlightDetailRepositoryTests {
     }
 
     @Test
-    @DisplayName("whenDeleteFlightDetail_thenReturnNothing")
+    @DisplayName("delete flight detail")
     void whenDeleteFlightDetail_thenReturnNothing() {
 
         var savedFLightDetail = flightDetailRepository.save(flightDetail);
@@ -143,7 +149,7 @@ class FlightDetailRepositoryTests {
     }
 
     @Test
-    @DisplayName("whenSaveAll_thenReturnSavedFlightDetails")
+    @DisplayName("save all flight details")
     void whenSaveAll_thenReturnSavedFlightDetails() {
 
         var flightDetails = Collections.singletonList(flightDetail);
@@ -156,5 +162,10 @@ class FlightDetailRepositoryTests {
                 () -> assertThat(savedFlightDetails).isEqualTo(flightDetails)
         );
 
+    }
+
+    @AfterAll
+    static void clearDataBase(@Autowired AirportRepository airportRepository) {
+        airportRepository.deleteAll();
     }
 }

@@ -3,13 +3,9 @@ package com.dmytrobozhor.airlinereservationservice.repository;
 import com.dmytrobozhor.airlinereservationservice.domain.*;
 import com.dmytrobozhor.airlinereservationservice.util.enums.AirplaneType;
 import com.dmytrobozhor.airlinereservationservice.util.enums.TravelClassName;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.annotation.Rollback;
 
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -27,25 +23,16 @@ class ReservationRepositoryTests {
     @Autowired
     private ReservationRepository reservationRepository;
 
-    @Autowired
-    private SeatDetailRepository seatDetailRepository;
-
-    @Autowired
-    private TravelClassRepository travelClassRepository;
-
-    @Autowired
-    private AirportRepository airportRepository;
-
-    @Autowired
-    private FlightDetailRepository flightDetailRepository;
-
-    @Autowired
-    private PassengerRepository passengerRepository;
-
     private Reservation reservation;
 
-    @BeforeEach
-    void setUp() {
+    @BeforeAll
+    static void saveDependencies(
+            @Autowired SeatDetailRepository seatDetailRepository,
+            @Autowired TravelClassRepository travelClassRepository,
+            @Autowired AirportRepository airportRepository,
+            @Autowired FlightDetailRepository flightDetailRepository,
+            @Autowired PassengerRepository passengerRepository
+    ) {
 
         TravelClass travelClass = TravelClass.builder()
                 .name(TravelClassName.BUSINESS_CLASS)
@@ -98,9 +85,17 @@ class ReservationRepositoryTests {
 
         passengerRepository.save(passenger);
 
+    }
+
+    @BeforeEach
+    void setUpReservation(
+            @Autowired SeatDetailRepository seatDetailRepository,
+            @Autowired PassengerRepository passengerRepository
+    ) {
+
         reservation = Reservation.builder()
-                .passenger(passenger)
-                .seatDetail(seatDetail)
+                .passenger(passengerRepository.findAll().stream().findFirst().get())
+                .seatDetail(seatDetailRepository.findAll().stream().findFirst().get())
                 .reservationDateTime(Timestamp.from(Instant.now()))
                 .build();
 
@@ -204,5 +199,20 @@ class ReservationRepositoryTests {
 
         assertThat(reservationOptional).isEmpty();
 
+    }
+
+    @AfterAll
+    static void clearDatabase(
+            @Autowired SeatDetailRepository seatDetailRepository,
+            @Autowired TravelClassRepository travelClassRepository,
+            @Autowired AirportRepository airportRepository,
+            @Autowired FlightDetailRepository flightDetailRepository,
+            @Autowired PassengerRepository passengerRepository
+    ) {
+        seatDetailRepository.deleteAll();
+        flightDetailRepository.deleteAll();
+        travelClassRepository.deleteAll();
+        airportRepository.deleteAll();
+        passengerRepository.deleteAll();
     }
 }

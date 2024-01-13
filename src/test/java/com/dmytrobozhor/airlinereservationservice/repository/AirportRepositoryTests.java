@@ -30,12 +30,14 @@ class AirportRepositoryTests {
 
     @BeforeEach
     void setUp() {
+
         airport = Airport
                 .builder()
                 .name("Northern Airport")
                 .city("Billingua")
                 .country("China")
                 .build();
+
     }
 
     @Test
