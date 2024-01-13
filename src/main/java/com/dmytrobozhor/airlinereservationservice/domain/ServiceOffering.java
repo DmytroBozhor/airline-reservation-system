@@ -20,7 +20,7 @@ public class ServiceOffering {
     @EmbeddedId
     private ServiceOfferingId id;
 
-    @Column(name = "offered")
+    @Column(name = "offered", nullable = false)
     private Boolean offered;
 
     @Column(name = "from_date")
@@ -31,13 +31,13 @@ public class ServiceOffering {
 
     @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "travel_class_id", referencedColumnName = "id",
-            insertable = false, updatable = false)
+            nullable = false, insertable = false, updatable = false)
     @MapsId(value = "travelClassId")
     private TravelClass travelClass;
 
     @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "flight_service_id", referencedColumnName = "id",
-            insertable = false, updatable = false)
+            nullable = false, insertable = false, updatable = false)
     @MapsId(value = "flightServiceId")
     private FlightService flightService;
 

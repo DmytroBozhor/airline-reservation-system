@@ -20,7 +20,7 @@ public class Calendar {
     @Column(name = "day_date")
     private Date date;
 
-    @Column(name = "business_day")
+    @Column(name = "business_day", nullable = false)
     private Boolean businessDay;
 
 }

@@ -22,21 +22,21 @@ public class FlightCost {
 
     @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "seat_details_id", referencedColumnName = "id",
-            insertable = false, updatable = false)
+            nullable = false, insertable = false, updatable = false)
     @MapsId(value = "seatDetailId")
     private SeatDetail seatDetail;
 
     @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "valid_from_date_id", referencedColumnName = "day_date",
-            insertable = false, updatable = false)
+            nullable = false, insertable = false, updatable = false)
     @MapsId(value = "validFromDateId")
     private Calendar validFromDate;
 
     @ManyToOne(cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "valid_to_date_id", referencedColumnName = "day_date")
+    @JoinColumn(name = "valid_to_date_id", referencedColumnName = "day_date", nullable = false)
     private Calendar validToDate;
 
-    @Column(name = "cost")
+    @Column(name = "cost", nullable = false)
     private BigDecimal cost;
 
 }

@@ -19,16 +19,17 @@ public class Passenger {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "first_name")
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(name = "last_name")
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
     @Column(name = "email")
     private String email;
 
-    @Column(name = "phone_number", unique = true)
+    @Column(name = "phone_number",
+            nullable = false , unique = true, length = 10)
     private String phoneNumber;
 
     @Column(name = "address")
@@ -40,7 +41,7 @@ public class Passenger {
     @Column(name = "state")
     private String state;
 
-    @Column(name = "zipcode")
+    @Column(name = "zipcode", length = 5)
     private String zipcode;
 
     @Column(name = "country")

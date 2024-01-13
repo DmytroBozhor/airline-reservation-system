@@ -21,10 +21,10 @@ public class TravelClass {
     private Integer id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private TravelClassName name;
 
-    @Column(name = "capacity")
+    @Column(name = "capacity", nullable = false)
     private Integer capacity;
 
     @ManyToMany

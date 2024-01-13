@@ -21,7 +21,7 @@ public class FlightService {
     private Integer id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "service_name")
+    @Column(name = "service_name", nullable = false)
     private ServiceName serviceName;
 
     @ManyToMany

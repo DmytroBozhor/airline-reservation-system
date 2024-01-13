@@ -20,11 +20,11 @@ public class SeatDetail {
     private Integer id;
 
     @ManyToOne(cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "travel_class_id", referencedColumnName = "id")
+    @JoinColumn(name = "travel_class_id", referencedColumnName = "id", nullable = false)
     private TravelClass travelClass;
 
     @ManyToOne(cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "flight_details_id", referencedColumnName = "id")
+    @JoinColumn(name = "flight_details_id", referencedColumnName = "id", nullable = false)
     private FlightDetail flightDetail;
 
 }

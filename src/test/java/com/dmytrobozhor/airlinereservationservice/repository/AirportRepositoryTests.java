@@ -12,15 +12,13 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @Tag("repository-tests")
 @Tag("unit-fast")
-@DisplayName("Airport Repository Test")
-@TestMethodOrder(MethodOrderer.DisplayName.class)
+@DisplayName("Airport Repository Tests")
 @DataJpaTest
+//@TestMethodOrder(MethodOrderer.DisplayName.class)
 //@TestInstance(TestInstance.Lifecycle.PER_METHOD)
 //@Rollback(value = true)
 //@SpringBootTest
-class AirportRepositoryTest {
-
-//    TODO: find out why DI with constructor does not work. Only field injection works
+class AirportRepositoryTests {
 
     @Autowired
     private AirportRepository airportRepository;
@@ -42,7 +40,7 @@ class AirportRepositoryTest {
 
     @Test
     @DisplayName("save airport and return the saved entity")
-    void saveAirport_shouldReturnSavedEntity() {
+    void whenSaveAirport_thenReturnSavedEntity() {
 
         var savedAirport = airportRepository.save(airport);
 
@@ -56,7 +54,7 @@ class AirportRepositoryTest {
 
     @Test
     @DisplayName("find airport by existing id")
-    void findAirportById_shouldReturnFoundEntity() {
+    void whenFindAirportById_thenReturnFoundEntity() {
 
         var savedAirport = airportRepository.save(airport);
 
@@ -71,7 +69,7 @@ class AirportRepositoryTest {
 
     @Test
     @DisplayName("find airport by not existing id")
-    void findAirportById_shouldReturnNothing() {
+    void whenFindAirportById_thenReturnNothing() {
 
         var airportOptional = airportRepository.findById(1);
 
@@ -81,7 +79,7 @@ class AirportRepositoryTest {
 
     @Test
     @DisplayName("delete airport by id")
-    void deleteAirportById_shouldSuccessfullyDeleteAirport() {
+    void whenDeleteAirportById_thenSuccessfullyDeleteAirport() {
 
         var savedAirport = airportRepository.save(airport);
 
@@ -95,7 +93,7 @@ class AirportRepositoryTest {
 
     @Test
     @DisplayName("delete airport")
-    void deleteAirport_shouldSuccessfullyDeleteAirport() {
+    void whenDeleteAirport_thenSuccessfullyDeleteAirport() {
 
         var savedAirport = airportRepository.save(airport);
 
@@ -109,7 +107,7 @@ class AirportRepositoryTest {
 
     @Test
     @DisplayName("save all airports")
-    void saveAllAirports_shouldReturnSavedEntities() {
+    void whenSaveAllAirports_thenReturnSavedEntities() {
 
         var airportsForSave = Collections.singletonList(airport);
 
@@ -125,7 +123,7 @@ class AirportRepositoryTest {
 
     @Test
     @DisplayName("find all airports")
-    void findAllAirports_shouldReturnAllEntities() {
+    void whenFindAllAirports_thenReturnAllEntities() {
 
         var airportsForSave = Collections.singletonList(airport);
         airportRepository.saveAll(airportsForSave);

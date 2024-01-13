@@ -2,7 +2,6 @@ package com.dmytrobozhor.airlinereservationservice.domain;
 
 import com.dmytrobozhor.airlinereservationservice.util.enums.Status;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.DecimalMin;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,18 +24,17 @@ public class PaymentStatus {
     private Integer id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status_yn")
+    @Column(name = "status_yn", nullable = false)
     private Status status;
 
-    @Column(name = "due_date")
+    @Column(name = "due_date", nullable = false)
     private Date dueDate;
 
-    //    TODO: find out how to map decimal(12, 2) to java
-    @Column(name = "amount")
+    @Column(name = "amount", nullable = false, precision = 12, scale = 2)
     private BigDecimal amount;
 
     @ManyToOne(cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "reservation_id", referencedColumnName = "id")
+    @JoinColumn(name = "reservation_id", referencedColumnName = "id", nullable = false)
     private Reservation reservation;
 
 }

@@ -22,24 +22,22 @@ public class FlightDetail {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "departure_date_time")
+    @Column(name = "departure_date_time", nullable = false)
     private Timestamp departureDateTime;
 
-    @Column(name = "arrival_date_time")
+    @Column(name = "arrival_date_time", nullable = false)
     private Timestamp arrivalDateTime;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "airplane_type")
+    @Column(name = "airplane_type", nullable = false)
     private AirplaneType airplaneType;
 
-    //    TODO: make column validations for correct ddl generation  all over the project
     @ManyToOne(cascade = {CascadeType.MERGE})
-//    @JoinColumn(name = "source_airport_id", referencedColumnName = "id", nullable = false)
-    @JoinColumn(name = "source_airport_id", referencedColumnName = "id")
+    @JoinColumn(name = "source_airport_id", referencedColumnName = "id", nullable = false)
     private Airport sourceAirport;
 
     @ManyToOne(cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "destination_airport_id", referencedColumnName = "id")
+    @JoinColumn(name = "destination_airport_id", referencedColumnName = "id", nullable = false)
     private Airport destinationAirport;
 
 }
