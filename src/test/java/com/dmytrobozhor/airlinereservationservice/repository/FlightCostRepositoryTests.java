@@ -11,9 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.util.Collections;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -218,4 +216,20 @@ class FlightCostRepositoryTests {
         assertThat(flightCostOptional).isEmpty();
 
     }
+
+    @AfterAll
+    static void clearDatabase(
+            @Autowired TravelClassRepository travelClassRepository,
+            @Autowired AirportRepository airportRepository,
+            @Autowired FlightDetailRepository flightDetailRepository,
+            @Autowired SeatDetailRepository seatDetailRepository,
+            @Autowired CalendarRepository calendarRepository
+    ){
+        calendarRepository.deleteAll();
+        seatDetailRepository.deleteAll();
+        flightDetailRepository.deleteAll();
+        airportRepository.deleteAll();
+        travelClassRepository.deleteAll();
+    }
+
 }
