@@ -15,9 +15,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("Airport Repository Tests")
 @DataJpaTest
 //@TestMethodOrder(MethodOrderer.DisplayName.class)
-//@TestInstance(TestInstance.Lifecycle.PER_METHOD)
-//@Rollback(value = true)
-//@SpringBootTest
 class AirportRepositoryTests {
 
     @Autowired

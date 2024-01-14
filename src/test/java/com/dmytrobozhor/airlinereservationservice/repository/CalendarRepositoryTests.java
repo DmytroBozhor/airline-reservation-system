@@ -29,7 +29,8 @@ class CalendarRepositoryTests {
     @BeforeEach
     void setUp() {
 
-        calendar = Calendar.builder()
+        calendar = Calendar
+                .builder()
                 .date(Date.valueOf(LocalDate.now()))
                 .businessDay(true)
                 .build();

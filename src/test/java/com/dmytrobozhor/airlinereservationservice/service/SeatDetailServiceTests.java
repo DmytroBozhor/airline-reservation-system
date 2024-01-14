@@ -47,7 +47,8 @@ class SeatDetailServiceTests {
     @BeforeEach
     void setUp() {
 
-        seatDetail = SeatDetail.builder()
+        seatDetail = SeatDetail
+                .builder()
                 .id(1)
                 .travelClass(TravelClass.builder().name(TravelClassName.FIRST_CLASS).build())
                 .flightDetail(FlightDetail.builder().airplaneType(AirplaneType.BOEING_747).build())

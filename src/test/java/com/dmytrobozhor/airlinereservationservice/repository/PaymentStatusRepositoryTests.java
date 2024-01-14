@@ -39,7 +39,8 @@ class PaymentStatusRepositoryTests {
             @Autowired PassengerRepository passengerRepository
     ) {
 
-        TravelClass travelClass = TravelClass.builder()
+        TravelClass travelClass = TravelClass
+                .builder()
                 .name(TravelClassName.BUSINESS_CLASS)
                 .capacity(20)
                 .build();
@@ -75,14 +76,16 @@ class PaymentStatusRepositoryTests {
 
         flightDetailRepository.save(flightDetail);
 
-        SeatDetail seatDetail = SeatDetail.builder()
+        SeatDetail seatDetail = SeatDetail
+                .builder()
                 .travelClass(travelClass)
                 .flightDetail(flightDetail)
                 .build();
 
         seatDetailRepository.save(seatDetail);
 
-        Passenger passenger = Passenger.builder()
+        Passenger passenger = Passenger
+                .builder()
                 .firstName("Bile")
                 .lastName("Harrington")
                 .phoneNumber("7452186394")
@@ -90,7 +93,8 @@ class PaymentStatusRepositoryTests {
 
         passengerRepository.save(passenger);
 
-        Reservation reservation = Reservation.builder()
+        Reservation reservation = Reservation
+                .builder()
                 .passenger(passenger)
                 .seatDetail(seatDetail)
                 .reservationDateTime(Timestamp.from(Instant.now()))
@@ -103,7 +107,8 @@ class PaymentStatusRepositoryTests {
     @BeforeEach
     void setUp(@Autowired ReservationRepository reservationRepository) {
 
-        paymentStatus = PaymentStatus.builder()
+        paymentStatus = PaymentStatus
+                .builder()
                 .status(Status.Y)
                 .dueDate(Date.valueOf(LocalDate.now().plusDays(10)))
                 .amount(BigDecimal.valueOf(49.99D))

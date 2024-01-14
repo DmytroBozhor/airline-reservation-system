@@ -29,7 +29,8 @@ class TravelClassRepositoryTests {
     @BeforeEach
     void setUp() {
 
-        travelClass = TravelClass.builder()
+        travelClass = TravelClass
+                .builder()
                 .name(TravelClassName.BUSINESS_CLASS)
                 .capacity(20)
                 .build();

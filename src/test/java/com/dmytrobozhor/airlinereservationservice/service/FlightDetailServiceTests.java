@@ -42,7 +42,8 @@ class FlightDetailServiceTests {
     @BeforeEach
     void setUp() {
 
-        flightDetail = FlightDetail.builder()
+        flightDetail = FlightDetail
+                .builder()
                 .id(1)
                 .departureDateTime(Timestamp.valueOf("2020-09-24 16:30:00"))
                 .arrivalDateTime(Timestamp.valueOf("2020-09-25 12:30:00"))

@@ -45,7 +45,8 @@ class ReservationServiceTests {
     @BeforeEach
     void setUp() {
 
-        reservation = Reservation.builder()
+        reservation = Reservation
+                .builder()
                 .id(1)
                 .passenger(Passenger
                         .builder()

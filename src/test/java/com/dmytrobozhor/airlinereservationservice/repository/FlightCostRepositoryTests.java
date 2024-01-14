@@ -39,7 +39,8 @@ class FlightCostRepositoryTests {
             @Autowired CalendarRepository calendarRepository
     ) {
 
-        TravelClass travelClass = TravelClass.builder()
+        TravelClass travelClass = TravelClass
+                .builder()
                 .name(TravelClassName.BUSINESS_CLASS)
                 .capacity(20)
                 .build();
@@ -82,14 +83,16 @@ class FlightCostRepositoryTests {
 
         seatDetailRepository.save(seatDetail);
 
-        Calendar validFromDate = Calendar.builder()
+        Calendar validFromDate = Calendar
+                .builder()
                 .date(Date.valueOf("2020-08-09"))
                 .businessDay(true)
                 .build();
 
         calendarRepository.save(validFromDate);
 
-        Calendar validToDate = Calendar.builder()
+        Calendar validToDate = Calendar
+                .builder()
                 .date(Date.valueOf("2020-08-10"))
                 .businessDay(false)
                 .build();
@@ -108,7 +111,8 @@ class FlightCostRepositoryTests {
 
         var validToDate = calendarRepository.findById(Date.valueOf("2020-08-10")).get();
 
-        flightCost = FlightCost.builder()
+        flightCost = FlightCost
+                .builder()
                 .seatDetail(seatDetailRepository.findAll().stream().findFirst().get())
                 .validFromDate(validFromDate)
                 .validToDate(validToDate)

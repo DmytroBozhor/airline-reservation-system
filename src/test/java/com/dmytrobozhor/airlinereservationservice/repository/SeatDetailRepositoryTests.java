@@ -35,7 +35,8 @@ class SeatDetailRepositoryTests {
             @Autowired FlightDetailRepository flightDetailRepository
     ) {
 
-        TravelClass travelClass = TravelClass.builder()
+        TravelClass travelClass = TravelClass
+                .builder()
                 .name(TravelClassName.BUSINESS_CLASS)
                 .capacity(20)
                 .build();
@@ -79,7 +80,8 @@ class SeatDetailRepositoryTests {
             @Autowired FlightDetailRepository flightDetailRepository
     ) {
 
-        seatDetail = SeatDetail.builder()
+        seatDetail = SeatDetail
+                .builder()
                 .travelClass(travelClassRepository.findAll().stream().findFirst().get())
                 .flightDetail(flightDetailRepository.findAll().stream().findFirst().get())
                 .build();

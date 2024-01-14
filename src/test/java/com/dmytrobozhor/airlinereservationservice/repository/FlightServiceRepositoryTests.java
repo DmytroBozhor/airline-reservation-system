@@ -28,7 +28,8 @@ class FlightServiceRepositoryTests {
     @BeforeEach
     void setUp() {
 
-        flightService = FlightService.builder()
+        flightService = FlightService
+                .builder()
                 .serviceName(ServiceName.WIFI)
                 .build();
 

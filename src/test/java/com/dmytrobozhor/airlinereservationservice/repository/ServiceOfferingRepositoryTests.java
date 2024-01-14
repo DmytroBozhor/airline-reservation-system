@@ -35,14 +35,16 @@ class ServiceOfferingRepositoryTests {
             @Autowired FlightServiceRepository flightServiceRepository
     ) {
 
-        TravelClass travelClass = TravelClass.builder()
+        TravelClass travelClass = TravelClass
+                .builder()
                 .name(TravelClassName.BUSINESS_CLASS)
                 .capacity(20)
                 .build();
 
         travelClassRepository.save(travelClass);
 
-        FlightService flightService = FlightService.builder()
+        FlightService flightService = FlightService
+                .builder()
                 .serviceName(ServiceName.WIFI)
                 .build();
 
@@ -56,7 +58,8 @@ class ServiceOfferingRepositoryTests {
             @Autowired FlightServiceRepository flightServiceRepository
     ) {
 
-        serviceOffering = ServiceOffering.builder()
+        serviceOffering = ServiceOffering
+                .builder()
                 .offered(true)
                 .travelClass(travelClassRepository.findAll().stream().findFirst().get())
                 .flightService(flightServiceRepository.findAll().stream().findFirst().get())

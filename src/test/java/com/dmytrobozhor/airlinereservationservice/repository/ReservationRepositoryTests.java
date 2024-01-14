@@ -34,7 +34,8 @@ class ReservationRepositoryTests {
             @Autowired PassengerRepository passengerRepository
     ) {
 
-        TravelClass travelClass = TravelClass.builder()
+        TravelClass travelClass = TravelClass
+                .builder()
                 .name(TravelClassName.BUSINESS_CLASS)
                 .capacity(20)
                 .build();
@@ -70,14 +71,16 @@ class ReservationRepositoryTests {
 
         flightDetailRepository.save(flightDetail);
 
-        SeatDetail seatDetail = SeatDetail.builder()
+        SeatDetail seatDetail = SeatDetail
+                .builder()
                 .travelClass(travelClass)
                 .flightDetail(flightDetail)
                 .build();
 
         seatDetailRepository.save(seatDetail);
 
-        Passenger passenger = Passenger.builder()
+        Passenger passenger = Passenger
+                .builder()
                 .firstName("Bile")
                 .lastName("Harrington")
                 .phoneNumber("7452186394")
