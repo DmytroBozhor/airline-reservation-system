@@ -18,4 +18,7 @@ public interface AbstractCrudService<T, ID> {
     T updateById(ID id, T entity);
 
     T updateOrCreateById(ID id, T entity);
+
+    List<T> saveAll(List<T> entities);
+
 }

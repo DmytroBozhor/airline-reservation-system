@@ -68,4 +68,9 @@ public class CalendarService implements AbstractCalendarService {
         }).orElseGet(() -> calendarRepository.save(calendar));
     }
 
+    @Override
+    public List<Calendar> saveAll(List<Calendar> calendars) {
+        return calendarRepository.saveAll(calendars);
+    }
+
 }

@@ -73,4 +73,9 @@ public class FlightCostService implements AbstractFlightCostService {
         }).orElseGet(() -> flightCostRepository.save(flightCost));
     }
 
+    @Override
+    public List<FlightCost> saveAll(List<FlightCost> flightCosts) {
+        return flightCostRepository.saveAll(flightCosts);
+    }
+
 }

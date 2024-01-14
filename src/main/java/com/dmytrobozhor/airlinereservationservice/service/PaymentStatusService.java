@@ -67,4 +67,9 @@ public class PaymentStatusService implements AbstractPaymentStatusService {
             return paymentStatusRepository.save(persistedPaymentStatus);
         }).orElseGet(() -> paymentStatusRepository.save(paymentStatus));
     }
+
+    @Override
+    public List<PaymentStatus> saveAll(List<PaymentStatus> paymentStatuses) {
+        return paymentStatusRepository.saveAll(paymentStatuses);
+    }
 }

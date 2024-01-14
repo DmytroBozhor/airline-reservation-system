@@ -26,12 +26,6 @@ public class SeatDetailService implements AbstractSeatDetailService {
 
     private final SeatDetailMapper seatDetailMapper;
 
-    private final FlightDetailRepository flightDetailRepository;
-
-    private final TravelClassRepository travelClassRepository;
-
-    private final FlightDetailService flightDetailService;
-
     @Override
     @Transactional(readOnly = true)
     public List<SeatDetail> findAll() {
@@ -80,6 +74,11 @@ public class SeatDetailService implements AbstractSeatDetailService {
     }
 
     @Override
+    public List<SeatDetail> saveAll(List<SeatDetail> seatDetails) {
+        return seatDetailRepository.saveAll(seatDetails);
+    }
+
+   /* @Override
     @Transactional(readOnly = true)
     public void fetchDataIfExist(SeatDetail seatDetail) {
 
@@ -102,5 +101,5 @@ public class SeatDetailService implements AbstractSeatDetailService {
             });
         });
 
-    }
+    }*/
 }

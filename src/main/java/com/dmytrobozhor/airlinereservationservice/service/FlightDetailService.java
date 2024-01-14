@@ -100,4 +100,8 @@ public class FlightDetailService implements AbstractFlightDetailService {
 
     }
 
+    @Override
+    public List<FlightDetail> saveAll(List<FlightDetail> flightDetails) {
+        return flightDetailRepository.saveAll(flightDetails);
+    }
 }

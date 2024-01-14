@@ -70,4 +70,9 @@ public class TravelClassService implements AbstractTravelClassService {
             return travelClassRepository.save(persistedTravelClass);
         }).orElseGet(() -> travelClassRepository.save(travelClass));
     }
+
+    @Override
+    public List<TravelClass> saveAll(List<TravelClass> travelClasses) {
+        return travelClassRepository.saveAll(travelClasses);
+    }
 }

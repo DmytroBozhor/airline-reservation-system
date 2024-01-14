@@ -70,6 +70,11 @@ public class PassengerService implements AbstractPassengerService {
     }
 
     @Override
+    public List<Passenger> saveAll(List<Passenger> passengers) {
+        return passengerRepository.saveAll(passengers);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public Optional<Passenger> findByPhoneNumber(String phoneNumber) {
         return passengerRepository.findPassengerByPhoneNumber(phoneNumber);

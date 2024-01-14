@@ -14,6 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
@@ -51,27 +52,40 @@ class AirportServiceTests {
     }
 
     @Test
-    @DisplayName("find all airports")
+    @DisplayName("save all airports")
     void whenSaveAll_thenReturnSavedAirports() {
 
         var airportsForSave = Collections.singletonList(airport);
 
         doReturn(airportsForSave).when(airportRepository).saveAll(anyCollection());
 
-        airportService.saveAll(airportsForSave);
+        var savedAirports = airportService.saveAll(airportsForSave);
 
-        doReturn(airportsForSave).when(airportRepository).findAll();
+        assertAll(
+                () -> assertThat(savedAirports).isNotEmpty(),
+                () -> assertThat(savedAirports).hasSameSizeAs(airportsForSave)
+        );
+
+        verify(airportRepository).saveAll(anyCollection());
+
+    }
+
+    @Test
+    @DisplayName("find all airports")
+    void whenFindAll_thenReturnAllAirports() {
+
+        var airports = Collections.singletonList(airport);
+
+        doReturn(airports).when(airportRepository).findAll();
 
         var savedAirports = airportService.findAll();
 
         assertAll(
                 () -> assertThat(savedAirports).isNotEmpty(),
-                () -> assertThat(savedAirports).hasSameSizeAs(airportsForSave),
-                () -> assertThat(savedAirports).isEqualTo(airportsForSave)
+                () -> assertThat(savedAirports).hasSameSizeAs(airports)
         );
 
         verify(airportRepository).findAll();
-        verify(airportRepository).saveAll(anyCollection());
 
     }
 

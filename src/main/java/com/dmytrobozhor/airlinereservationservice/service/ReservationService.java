@@ -75,4 +75,9 @@ public class ReservationService implements AbstractReservationService {
             return reservationRepository.save(persistedReservation);
         }).orElseGet(() -> reservationRepository.save(reservation));
     }
+
+    @Override
+    public List<Reservation> saveAll(List<Reservation> reservations) {
+        return reservationRepository.saveAll(reservations);
+    }
 }

@@ -69,4 +69,9 @@ public class ServiceOfferingService implements AbstractServiceOfferingService {
         }).orElseGet(() -> serviceOfferingRepository.save(serviceOffering));
     }
 
+    @Override
+    public List<ServiceOffering> saveAll(List<ServiceOffering> serviceOfferings) {
+        return serviceOfferingRepository.saveAll(serviceOfferings);
+    }
+
 }

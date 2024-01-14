@@ -73,4 +73,9 @@ public class FlightServiceService implements AbstractFlightServiceService {
         }).orElseGet(() -> flightServiceRepository.save(flightService));
     }
 
+    @Override
+    public List<FlightService> saveAll(List<FlightService> flightServices) {
+        return flightServiceRepository.saveAll(flightServices);
+    }
+
 }
