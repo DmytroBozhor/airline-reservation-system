@@ -26,8 +26,6 @@ public class FlightDetailService implements AbstractFlightDetailService {
 
     private final FlightDetailMapper flightDetailMapper;
 
-    private final AirportRepository airportRepository;
-
     @Override
     @Transactional(readOnly = true)
     public List<FlightDetail> findAll() {
@@ -77,31 +75,8 @@ public class FlightDetailService implements AbstractFlightDetailService {
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public void fetchDataIfExist(FlightDetail flightDetail) {
-
-        Optional<Airport> sourceAirportOptional = Optional.ofNullable(flightDetail.getSourceAirport());
-        sourceAirportOptional.ifPresent(sourceAirport -> {
-            Optional<Airport> persistedAirportOptional = airportRepository.findByAllFields(sourceAirport);
-            persistedAirportOptional.ifPresent(persistedAirport -> {
-                log.debug("The source airport already exists. Fetching...");
-                flightDetail.setSourceAirport(persistedAirport);
-            });
-        });
-
-        Optional<Airport> destinationAirportOptional = Optional.ofNullable(flightDetail.getDestinationAirport());
-        destinationAirportOptional.ifPresent(destinationAirport -> {
-            Optional<Airport> persistedAirportOptional = airportRepository.findByAllFields(destinationAirport);
-            persistedAirportOptional.ifPresent(persistedAirport -> {
-                log.debug("The destination airport already exists. Fetching...");
-                flightDetail.setDestinationAirport(persistedAirport);
-            });
-        });
-
-    }
-
-    @Override
     public List<FlightDetail> saveAll(List<FlightDetail> flightDetails) {
         return flightDetailRepository.saveAll(flightDetails);
     }
+
 }

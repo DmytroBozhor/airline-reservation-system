@@ -78,28 +78,4 @@ public class SeatDetailService implements AbstractSeatDetailService {
         return seatDetailRepository.saveAll(seatDetails);
     }
 
-   /* @Override
-    @Transactional(readOnly = true)
-    public void fetchDataIfExist(SeatDetail seatDetail) {
-
-        Optional<FlightDetail> flightDetailOptional = Optional.ofNullable(seatDetail.getFlightDetail());
-        flightDetailOptional.ifPresent(flightDetail -> {
-            flightDetailService.fetchDataIfExist(flightDetail);
-            Optional<FlightDetail> flightDetailOptional1 = flightDetailRepository.findByAllFields(flightDetail);
-            flightDetailOptional1.ifPresent(flightDetail1 -> {
-                log.debug("The flight detail already exists. Fetching...");
-                seatDetail.setFlightDetail(flightDetail1);
-            });
-        });
-
-        Optional<TravelClass> travelClassOptional = Optional.ofNullable(seatDetail.getTravelClass());
-        travelClassOptional.ifPresent(travelClass -> {
-            Optional<TravelClass> travelClassOptional1 = travelClassRepository.findByAllFields(travelClass);
-            travelClassOptional1.ifPresent(travelClass1 -> {
-                log.debug("The travel class already exists. Fetching...");
-                seatDetail.setTravelClass(travelClass1);
-            });
-        });
-
-    }*/
 }
