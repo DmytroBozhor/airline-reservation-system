@@ -1,4 +1,5 @@
-Technology stack:
+# **Technology stack:**
+
 •	Spring Boot
 •	Spring Web
 •	Spring Data JPA
