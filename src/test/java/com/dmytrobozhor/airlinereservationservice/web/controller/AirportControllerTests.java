@@ -33,10 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("Airport Controller Test")
 @WebMvcTest(controllers = AirportController.class)
 @AutoConfigureMockMvc(addFilters = false)
-@ExtendWith({
-        MockitoExtension.class,
-        SpringExtension.class
-})
+@ExtendWith(MockitoExtension.class)
 class AirportControllerTests {
 
     @Autowired
