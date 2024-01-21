@@ -9,11 +9,10 @@ import com.dmytrobozhor.airlinereservationservice.util.mappers.FlightDetailMappe
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.hamcrest.CoreMatchers;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
-import org.mockito.internal.hamcrest.HamcrestArgumentMatcher;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -21,19 +20,21 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.RequestBuilder;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.sql.Timestamp;
+import java.util.Collections;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@DisplayName("FlightDetailControllerTest")
+@DisplayName("FlightDetail Controller Tests")
 @WebMvcTest(controllers = FlightDetailController.class)
 @AutoConfigureMockMvc(addFilters = false)
 @ExtendWith(MockitoExtension.class)
@@ -51,10 +52,39 @@ class FlightDetailControllerTests {
     @MockBean
     private FlightDetailMapper flightDetailMapper;
 
+    //    TODO: fix and refactor the test below
+    @SneakyThrows
     @Test
     @DisplayName("get all flight details")
     void whenGetAllFlightDetails_thenReturnAllFlightDetails() {
 
+        var flightDetail = FlightDetail
+                .builder()
+                .id(1)
+                .departureDateTime(Timestamp.valueOf("2024-7-25 16:30:00"))
+                .arrivalDateTime(Timestamp.valueOf("2024-7-26 11:30:00"))
+                .airplaneType(AirplaneType.AIRBUS_A380)
+                .build();
+
+        var flightDetailDto = new FlightDetailDto(
+                flightDetail.getId(),
+                flightDetail.getDepartureDateTime(),
+                flightDetail.getArrivalDateTime(),
+                flightDetail.getAirplaneType().toString(), null, null
+        );
+
+        doReturn(Collections.singletonList(flightDetail)).when(flightDetailService).findAll();
+        doReturn(Collections.singletonList(flightDetailDto)).when(flightDetailMapper).toFlightDetailDto(anyList());
+
+        var request = MockMvcRequestBuilders.get("/fright-details");
+
+        mockMvc.perform(request)
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", equalTo(Collections.singletonList(flightDetailDto))));
+
+        verify(flightDetailService).findAll();
+        verify(flightDetailMapper).toFlightDetailDto(anyList());
 
     }
 
@@ -107,11 +137,47 @@ class FlightDetailControllerTests {
                 .andExpect(jsonPath("$.arrivalDateTime", is(flightDetailSaveDto.arrivalDateTime())))
                 .andExpect(jsonPath("$.airplaneType", is(flightDetailSaveDto.airplaneType())));
 
+        verify(flightDetailService).save(any(FlightDetail.class));
+        verify(flightDetailMapper).toFlightDetail(any(FlightDetailSaveDto.class));
+        verify(flightDetailMapper).toFlightDetailDto(any(FlightDetail.class));
+
     }
 
+    @SneakyThrows
     @Test
     @DisplayName("")
     void getFlightDetailById() {
+
+        var flightDetail = FlightDetail
+                .builder()
+                .id(1)
+                .departureDateTime(Timestamp.valueOf("2024-7-25 16:30:00"))
+                .arrivalDateTime(Timestamp.valueOf("2024-7-26 11:30:00"))
+                .airplaneType(AirplaneType.AIRBUS_A380)
+                .build();
+
+        var flightDetailDto = new FlightDetailDto(
+                flightDetail.getId(),
+                flightDetail.getDepartureDateTime(),
+                flightDetail.getArrivalDateTime(),
+                flightDetail.getAirplaneType().toString(), null, null
+        );
+
+        doReturn(flightDetail).when(flightDetailService).findById(anyInt());
+        doReturn(flightDetailDto).when(flightDetailMapper).toFlightDetailDto(any(FlightDetail.class));
+
+        var request = MockMvcRequestBuilders.get("/fright-details/1");
+
+        mockMvc.perform(request)
+                .andDo(print())
+                .andExpect(jsonPath("$.id", is(flightDetailDto.id())))
+                .andExpect(jsonPath("$.departureDateTime", is(flightDetailDto.departureDateTime())))
+                .andExpect(jsonPath("$.arrivalDateTime", is(flightDetailDto.arrivalDateTime())))
+                .andExpect(jsonPath("$.airplaneType", is(flightDetailDto.airplaneType())));
+
+        verify(flightDetailService).findById(anyInt());
+        verify(flightDetailMapper).toFlightDetailDto(any(FlightDetail.class));
+
     }
 
     @Test
