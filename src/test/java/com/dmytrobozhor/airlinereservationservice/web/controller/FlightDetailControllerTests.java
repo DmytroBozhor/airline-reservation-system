@@ -8,8 +8,6 @@ import com.dmytrobozhor.airlinereservationservice.util.enums.AirplaneType;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.FlightDetailMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
-import org.hamcrest.CoreMatchers;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,9 +18,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.RequestBuilder;
-import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.sql.Timestamp;
@@ -76,7 +71,7 @@ class FlightDetailControllerTests {
         doReturn(Collections.singletonList(flightDetail)).when(flightDetailService).findAll();
         doReturn(Collections.singletonList(flightDetailDto)).when(flightDetailMapper).toFlightDetailDto(anyList());
 
-        var request = MockMvcRequestBuilders.get("/fright-details");
+        var request = MockMvcRequestBuilders.get("/flight-details");
 
         mockMvc.perform(request)
                 .andDo(print())
@@ -125,7 +120,7 @@ class FlightDetailControllerTests {
         doReturn(flightDetailDto).when(flightDetailMapper).toFlightDetailDto(flightDetailSaved);
 
         var request = MockMvcRequestBuilders
-                .post("/fright-details")
+                .post("/flight-details")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(flightDetailSaveDto));
 
@@ -145,8 +140,8 @@ class FlightDetailControllerTests {
 
     @SneakyThrows
     @Test
-    @DisplayName("")
-    void getFlightDetailById() {
+    @DisplayName("get flight detail by id")
+    void whenGetFlightDetailById_thenReturnFlightDetail() {
 
         var flightDetail = FlightDetail
                 .builder()
@@ -166,7 +161,7 @@ class FlightDetailControllerTests {
         doReturn(flightDetail).when(flightDetailService).findById(anyInt());
         doReturn(flightDetailDto).when(flightDetailMapper).toFlightDetailDto(any(FlightDetail.class));
 
-        var request = MockMvcRequestBuilders.get("/fright-details/1");
+        var request = MockMvcRequestBuilders.get("/flight-details/1");
 
         mockMvc.perform(request)
                 .andDo(print())
@@ -180,9 +175,21 @@ class FlightDetailControllerTests {
 
     }
 
+    @SneakyThrows
     @Test
-    @DisplayName("")
-    void deleteFlightDetailById() {
+    @DisplayName("delete flight detail by id")
+    void whenDeleteFlightDetailById_thenReturnNothing() {
+
+        doNothing().when(flightDetailService).deleteById(anyInt());
+
+        var request = MockMvcRequestBuilders.delete("/flight-details/1");
+
+        mockMvc.perform(request)
+                .andDo(print())
+                .andExpect(status().isNoContent());
+
+        verify(flightDetailService).deleteById(anyInt());
+
     }
 
     @Test

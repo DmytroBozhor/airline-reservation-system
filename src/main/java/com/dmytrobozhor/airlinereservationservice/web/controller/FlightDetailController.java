@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/fright-details")
+@RequestMapping("/flight-details")
 @RequiredArgsConstructor
 @Slf4j
 public class FlightDetailController {
