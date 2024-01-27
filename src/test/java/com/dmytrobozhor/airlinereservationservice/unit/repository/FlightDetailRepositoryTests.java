@@ -1,7 +1,9 @@
-package com.dmytrobozhor.airlinereservationservice.repository;
+package com.dmytrobozhor.airlinereservationservice.unit.repository;
 
 import com.dmytrobozhor.airlinereservationservice.domain.Airport;
 import com.dmytrobozhor.airlinereservationservice.domain.FlightDetail;
+import com.dmytrobozhor.airlinereservationservice.repository.AirportRepository;
+import com.dmytrobozhor.airlinereservationservice.repository.FlightDetailRepository;
 import com.dmytrobozhor.airlinereservationservice.util.enums.AirplaneType;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;

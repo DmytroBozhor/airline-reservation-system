@@ -1,6 +1,7 @@
-package com.dmytrobozhor.airlinereservationservice.repository;
+package com.dmytrobozhor.airlinereservationservice.unit.repository;
 
 import com.dmytrobozhor.airlinereservationservice.domain.TravelClass;
+import com.dmytrobozhor.airlinereservationservice.repository.TravelClassRepository;
 import com.dmytrobozhor.airlinereservationservice.util.enums.TravelClassName;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

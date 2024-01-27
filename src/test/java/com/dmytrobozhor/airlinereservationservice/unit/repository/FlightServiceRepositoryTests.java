@@ -1,6 +1,7 @@
-package com.dmytrobozhor.airlinereservationservice.repository;
+package com.dmytrobozhor.airlinereservationservice.unit.repository;
 
 import com.dmytrobozhor.airlinereservationservice.domain.FlightService;
+import com.dmytrobozhor.airlinereservationservice.repository.FlightServiceRepository;
 import com.dmytrobozhor.airlinereservationservice.util.enums.ServiceName;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

@@ -1,4 +1,4 @@
-package com.dmytrobozhor.airlinereservationservice.web.controller;
+package com.dmytrobozhor.airlinereservationservice.unit.controller;
 
 import com.dmytrobozhor.airlinereservationservice.domain.Airport;
 import com.dmytrobozhor.airlinereservationservice.dto.AirportDto;
@@ -6,11 +6,13 @@ import com.dmytrobozhor.airlinereservationservice.dto.AirportPartialUpdateDto;
 import com.dmytrobozhor.airlinereservationservice.dto.AirportSaveDto;
 import com.dmytrobozhor.airlinereservationservice.service.AbstractAirportService;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.AirportMapper;
+import com.dmytrobozhor.airlinereservationservice.web.controller.AirportController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -30,6 +32,8 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@Tag("unit-fast")
+@Tag("controller-tests")
 @DisplayName("Airport Controller Tests")
 @WebMvcTest(controllers = AirportController.class)
 @AutoConfigureMockMvc(addFilters = false)
@@ -95,7 +99,7 @@ class AirportControllerTests {
         doReturn(airportDto).when(airportMapper).toAirportDto(any(Airport.class));
 
         var request = MockMvcRequestBuilders
-                .get("/airports/1");
+                .get("/airports/{id}", airport.getId());
 
         mockMvc.perform(request)
                 .andDo(print())
@@ -117,7 +121,7 @@ class AirportControllerTests {
 
         doThrow(EntityNotFoundException.class).when(airportService).findById(anyInt());
 
-        var request = MockMvcRequestBuilders.get("/airports/1");
+        var request = MockMvcRequestBuilders.get("/airports/{id}", airport.getId());
 
         mockMvc.perform(request)
                 .andDo(print())
@@ -134,7 +138,7 @@ class AirportControllerTests {
 
         doNothing().when(airportService).deleteById(anyInt());
 
-        var request = MockMvcRequestBuilders.delete("/airports/1");
+        var request = MockMvcRequestBuilders.delete("/airports/{id}", airport.getId());
 
         mockMvc.perform(request)
                 .andDo(print())
@@ -197,7 +201,7 @@ class AirportControllerTests {
         doReturn(updatedAirportDto).when(airportMapper).toAirportDto(updatedAirport);
 
         var request = MockMvcRequestBuilders
-                .patch("/airports/1")
+                .patch("/airports/{id}", airport.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(airportPartialUpdateDto));
 
@@ -227,7 +231,7 @@ class AirportControllerTests {
         doThrow(EntityNotFoundException.class).when(airportService).updateById(anyInt(), eq(airportPartialUpdate));
 
         var request = MockMvcRequestBuilders
-                .patch("/airports/1")
+                .patch("/airports/{id}", airport.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(airportPartialUpdateDto));
 
@@ -265,7 +269,7 @@ class AirportControllerTests {
         doReturn(updatedAirportDto).when(airportMapper).toAirportDto(updatedAirport);
 
         var request = MockMvcRequestBuilders
-                .put("/airports/1")
+                .put("/airports/{id}", airport.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(airportSaveDto));
 
@@ -308,7 +312,7 @@ class AirportControllerTests {
         doReturn(saveAirportDto).when(airportMapper).toAirportDto(savedAirport);
 
         var request = MockMvcRequestBuilders
-                .put("/airports/1")
+                .put("/airports/{id}", airport.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(airportSaveDto));
 

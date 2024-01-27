@@ -1,7 +1,8 @@
-package com.dmytrobozhor.airlinereservationservice.service;
+package com.dmytrobozhor.airlinereservationservice.unit.service;
 
 import com.dmytrobozhor.airlinereservationservice.domain.Airport;
 import com.dmytrobozhor.airlinereservationservice.repository.AirportRepository;
+import com.dmytrobozhor.airlinereservationservice.service.AirportService;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.AirportMapper;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;

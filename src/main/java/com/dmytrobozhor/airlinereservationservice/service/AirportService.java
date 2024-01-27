@@ -37,7 +37,7 @@ public class AirportService implements AbstractAirportService {
         return airportRepository.save(airport);
     }
 
-//    TODO: replace types with var all over the project
+    //    TODO: replace types with var all over the project
     @Override
     public void deleteById(Integer id) {
         Airport airport = airportRepository.findById(id)
@@ -84,5 +84,10 @@ public class AirportService implements AbstractAirportService {
     @Override
     public List<Airport> saveAll(List<Airport> airportsForSave) {
         return airportRepository.saveAll(airportsForSave);
+    }
+
+    @Override
+    public void deleteAll() {
+        airportRepository.deleteAll();
     }
 }

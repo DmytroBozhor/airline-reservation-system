@@ -1,6 +1,7 @@
-package com.dmytrobozhor.airlinereservationservice.repository;
+package com.dmytrobozhor.airlinereservationservice.unit.repository;
 
 import com.dmytrobozhor.airlinereservationservice.domain.Airport;
+import com.dmytrobozhor.airlinereservationservice.repository.AirportRepository;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -14,14 +15,10 @@ import static org.junit.jupiter.api.Assertions.*;
 @Tag("unit-fast")
 @DisplayName("Airport Repository Tests")
 @DataJpaTest
-//@TestMethodOrder(MethodOrderer.DisplayName.class)
 class AirportRepositoryTests {
 
     @Autowired
     private AirportRepository airportRepository;
-
-//    @PersistenceContext
-//    private TestEntityManager entityManager;
 
     private Airport airport;
 

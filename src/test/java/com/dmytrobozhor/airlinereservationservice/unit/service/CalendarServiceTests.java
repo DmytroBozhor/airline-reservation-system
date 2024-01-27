@@ -1,7 +1,8 @@
-package com.dmytrobozhor.airlinereservationservice.service;
+package com.dmytrobozhor.airlinereservationservice.unit.service;
 
 import com.dmytrobozhor.airlinereservationservice.domain.Calendar;
 import com.dmytrobozhor.airlinereservationservice.repository.CalendarRepository;
+import com.dmytrobozhor.airlinereservationservice.service.CalendarService;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.CalendarMapper;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;

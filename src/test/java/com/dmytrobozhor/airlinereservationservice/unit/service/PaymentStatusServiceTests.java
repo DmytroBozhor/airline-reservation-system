@@ -1,7 +1,8 @@
-package com.dmytrobozhor.airlinereservationservice.service;
+package com.dmytrobozhor.airlinereservationservice.unit.service;
 
 import com.dmytrobozhor.airlinereservationservice.domain.PaymentStatus;
 import com.dmytrobozhor.airlinereservationservice.repository.PaymentStatusRepository;
+import com.dmytrobozhor.airlinereservationservice.service.PaymentStatusService;
 import com.dmytrobozhor.airlinereservationservice.util.enums.Status;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.PaymentStatusMapper;
 import jakarta.persistence.EntityNotFoundException;

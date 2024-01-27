@@ -1,7 +1,8 @@
-package com.dmytrobozhor.airlinereservationservice.service;
+package com.dmytrobozhor.airlinereservationservice.unit.service;
 
 import com.dmytrobozhor.airlinereservationservice.domain.TravelClass;
 import com.dmytrobozhor.airlinereservationservice.repository.TravelClassRepository;
+import com.dmytrobozhor.airlinereservationservice.service.TravelClassService;
 import com.dmytrobozhor.airlinereservationservice.util.enums.TravelClassName;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.TravelClassMapper;
 import jakarta.persistence.EntityNotFoundException;

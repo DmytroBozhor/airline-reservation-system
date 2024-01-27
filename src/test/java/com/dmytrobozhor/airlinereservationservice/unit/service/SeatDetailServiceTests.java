@@ -1,9 +1,10 @@
-package com.dmytrobozhor.airlinereservationservice.service;
+package com.dmytrobozhor.airlinereservationservice.unit.service;
 
 import com.dmytrobozhor.airlinereservationservice.domain.FlightDetail;
 import com.dmytrobozhor.airlinereservationservice.domain.SeatDetail;
 import com.dmytrobozhor.airlinereservationservice.domain.TravelClass;
 import com.dmytrobozhor.airlinereservationservice.repository.SeatDetailRepository;
+import com.dmytrobozhor.airlinereservationservice.service.SeatDetailService;
 import com.dmytrobozhor.airlinereservationservice.util.enums.AirplaneType;
 import com.dmytrobozhor.airlinereservationservice.util.enums.TravelClassName;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.SeatDetailMapper;

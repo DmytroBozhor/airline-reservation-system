@@ -1,4 +1,4 @@
-package com.dmytrobozhor.airlinereservationservice.web.controller;
+package com.dmytrobozhor.airlinereservationservice.unit.controller;
 
 import com.dmytrobozhor.airlinereservationservice.domain.Airport;
 import com.dmytrobozhor.airlinereservationservice.domain.FlightDetail;
@@ -9,10 +9,12 @@ import com.dmytrobozhor.airlinereservationservice.dto.FlightDetailSaveDto;
 import com.dmytrobozhor.airlinereservationservice.service.AbstractFlightDetailService;
 import com.dmytrobozhor.airlinereservationservice.util.enums.AirplaneType;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.FlightDetailMapper;
+import com.dmytrobozhor.airlinereservationservice.web.controller.FlightDetailController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -22,7 +24,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.sql.Timestamp;
@@ -33,6 +34,8 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@Tag("unit-fast")
+@Tag("controller-tests")
 @DisplayName("FlightDetail Controller Tests")
 @WebMvcTest(controllers = FlightDetailController.class)
 @AutoConfigureMockMvc(addFilters = false)
@@ -173,7 +176,7 @@ class FlightDetailControllerTests {
         doReturn(flightDetail).when(flightDetailService).findById(anyInt());
         doReturn(flightDetailDto).when(flightDetailMapper).toFlightDetailDto(flightDetail);
 
-        var request = MockMvcRequestBuilders.get("/flight-details/1");
+        var request = MockMvcRequestBuilders.get("/flight-details/{id}", flightDetail.getId());
 
         mockMvc.perform(request)
                 .andDo(print())
@@ -194,7 +197,7 @@ class FlightDetailControllerTests {
 
         doNothing().when(flightDetailService).deleteById(anyInt());
 
-        var request = MockMvcRequestBuilders.delete("/flight-details/1");
+        var request = MockMvcRequestBuilders.delete("/flight-details/{id}", flightDetail.getId());
 
         mockMvc.perform(request)
                 .andDo(print())
@@ -235,7 +238,7 @@ class FlightDetailControllerTests {
         doReturn(updatedFlightDetailDto).when(flightDetailMapper).toFlightDetailDto(eq(updatedFlightDetail));
 
         var request = MockMvcRequestBuilders
-                .patch("/flight-details/1")
+                .patch("/flight-details/{id}", flightDetail.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(flightDetailPartialUpdateDto));
 
@@ -281,7 +284,7 @@ class FlightDetailControllerTests {
         doReturn(updatedFlightDetailDto).when(flightDetailMapper).toFlightDetailDto(updatedFlightDetail);
 
         var request = MockMvcRequestBuilders
-                .put("/flight-details/1")
+                .put("/flight-details/{id}", flightDetail.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(updatedFlightDetail));
 
