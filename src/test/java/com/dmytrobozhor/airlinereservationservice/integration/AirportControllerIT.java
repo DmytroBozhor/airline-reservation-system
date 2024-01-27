@@ -28,6 +28,10 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.transaction.annotation.Transactional;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.List;
 
@@ -43,11 +47,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("Airport Controller IT")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc(addFilters = false)
-// TODO: replace with real database
-@AutoConfigureTestDatabase
-//@TestPropertySource("classpath:../resources/application.yml")
-//@PropertySource(value = "classpath:../resources/application.yml")
-class AirportControllerIT {
+@Transactional
+class AirportControllerIT extends TestContainerBase{
 
     @Autowired
     private MockMvc mockMvc;
@@ -288,10 +289,4 @@ class AirportControllerIT {
                         jsonPath("$.country", is(airportPartialUpdate.getCountry()))
                 );
     }
-
-    @AfterEach
-    void clearDataBase() {
-        airportService.deleteAll();
-    }
-
 }
