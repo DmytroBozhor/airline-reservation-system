@@ -105,18 +105,12 @@ class FlightDetailControllerIT {
         var flightDetails = Collections.singletonList(flightDetail);
         var flightDetailDtos = Collections.singletonList(flightDetailDto);
 
-        doReturn(flightDetails).when(flightDetailService).findAll();
-        doReturn(flightDetailDtos).when(flightDetailMapper).toFlightDetailDto(flightDetails);
-
         var request = MockMvcRequestBuilders.get("/flight-details");
 
         mockMvc.perform(request)
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()", is(flightDetailDtos.size())));
-
-        verify(flightDetailService).findAll();
-        verify(flightDetailMapper).toFlightDetailDto(anyList());
 
     }
 
@@ -141,10 +135,6 @@ class FlightDetailControllerIT {
                 .airplaneType(AirplaneType.valueOf(flightDetailSaveDto.airplaneType()))
                 .build();
 
-        doReturn(flightDetailForSave).when(flightDetailMapper).toFlightDetail(flightDetailSaveDto);
-        doReturn(flightDetail).when(flightDetailService).save(flightDetailForSave);
-        doReturn(flightDetailDto).when(flightDetailMapper).toFlightDetailDto(flightDetail);
-
         var request = MockMvcRequestBuilders
                 .post("/flight-details")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -158,19 +148,12 @@ class FlightDetailControllerIT {
                 .andExpect(jsonPath("$.arrivalDateTime", is("2024-07-26T09:30:00.000+00:00")))
                 .andExpect(jsonPath("$.airplaneType", is(flightDetailSaveDto.airplaneType())));
 
-        verify(flightDetailService).save(any(FlightDetail.class));
-        verify(flightDetailMapper).toFlightDetail(any(FlightDetailSaveDto.class));
-        verify(flightDetailMapper).toFlightDetailDto(any(FlightDetail.class));
-
     }
 
     @SneakyThrows
     @Test
     @DisplayName("get flight detail by id")
     void whenGetFlightDetailById_thenReturnFlightDetail() {
-
-        doReturn(flightDetail).when(flightDetailService).findById(anyInt());
-        doReturn(flightDetailDto).when(flightDetailMapper).toFlightDetailDto(flightDetail);
 
         var request = MockMvcRequestBuilders.get("/flight-details/{id}", flightDetail.getId());
 
@@ -181,9 +164,6 @@ class FlightDetailControllerIT {
                 .andExpect(jsonPath("$.arrivalDateTime", is("2024-07-26T09:30:00.000+00:00")))
                 .andExpect(jsonPath("$.airplaneType", is(flightDetailDto.airplaneType())));
 
-        verify(flightDetailService).findById(anyInt());
-        verify(flightDetailMapper).toFlightDetailDto(any(FlightDetail.class));
-
     }
 
     @SneakyThrows
@@ -191,15 +171,11 @@ class FlightDetailControllerIT {
     @DisplayName("delete flight detail by id")
     void whenDeleteFlightDetailById_thenReturnNothing() {
 
-        doNothing().when(flightDetailService).deleteById(anyInt());
-
         var request = MockMvcRequestBuilders.delete("/flight-details/{id}", flightDetail.getId());
 
         mockMvc.perform(request)
                 .andDo(print())
                 .andExpect(status().isNoContent());
-
-        verify(flightDetailService).deleteById(anyInt());
 
     }
 
@@ -229,10 +205,6 @@ class FlightDetailControllerIT {
                 null, null
         );
 
-        doReturn(flightDetailPartialUpdate).when(flightDetailMapper).toFlightDetail(eq(flightDetailPartialUpdateDto));
-        doReturn(updatedFlightDetail).when(flightDetailService).updateById(anyInt(), eq(flightDetailPartialUpdate));
-        doReturn(updatedFlightDetailDto).when(flightDetailMapper).toFlightDetailDto(eq(updatedFlightDetail));
-
         var request = MockMvcRequestBuilders
                 .patch("/flight-details/{id}", flightDetail.getId())
                 .contentType(MediaType.APPLICATION_JSON)
@@ -245,10 +217,6 @@ class FlightDetailControllerIT {
                 .andExpect(jsonPath("$.airplaneType", is(flightDetailPartialUpdateDto.airplaneType())))
                 .andExpect(jsonPath("$.departureDateTime", is("2024-07-25T14:30:00.000+00:00")))
                 .andExpect(jsonPath("$.arrivalDateTime", is("2024-07-26T09:30:00.000+00:00")));
-
-        verify(flightDetailService).updateById(anyInt(), any(FlightDetail.class));
-        verify(flightDetailMapper).toFlightDetail(any(FlightDetailPartialUpdateDto.class));
-        verify(flightDetailMapper).toFlightDetailDto(any(FlightDetail.class));
 
     }
 
@@ -275,10 +243,6 @@ class FlightDetailControllerIT {
                 flightDetailDto.destinationAirport()
         );
 
-        doReturn(updatedFlightDetail).when(flightDetailMapper).toFlightDetail(any(FlightDetailSaveDto.class));
-        doReturn(updatedFlightDetail).when(flightDetailService).updateOrCreateById(anyInt(), eq(updatedFlightDetail));
-        doReturn(updatedFlightDetailDto).when(flightDetailMapper).toFlightDetailDto(updatedFlightDetail);
-
         var request = MockMvcRequestBuilders
                 .put("/flight-details/{id}", flightDetail.getId())
                 .contentType(MediaType.APPLICATION_JSON)
@@ -291,10 +255,6 @@ class FlightDetailControllerIT {
                 .andExpect(jsonPath("$.departureDateTime", is("2024-07-25T14:30:00.000+00:00")))
                 .andExpect(jsonPath("$.arrivalDateTime", is("2024-07-26T09:30:00.000+00:00")))
                 .andExpect(jsonPath("$.airplaneType", is(updatedFlightDetail.getAirplaneType().toString())));
-
-        verify(flightDetailService).updateOrCreateById(anyInt(), any(FlightDetail.class));
-        verify(flightDetailMapper).toFlightDetail(any(FlightDetailSaveDto.class));
-        verify(flightDetailMapper).toFlightDetailDto(any(FlightDetail.class));
 
     }
 
