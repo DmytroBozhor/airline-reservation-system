@@ -4,9 +4,11 @@
 •	Spring Web
 •	Spring Data JPA
 •	Spring Security
+•	Spring AOP
 •	Hibernate (as JPA implementation)
 •	JUnit
 •	Mockito
+•	Testcontainers
 •	Docker
 •	PostgreSQL
 •	Flyway
@@ -17,3 +19,6 @@
 •	Swagger (Open API)
 •	Logback (as SLF4J facade)
 •	JWT
+•	Keycloak IDP
+•	Nexus
+•	JaCoCo

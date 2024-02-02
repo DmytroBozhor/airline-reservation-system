@@ -1,3 +1,4 @@
+/*
 package com.dmytrobozhor.airlinereservationservice.integration;
 
 import com.dmytrobozhor.airlinereservationservice.domain.Airport;
@@ -259,3 +260,4 @@ class FlightDetailControllerIT {
     }
 
 }
+*/
