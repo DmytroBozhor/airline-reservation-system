@@ -1,7 +1,7 @@
-create table if not exists "flight_service"
+CREATE TABLE IF NOT EXISTS "flight_service"
 (
-    "id"           serial,
-    "service_name" varchar(255) not null,
-    constraint "flight_service_id_pk" primary key ("id"),
-    constraint "service_name_check" check ( "service_name" in ('FOOD', 'FRENCH_WINE', 'WIFI', 'ENTERTAINMENT', 'LOUNGE'))
+    "id"           BIGSERIAL,
+    "service_name" VARCHAR(255)   NOT NULL,
+    "cost"         DECIMAL(12, 2) NOT NULL,
+    CONSTRAINT "flight_service_pk" PRIMARY KEY ("id")
 );

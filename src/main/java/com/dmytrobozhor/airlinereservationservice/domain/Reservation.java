@@ -9,18 +9,16 @@ import lombok.NoArgsConstructor;
 import java.sql.Timestamp;
 import java.time.Instant;
 
-@Entity
-@Table(name = "reservation")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Entity
 public class Reservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
+    private Long id;
 
     @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "passenger_id", referencedColumnName = "id", nullable = false)

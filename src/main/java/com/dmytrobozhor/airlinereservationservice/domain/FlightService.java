@@ -4,39 +4,26 @@ import com.dmytrobozhor.airlinereservationservice.util.enums.ServiceName;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "flight_service")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Entity
+@Table(name = "flight_service")
 public class FlightService {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
+    private Long id;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "service_name", nullable = false)
-    private ServiceName serviceName;
+    private String serviceName;
 
-    @ManyToMany
-    @JoinTable(name = "service_offering",
-            joinColumns = {@JoinColumn(name = "flight_service_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "travel_class_id", referencedColumnName = "id")})
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @Builder.Default
-    private List<TravelClass> travelClasses = new ArrayList<>();
-
-//    TODO: sort out the thing below and the one that is in the TravelClass
-//    @OneToMany(mappedBy = "flightService")
-//    @ToString.Exclude
-//    @EqualsAndHashCode.Exclude
-//    private List<ServiceOffering> serviceOfferings;
+    @Column(nullable = false, precision = 12, scale = 2)
+    private BigDecimal cost;
 
 }

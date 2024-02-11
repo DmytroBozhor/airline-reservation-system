@@ -1,11 +1,13 @@
-create table if not exists "payment_status"
+CREATE TABLE IF NOT EXISTS "payment_status"
 (
-    "id"             serial,
-    "status_yn"      varchar(1)     not null,
-    "due_date"       date           not null,
-    "amount"         decimal(12, 2) not null,
-    "reservation_id" int            not null,
-    constraint "payment_status_id_pk" primary key ("id"),
-    constraint "reservation_id_fk" foreign key ("reservation_id") references "reservation" ("id"),
-    constraint "status_yn_check" check ( "status_yn" in ('Y', 'N'))
+    "id"             BIGSERIAL,
+    "status"         VARCHAR(32)    NOT NULL,
+    "due_date"       DATE           NOT NULL,
+    "amount"         DECIMAL(12, 2) NOT NULL,
+    "reservation_id" BIGINT         NOT NULL,
+    CONSTRAINT "payment_status_pk" PRIMARY KEY ("id"),
+    CONSTRAINT "reservation_id_fk" FOREIGN KEY ("reservation_id") REFERENCES "reservation" ("id"),
+    CONSTRAINT "status_yn_check" CHECK ( "status" IN
+                                         ('PENDING', 'COMPLETE', 'REFUNDED', 'FAILED', 'ABANDONED', 'REVOKED',
+                                          'PREAPPROVED', 'ON_HOLD', 'CANCELLED'))
 );

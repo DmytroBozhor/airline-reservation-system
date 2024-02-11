@@ -1,6 +1,5 @@
 package com.dmytrobozhor.airlinereservationservice.domain;
 
-import com.dmytrobozhor.airlinereservationservice.util.compositeid.ServiceOfferingId;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,18 +8,20 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Timestamp;
 
-@Entity
-@Table(name = "service_offering")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Entity
+@Table(name = "service_offering", uniqueConstraints =
+@UniqueConstraint(columnNames = {"travel_class_id", "flight_service_id"}))
 public class ServiceOffering {
 
-    @EmbeddedId
-    private ServiceOfferingId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column(name = "offered", nullable = false)
+    @Column(nullable = false)
     private Boolean offered;
 
     @Column(name = "from_date")
@@ -32,13 +33,11 @@ public class ServiceOffering {
     @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "travel_class_id", referencedColumnName = "id",
             nullable = false, insertable = false, updatable = false)
-    @MapsId(value = "travelClassId")
     private TravelClass travelClass;
 
     @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "flight_service_id", referencedColumnName = "id",
             nullable = false, insertable = false, updatable = false)
-    @MapsId(value = "flightServiceId")
     private FlightService flightService;
 
 }

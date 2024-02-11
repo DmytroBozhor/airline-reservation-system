@@ -1,17 +1,17 @@
-create table if not exists "passenger"
+CREATE TABLE IF NOT EXISTS "passenger"
 (
-    "id"           serial,
-    "first_name"   varchar(255) not null,
-    "last_name"    varchar(255) not null,
-    "email"        varchar(255),
-    "phone_number" varchar(255) not null,
-    "address"      varchar(255),
-    "city"         varchar(255),
-    "state"        varchar(255),
-    "zipcode"      varchar(255),
-    "country"      varchar(255),
-    constraint "passenger_id_pk" primary key ("id"),
-    constraint "zipcode_check" check (length("zipcode") = 5),
-    constraint "phone_number_unique" unique ("phone_number"),
-    constraint "phone_number_check" check (length("phone_number") = 10)
+    "id"           BIGSERIAL,
+    "first_name"   VARCHAR(255) NOT NULL,
+    "last_name"    VARCHAR(255) NOT NULL,
+    "email"        VARCHAR(255),
+    "phone_number" VARCHAR(255) NOT NULL,
+    "address"      VARCHAR(255),
+    "city"         VARCHAR(255),
+    "state"        VARCHAR(255),
+    "zipcode"      VARCHAR(255),
+    "country"      VARCHAR(255),
+    CONSTRAINT "passenger_pk" PRIMARY KEY ("id"),
+    CONSTRAINT "zipcode_check" CHECK (LENGTH("zipcode") = 5),
+    CONSTRAINT "phone_number_check" CHECK (LENGTH("phone_number") = 10),
+    CONSTRAINT "phone_number_unique" UNIQUE ("phone_number")
 );

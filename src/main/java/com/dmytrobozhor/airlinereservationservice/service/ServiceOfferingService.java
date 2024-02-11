@@ -2,7 +2,6 @@ package com.dmytrobozhor.airlinereservationservice.service;
 
 import com.dmytrobozhor.airlinereservationservice.domain.ServiceOffering;
 import com.dmytrobozhor.airlinereservationservice.repository.ServiceOfferingRepository;
-import com.dmytrobozhor.airlinereservationservice.util.compositeid.ServiceOfferingId;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.ServiceOfferingMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.function.Supplier;
 
 @Service
 @Transactional

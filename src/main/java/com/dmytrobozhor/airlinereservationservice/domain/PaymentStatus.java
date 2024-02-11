@@ -10,21 +10,20 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.sql.Date;
 
-@Entity
-@Table(name = "payment_status")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Entity
+@Table(name = "payment_status")
 public class PaymentStatus {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private Integer id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "status_yn", nullable = false)
+    @Column(nullable = false)
     private Status status;
 
     @Column(name = "due_date", nullable = false)

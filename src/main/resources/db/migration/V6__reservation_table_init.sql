@@ -1,10 +1,10 @@
-create table if not exists "reservation"
+CREATE TABLE IF NOT EXISTS "reservation"
 (
-    "id"                    serial,
-    "passenger_id"          int       not null,
-    "seat_details_id"       int       not null,
-    "reservation_date_time" timestamp not null,
-    constraint "reservation_id_pk" primary key ("id"),
-    constraint "passenger_id_fk" foreign key ("passenger_id") references "passenger" ("id"),
-    constraint "seat_details_id_fk" foreign key ("seat_details_id") references "seat_details" ("id")
+    "id"                    BIGSERIAL,
+    "passenger_id"          BIGINT    NOT NULL,
+    "seat_details_id"       BIGINT    NOT NULL,
+    "reservation_date_time" TIMESTAMP NOT NULL,
+    CONSTRAINT "reservation_pk" PRIMARY KEY ("id"),
+    CONSTRAINT "passenger_id_fk" FOREIGN KEY ("passenger_id") REFERENCES "passenger" ("id"),
+    CONSTRAINT "seat_details_id_fk" FOREIGN KEY ("seat_details_id") REFERENCES "seat_details" ("id")
 );

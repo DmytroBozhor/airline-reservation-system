@@ -1,9 +1,9 @@
-create table if not exists "seat_details"
+CREATE TABLE IF NOT EXISTS "seat_details"
 (
-    "id"                serial,
-    "travel_class_id"   int not null,
-    "flight_details_id" int not null,
-    constraint "seat_details_id_pk" primary key ("id"),
-    constraint "travel_class_id_fk" foreign key ("travel_class_id") references "travel_class" ("id"),
-    constraint "flight_details_id_fk" foreign key ("flight_details_id") references "flight_details" ("id")
+    "id"                BIGSERIAL,
+    "travel_class_id"   BIGINT NOT NULL,
+    "flight_details_id" BIGINT NOT NULL,
+    CONSTRAINT "seat_details_pk" PRIMARY KEY ("id"),
+    CONSTRAINT "travel_class_id_fk" FOREIGN KEY ("travel_class_id") REFERENCES "travel_class" ("id"),
+    CONSTRAINT "flight_details_id_fk" FOREIGN KEY ("flight_details_id") REFERENCES "flight_details" ("id")
 );

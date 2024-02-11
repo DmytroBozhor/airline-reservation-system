@@ -1,6 +1,5 @@
 package com.dmytrobozhor.airlinereservationservice.domain;
 
-import com.dmytrobozhor.airlinereservationservice.util.compositeid.FlightCostId;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,34 +8,34 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
-@Entity
-@Table(name = "flight_cost")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Entity
+@Table(name = "flight_cost", uniqueConstraints =
+@UniqueConstraint(columnNames = {"seat_details_id", "valid_from_date_id"}))
 public class FlightCost {
 
-    @EmbeddedId
-    private FlightCostId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "seat_details_id", referencedColumnName = "id",
             nullable = false, insertable = false, updatable = false)
-    @MapsId(value = "seatDetailId")
     private SeatDetail seatDetail;
 
     @ManyToOne(cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "valid_from_date_id", referencedColumnName = "day_date",
+    @JoinColumn(name = "valid_from_date_id", referencedColumnName = "id",
             nullable = false, insertable = false, updatable = false)
-    @MapsId(value = "validFromDateId")
     private Calendar validFromDate;
 
     @ManyToOne(cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "valid_to_date_id", referencedColumnName = "day_date", nullable = false)
+    @JoinColumn(name = "valid_to_date_id", referencedColumnName = "id", nullable = false)
     private Calendar validToDate;
 
-    @Column(name = "cost", nullable = false, precision = 12, scale = 2)
+    @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal cost;
 
 }

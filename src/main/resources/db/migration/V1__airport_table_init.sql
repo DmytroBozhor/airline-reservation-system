@@ -1,8 +1,8 @@
-create table if not exists "airport"
+CREATE TABLE IF NOT EXISTS "airport"
 (
-    "id"      serial,
-    "name"    varchar(255) not null,
-    "city"    varchar(255) not null,
-    "country" varchar(255) not null,
-    constraint "airport_id_pk" primary key ("id")
+    "id"      BIGSERIAL,
+    "name"    VARCHAR(255) NOT NULL,
+    "city"    VARCHAR(255) NOT NULL,
+    "country" VARCHAR(255) NOT NULL,
+    CONSTRAINT "airport_pk" PRIMARY KEY ("id")
 );

@@ -1,12 +1,13 @@
-create table if not exists "flight_cost"
+CREATE TABLE IF NOT EXISTS "flight_cost"
 (
-    "seat_details_id"    int            not null,
-    "valid_from_date_id" date           not null,
-    "valid_to_date_id"   date           not null,
-    "cost"               decimal(12, 2) not null,
-    constraint "seat_details_id_fk" foreign key ("seat_details_id") references "seat_details" ("id"),
-    constraint "valid_from_date_id_fk" foreign key ("valid_from_date_id") references "calendar" ("day_date"),
-    constraint "valid_to_date_id_fk" foreign key ("valid_to_date_id") references "calendar" ("day_date"),
-    constraint "seat_details_id_valid_from_date_id_pk" primary key ("seat_details_id", "valid_from_date_id"),
-    constraint "valid_from_date_id_valid_to_date_id_check" check ( "valid_from_date_id" < "valid_to_date_id" )
+    "id"                 BIGSERIAL,
+    "seat_details_id"    BIGINT         NOT NULL,
+    "valid_from_date_id" BIGINT         NOT NULL,
+    "valid_to_date_id"   BIGINT         NOT NULL,
+    "cost"               DECIMAL(12, 2) NOT NULL,
+    CONSTRAINT "flight_cost_id" PRIMARY KEY ("id"),
+    CONSTRAINT "seat_details_id_fk" FOREIGN KEY ("seat_details_id") REFERENCES "seat_details" ("id"),
+    CONSTRAINT "valid_from_date_id_fk" FOREIGN KEY ("valid_from_date_id") REFERENCES "calendar" ("id"),
+    CONSTRAINT "valid_to_date_id_fk" FOREIGN KEY ("valid_to_date_id") REFERENCES "calendar" ("id"),
+    CONSTRAINT "seat_details_id_valid_from_date_id_unique" UNIQUE ("seat_details_id", "valid_from_date_id")
 );

@@ -1,11 +1,10 @@
 package com.dmytrobozhor.airlinereservationservice.web.controller;
 
-import com.dmytrobozhor.airlinereservationservice.domain.SeatDetail;
 import com.dmytrobozhor.airlinereservationservice.dto.FlightCostDto;
 import com.dmytrobozhor.airlinereservationservice.dto.FlightCostPartialUpdateDto;
 import com.dmytrobozhor.airlinereservationservice.dto.FlightCostSaveDto;
 import com.dmytrobozhor.airlinereservationservice.service.AbstractFlightCostService;
-import com.dmytrobozhor.airlinereservationservice.util.compositeid.FlightCostId;
+import com.dmytrobozhor.airlinereservationservice.domain.compositeid.FlightCostId;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.FlightCostMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,8 @@
-create table if not exists "calendar"
+CREATE TABLE IF NOT EXISTS "calendar"
 (
-    "day_date"     date,
-    "business_day" boolean not null,
-    constraint "calendar_id_pk" primary key ("day_date")
+    "id"           BIGSERIAL,
+    "day_date"     DATE    NOT NULL,
+    "business_day" BOOLEAN NOT NULL,
+    CONSTRAINT "calendar_pk" PRIMARY KEY ("id"),
+    CONSTRAINT "day_date_unique" UNIQUE ("day_date")
 );

@@ -6,7 +6,6 @@ import com.dmytrobozhor.airlinereservationservice.domain.TravelClass;
 import com.dmytrobozhor.airlinereservationservice.repository.FlightServiceRepository;
 import com.dmytrobozhor.airlinereservationservice.repository.ServiceOfferingRepository;
 import com.dmytrobozhor.airlinereservationservice.repository.TravelClassRepository;
-import com.dmytrobozhor.airlinereservationservice.util.compositeid.ServiceOfferingId;
 import com.dmytrobozhor.airlinereservationservice.util.enums.ServiceName;
 import com.dmytrobozhor.airlinereservationservice.util.enums.TravelClassName;
 import org.junit.jupiter.api.*;

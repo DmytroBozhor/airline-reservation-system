@@ -5,22 +5,27 @@ spring:
     username: postgres
     password: 1
   jpa:
-    hibernate:
-      ddl-auto: none
-    show-sql: true
     database: postgresql
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        highlight_sql: true
+        hbm2ddl:auto: none
   flyway:
-    locations: filesystem:.\src\main\resources\db\migration
+    locations: classpath:db/migration
     enabled: true
     clean-disabled: true
     baseline-on-migrate: true
+    schemas: public
+    default-schema: public
     driver-class-name: org.postgresql.Driver
     url: jdbc:postgresql://localhost:5432/airline_reservation
     user: postgres
     password: 1
-    schemas: public
-    default-schema: public
 
 logging:
   level:
@@ -29,7 +34,7 @@ logging:
       hibernate: info
       flywaydb: info
     com:
-      dmytrobozhor.airlinereservationservice: debug
+      dmytrobozhor:airlinereservationservice: debug
 
 server:
   port: 8080

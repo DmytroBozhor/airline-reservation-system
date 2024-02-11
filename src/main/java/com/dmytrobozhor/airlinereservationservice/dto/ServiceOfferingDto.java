@@ -1,7 +1,6 @@
 package com.dmytrobozhor.airlinereservationservice.dto;
 
 import com.dmytrobozhor.airlinereservationservice.util.annotations.DateConstraint;
-import com.dmytrobozhor.airlinereservationservice.util.compositeid.ServiceOfferingId;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 

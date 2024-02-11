@@ -1,11 +1,8 @@
 package com.dmytrobozhor.airlinereservationservice.service;
 
-import com.dmytrobozhor.airlinereservationservice.domain.Airport;
 import com.dmytrobozhor.airlinereservationservice.domain.FlightCost;
-import com.dmytrobozhor.airlinereservationservice.repository.AirportRepository;
 import com.dmytrobozhor.airlinereservationservice.repository.FlightCostRepository;
-import com.dmytrobozhor.airlinereservationservice.util.compositeid.FlightCostId;
-import com.dmytrobozhor.airlinereservationservice.util.mappers.AirportMapper;
+import com.dmytrobozhor.airlinereservationservice.domain.compositeid.FlightCostId;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.FlightCostMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -13,9 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Function;
-import java.util.function.Supplier;
 
 @Service
 @RequiredArgsConstructor

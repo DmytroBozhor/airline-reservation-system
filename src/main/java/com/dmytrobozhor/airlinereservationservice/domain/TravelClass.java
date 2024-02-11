@@ -7,38 +7,23 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "travel_class")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Entity
+@Table(name = "travel_class")
 public class TravelClass {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
+    private Long id;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "name", nullable = false)
+    @Column(nullable = false)
     private TravelClassName name;
 
-    @Column(name = "capacity", nullable = false)
+    @Column(nullable = false)
     private Integer capacity;
-
-    @ManyToMany
-    @JoinTable(name = "service_offering",
-            joinColumns = {@JoinColumn(name = "travel_class_id", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "flight_service_id", referencedColumnName = "id")})
-    @ToString.Exclude
-    @EqualsAndHashCode.Exclude
-    @Builder.Default
-    private List<FlightService> flightServices = new ArrayList<>();
-
-//    @OneToMany(mappedBy = "travelClass")
-//    @ToString.Exclude
-//    @EqualsAndHashCode.Exclude
-//    private List<ServiceOffering> serviceOfferings;
 
 }

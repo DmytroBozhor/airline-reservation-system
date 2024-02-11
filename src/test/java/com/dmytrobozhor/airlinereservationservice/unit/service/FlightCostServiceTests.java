@@ -4,7 +4,7 @@ import com.dmytrobozhor.airlinereservationservice.domain.Calendar;
 import com.dmytrobozhor.airlinereservationservice.domain.FlightCost;
 import com.dmytrobozhor.airlinereservationservice.repository.FlightCostRepository;
 import com.dmytrobozhor.airlinereservationservice.service.FlightCostService;
-import com.dmytrobozhor.airlinereservationservice.util.compositeid.FlightCostId;
+import com.dmytrobozhor.airlinereservationservice.domain.compositeid.FlightCostId;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.FlightCostMapper;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.*;

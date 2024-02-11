@@ -1,5 +1,13 @@
 package com.dmytrobozhor.airlinereservationservice.util.enums;
 
 public enum Status {
-    Y, N;
+    PENDING,
+    COMPLETE,
+    REFUNDED,
+    FAILED,
+    ABANDONED,
+    REVOKED,
+    PREAPPROVED,
+    ON_HOLD,
+    CANCELLED;
 }

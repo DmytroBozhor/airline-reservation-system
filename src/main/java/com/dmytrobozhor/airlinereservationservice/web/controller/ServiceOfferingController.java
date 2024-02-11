@@ -4,7 +4,6 @@ import com.dmytrobozhor.airlinereservationservice.dto.ServiceOfferingDto;
 import com.dmytrobozhor.airlinereservationservice.dto.ServiceOfferingPartialUpdateDto;
 import com.dmytrobozhor.airlinereservationservice.dto.ServiceOfferingSaveDto;
 import com.dmytrobozhor.airlinereservationservice.service.AbstractServiceOfferingService;
-import com.dmytrobozhor.airlinereservationservice.util.compositeid.ServiceOfferingId;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.ServiceOfferingMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

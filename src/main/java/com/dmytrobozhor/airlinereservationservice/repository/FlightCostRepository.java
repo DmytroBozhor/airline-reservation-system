@@ -1,7 +1,7 @@
 package com.dmytrobozhor.airlinereservationservice.repository;
 
 import com.dmytrobozhor.airlinereservationservice.domain.FlightCost;
-import com.dmytrobozhor.airlinereservationservice.util.compositeid.FlightCostId;
+import com.dmytrobozhor.airlinereservationservice.domain.compositeid.FlightCostId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

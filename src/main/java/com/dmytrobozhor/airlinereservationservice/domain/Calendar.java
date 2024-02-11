@@ -8,16 +8,18 @@ import lombok.NoArgsConstructor;
 
 import java.sql.Date;
 
-@Entity
-@Table(name = "calendar")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Entity
 public class Calendar {
 
     @Id
-    @Column(name = "day_date")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(unique = true)
     private Date date;
 
     @Column(name = "business_day", nullable = false)
