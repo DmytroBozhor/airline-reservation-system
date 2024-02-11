@@ -1,4 +1,4 @@
-# **Technology stack:**
+# **This project is going to cover the following technology stack:**
 
 •	Spring Boot
 •	Spring Web
@@ -10,6 +10,7 @@
 •	Mockito
 •	Testcontainers
 •	Docker
+•	Docker Compose
 •	PostgreSQL
 •	Flyway
 •	Tomcat embedded
