@@ -37,30 +37,22 @@ public class AirportService implements AbstractAirportService {
         return airportRepository.save(airport);
     }
 
-    //    TODO: replace types with var all over the project
     @Override
-    public void deleteById(Integer id) {
-        Airport airport = airportRepository.findById(id)
-                .orElseThrow(EntityNotFoundException::new);
-        airportRepository.delete(airport);
-    }
-
-    @Override
-    public void delete(Airport airport) {
-        Airport persistedAirport = airportRepository
-                .findByAllFields(airport).orElseThrow(EntityNotFoundException::new);
-        airportRepository.delete(persistedAirport);
+    public Airport deleteById(Long id) {
+        var airport = airportRepository.findById(id);
+        airport.ifPresent(airportRepository::delete);
+        return airport.orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Airport findById(Integer id) {
+    public Airport findById(Long id) {
         return airportRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
-    public Airport updateById(Integer id, Airport airport) {
+    public Airport updateById(Long id, Airport airport) {
         return airportRepository.findById(id).map(persistedAirport -> {
             airportMapper.updateAirportPartial(persistedAirport, airport);
             return airportRepository.save(persistedAirport);
@@ -68,18 +60,18 @@ public class AirportService implements AbstractAirportService {
     }
 
     @Override
-    public Airport updateOrCreateById(Integer id, Airport airport) {
+    public Airport updateOrCreateById(Long id, Airport airport) {
         return airportRepository.findById(id).map(persistedAirport -> {
             airportMapper.updateAirportPartial(persistedAirport, airport);
             return airportRepository.save(persistedAirport);
         }).orElseGet(() -> airportRepository.save(airport));
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public Optional<Airport> findByAllFields(Airport airport) {
-        return airportRepository.findByAllFields(airport);
-    }
+//    @Override
+//    @Transactional(readOnly = true)
+//    public Optional<Airport> findByAllFields(Airport airport) {
+//        return airportRepository.findByAllFields(airport);
+//    }
 
     @Override
     public List<Airport> saveAll(List<Airport> airportsForSave) {

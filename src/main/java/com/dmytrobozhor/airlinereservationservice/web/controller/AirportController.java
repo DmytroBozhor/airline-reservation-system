@@ -38,20 +38,20 @@ public class AirportController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public AirportDto getAirportById(@PathVariable Integer id) {
+    public AirportDto getAirportById(@PathVariable Long id) {
         return airportMapper.toAirportDto(airportService.findById(id));
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteAirportById(@PathVariable Integer id) {
-        airportService.deleteById(id);
+    @ResponseStatus(HttpStatus.OK)
+    public AirportDto deleteAirportById(@PathVariable Long id) {
+        return airportMapper.toAirportDto(airportService.deleteById(id));
     }
 
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public AirportDto updateAirport(
-            @RequestBody @Valid AirportPartialUpdateDto airportDto, @PathVariable Integer id) {
+            @RequestBody @Valid AirportPartialUpdateDto airportDto, @PathVariable Long id) {
         var airport = airportMapper.toAirport(airportDto);
         return airportMapper.toAirportDto(airportService.updateById(id, airport));
     }
@@ -59,7 +59,7 @@ public class AirportController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public AirportDto updateOrCreateAirport(
-            @RequestBody @Valid AirportSaveDto airportDto, @PathVariable Integer id) {
+            @RequestBody @Valid AirportSaveDto airportDto, @PathVariable Long id) {
         var airport = airportMapper.toAirport(airportDto);
         return airportMapper.toAirportDto(airportService.updateOrCreateById(id, airport));
     }

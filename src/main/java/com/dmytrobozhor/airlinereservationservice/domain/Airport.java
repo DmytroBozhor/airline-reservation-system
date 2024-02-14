@@ -1,10 +1,10 @@
 package com.dmytrobozhor.airlinereservationservice.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -25,5 +25,17 @@ public class Airport {
 
     @Column(nullable = false)
     private String country;
+
+    @Builder.Default
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "sourceAirport")
+    private List<FlightDetail> flightDetailsAsSource = new ArrayList<>();
+
+    @Builder.Default
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
+    @OneToMany(mappedBy = "destinationAirport")
+    private List<FlightDetail> flightDetailsAsDestination = new ArrayList<>();
 
 }

@@ -5,11 +5,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Repository
-public interface AirportRepository extends JpaRepository<Airport, Integer> {
+public interface AirportRepository extends JpaRepository<Airport, Long> {
 
 //    @Override
 //    @EntityGraph(type = EntityGraph.EntityGraphType.FETCH, value = "user_entity-graph")
@@ -30,11 +31,15 @@ public interface AirportRepository extends JpaRepository<Airport, Integer> {
 //    void delete(Airport entity);
 
 
-    @Query(nativeQuery = true,
-            value = "select * from airport " +
-                    "where name = :#{#airport.getName()} " +
-                    "and city = :#{#airport.getCity()} " +
-                    "and country = :#{#airport.getCountry()}")
-    Optional<Airport> findByAllFields(Airport airport);
-
+//    @Query(nativeQuery = true,
+//            value = "SELECT * FROM airport " +
+//                    "WHERE name = :#{#airport.getName()} " +
+//                    "AND city = :#{#airport.getCity()} " +
+//                    "AND country = :#{#airport.getCountry()}")
+//    Optional<Airport> findByAllFields(Airport airport);
+//
+//    @Transactional
+//    @Query(nativeQuery = true, value = "DELETE FROM airport WHERE id = :id RETURNING *")
+//    @Modifying(flushAutomatically = true, clearAutomatically = true)
+//    Optional<Airport> deleteByIdAndReturn(Long id);
 }
