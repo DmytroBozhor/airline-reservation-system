@@ -38,21 +38,20 @@ public class FlightDetailController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public FlightDetailDto getFlightDetailById(@PathVariable Integer id) {
+    public FlightDetailDto getFlightDetailById(@PathVariable Long id) {
         return flightDetailMapper.toFlightDetailDto(flightDetailService.findById(id));
     }
 
-    //    TODO: return something other than void in all controllers
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteFlightDetailById(@PathVariable Integer id) {
-        flightDetailService.deleteById(id);
+    @ResponseStatus(HttpStatus.OK)
+    public FlightDetailDto deleteFlightDetailById(@PathVariable Long id) {
+        return flightDetailMapper.toFlightDetailDto(flightDetailService.deleteById(id));
     }
 
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public FlightDetailDto updateFlightDetail(
-            @RequestBody @Valid FlightDetailPartialUpdateDto flightDetailDto, @PathVariable Integer id) {
+            @RequestBody @Valid FlightDetailPartialUpdateDto flightDetailDto, @PathVariable Long id) {
         var flightDetail = flightDetailMapper.toFlightDetail(flightDetailDto);
         return flightDetailMapper.toFlightDetailDto(flightDetailService.updateById(id, flightDetail));
     }
@@ -60,7 +59,7 @@ public class FlightDetailController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public FlightDetailDto updateOrCreateFlightDetail(
-            @RequestBody @Valid FlightDetailSaveDto flightDetailDto, @PathVariable Integer id) {
+            @RequestBody @Valid FlightDetailSaveDto flightDetailDto, @PathVariable Long id) {
         var flightDetail = flightDetailMapper.toFlightDetail(flightDetailDto);
         return flightDetailMapper.toFlightDetailDto(flightDetailService.updateOrCreateById(id, flightDetail));
     }

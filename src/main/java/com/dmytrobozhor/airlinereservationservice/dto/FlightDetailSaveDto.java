@@ -11,8 +11,8 @@ import org.hibernate.validator.constraints.Length;
 
 import java.sql.Timestamp;
 
-@DateConstraint
-@AirportConstraint
+//@DateConstraint
+//@AirportConstraint
 public record FlightDetailSaveDto(
 
         @NotNull
@@ -22,10 +22,11 @@ public record FlightDetailSaveDto(
         Timestamp arrivalDateTime,
 
         //TODO: * make the value of the airplaneType to uppercase using annotation and beanPostProcessor
-        @NotBlank
-        @Length(max = 255)
-        @EnumBasedString(enumClass = AirplaneType.class)
-        String airplaneType,
+//        @NotBlank
+        @NotNull
+//        @Length(max = 255)
+//        @EnumBasedString(enumClass = AirplaneType.class)
+        AirplaneType airplaneType,
 
         @NotNull
         @Valid

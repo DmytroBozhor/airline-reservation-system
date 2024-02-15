@@ -2,12 +2,11 @@ package com.dmytrobozhor.airlinereservationservice.domain;
 
 import com.dmytrobozhor.airlinereservationservice.util.enums.AirplaneType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -21,22 +20,26 @@ public class FlightDetail {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "departure_date_time", nullable = false)
+    @Column(nullable = false)
     private Timestamp departureDateTime;
 
-    @Column(name = "arrival_date_time", nullable = false)
+    @Column(nullable = false)
     private Timestamp arrivalDateTime;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "airplane_type", nullable = false)
+    @Column(nullable = false)
     private AirplaneType airplaneType;
 
-    @ManyToOne(cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "source_airport_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne(optional = false)
     private Airport sourceAirport;
 
-    @ManyToOne(cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "destination_airport_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne(optional = false)
     private Airport destinationAirport;
+
+    @Builder.Default
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @OneToMany(mappedBy = "flightDetail")
+    private List<SeatDetail> seatDetails = new ArrayList<>();
 
 }

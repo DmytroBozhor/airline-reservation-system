@@ -9,17 +9,17 @@ import org.hibernate.validator.constraints.Length;
 
 import java.sql.Timestamp;
 
-@DateConstraint
-@AirportConstraint
+//@DateConstraint
+//@AirportConstraint
 public record FlightDetailPartialUpdateDto(
 
         Timestamp departureDateTime,
 
         Timestamp arrivalDateTime,
 
-        @Length(max = 255)
-        @EnumBasedString(enumClass = AirplaneType.class)
-        String airplaneType,
+//        @Length(max = 255)
+//        @EnumBasedString(enumClass = AirplaneType.class)
+        AirplaneType airplaneType,
 
         @Valid
         AirportDto sourceAirport,
