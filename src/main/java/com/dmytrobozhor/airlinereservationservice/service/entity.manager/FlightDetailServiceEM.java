@@ -4,10 +4,12 @@ import com.dmytrobozhor.airlinereservationservice.domain.Airport;
 import com.dmytrobozhor.airlinereservationservice.domain.FlightDetail;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.persistence.FlushModeType;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.hibernate.Session;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -36,6 +38,15 @@ public class FlightDetailServiceEM implements AbstractFlightDetailServiceEM {
         mergeAirports(flightDetail);
         return entityManager.merge(flightDetail);
     }
+
+//    @Override
+//    public FlightDetail delete(Long id) {
+//        String sql = "DELETE FROM flight_details WHERE id = :id RETURNING *";
+//        var flightDetail = entityManager.createNativeQuery(sql, FlightDetail.class)
+//                .setParameter("id", id)
+//                .getSingleResult();
+//        return (FlightDetail) flightDetail;
+//    }
 
     private void mergeAirports(FlightDetail flightDetail) throws Throwable {
         var sourceAirportId = flightDetail.getSourceAirport().getId();

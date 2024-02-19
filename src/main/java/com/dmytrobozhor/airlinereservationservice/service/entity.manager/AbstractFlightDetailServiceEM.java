@@ -8,4 +8,6 @@ public interface AbstractFlightDetailServiceEM {
 
     FlightDetail update(FlightDetail flightDetail);
 
+//    FlightDetail delete(Long id);
+
 }

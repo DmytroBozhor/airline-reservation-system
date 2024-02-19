@@ -1,6 +1,7 @@
 package com.dmytrobozhor.airlinereservationservice.service;
 
 import com.dmytrobozhor.airlinereservationservice.domain.Passenger;
+import com.dmytrobozhor.airlinereservationservice.exceptions.EntityUniquePhoneNumberException;
 import com.dmytrobozhor.airlinereservationservice.repository.PassengerRepository;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.PassengerMapper;
 import jakarta.persistence.EntityNotFoundException;
@@ -10,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Supplier;
 
 @Service
 @Transactional
@@ -29,32 +29,30 @@ public class PassengerService implements AbstractPassengerService {
 
     @Override
     public Passenger save(Passenger passenger) {
+        if (passengerRepository.findPassengerByPhoneNumber(passenger.getPhoneNumber()).isPresent()) {
+            throw new EntityUniquePhoneNumberException("Passenger with a phone number "
+                    + passenger.getPhoneNumber() + " already exists");
+        }
         return passengerRepository.save(passenger);
     }
 
     @Override
-    public void deleteById(Integer id) {
-        Passenger passenger = passengerRepository.findById(id)
+    public Passenger deleteById(Long id) {
+        var passenger = passengerRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
         passengerRepository.delete(passenger);
-    }
-
-    @Override
-    public void delete(Passenger passenger) {
-        Passenger persistedPassenger = passengerRepository
-                .findByAllFields(passenger).orElseThrow(EntityNotFoundException::new);
-        passengerRepository.delete(persistedPassenger);
+        return passenger;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Passenger findById(Integer id) {
+    public Passenger findById(Long id) {
         return passengerRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
-    public Passenger updateById(Integer id, Passenger passenger) {
+    public Passenger updateById(Long id, Passenger passenger) {
         return passengerRepository.findById(id).map(persistedPassenger -> {
             passengerMapper.updatePassengerPartial(persistedPassenger, passenger);
             return passengerRepository.save(persistedPassenger);
@@ -62,7 +60,11 @@ public class PassengerService implements AbstractPassengerService {
     }
 
     @Override
-    public Passenger updateOrCreateById(Integer id, Passenger passenger) {
+    public Passenger updateOrCreateById(Long id, Passenger passenger) {
+        if (passengerRepository.findPassengerByPhoneNumber(passenger.getPhoneNumber()).isPresent()) {
+            throw new EntityUniquePhoneNumberException("Passenger with a phone number "
+                    + passenger.getPhoneNumber() + " already exists");
+        }
         return passengerRepository.findById(id).map(persistedPassenger -> {
             passengerMapper.updatePassengerPartial(persistedPassenger, passenger);
             return passengerRepository.save(persistedPassenger);

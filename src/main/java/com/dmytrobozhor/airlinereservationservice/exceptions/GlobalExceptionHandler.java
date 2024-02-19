@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
 import java.util.Date;
+import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -17,8 +20,8 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(EntityNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorDetail handleEntityNotFoundException(EntityNotFoundException ex, WebRequest request) {
-        return new ErrorDetail("The entity was not found. " + ex.getMessage(),
-                new Date(), request.getDescription(true));
+        var returningMessage = Optional.ofNullable(ex.getMessage()).orElse("The entity was not found.");
+        return new ErrorDetail(returningMessage, new Date(), request.getDescription(true));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -32,6 +35,13 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.CONFLICT)
     public ErrorDetail handleDataIntegrityViolationException(
             DataIntegrityViolationException ex, WebRequest request) {
+        return new ErrorDetail(ex.getMessage(), new Date(), request.getDescription(true));
+    }
+
+    @ExceptionHandler(EntityUniquePhoneNumberException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorDetail handleEntityUniquePhoneNumberException(
+            EntityUniquePhoneNumberException ex, WebRequest request) {
         return new ErrorDetail(ex.getMessage(), new Date(), request.getDescription(true));
     }
 
