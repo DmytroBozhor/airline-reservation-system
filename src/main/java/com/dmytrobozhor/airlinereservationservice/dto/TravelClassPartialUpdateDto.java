@@ -6,9 +6,9 @@ import org.hibernate.validator.constraints.Length;
 
 public record TravelClassPartialUpdateDto(
 
-        @Length(max = 255)
-        @EnumBasedString(enumClass = TravelClassName.class)
-        String name,
+//        @Length(max = 255)
+//        @EnumBasedString(enumClass = TravelClassName.class)
+        TravelClassName name,
 
         Integer capacity
 

@@ -9,12 +9,13 @@ import org.hibernate.validator.constraints.Length;
 public record TravelClassDto(
 
         @NotNull
-        Integer id,
+        Long id,
 
-        @NotBlank
-        @Length(max = 255)
-        @EnumBasedString(enumClass = TravelClassName.class)
-        String name,
+        @NotNull
+//        @NotBlank
+//        @Length(max = 255)
+//        @EnumBasedString(enumClass = TravelClassName.class)
+        TravelClassName name,
 
         @NotNull
         Integer capacity

@@ -1,6 +1,5 @@
 package com.dmytrobozhor.airlinereservationservice.service;
 
-import com.dmytrobozhor.airlinereservationservice.domain.Airport;
 import com.dmytrobozhor.airlinereservationservice.domain.TravelClass;
 import com.dmytrobozhor.airlinereservationservice.repository.TravelClassRepository;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.TravelClassMapper;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.function.Supplier;
 
 @Service
 @Transactional
@@ -34,29 +32,23 @@ public class TravelClassService implements AbstractTravelClassService {
     }
 
     @Override
-    public void deleteById(Integer id) {
-        TravelClass travelClass = travelClassRepository.findById(id)
+    public TravelClass deleteById(Long id) {
+        var travelClass = travelClassRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
         travelClassRepository.delete(travelClass);
-    }
-
-    @Override
-    public void delete(TravelClass travelClass) {
-        TravelClass persistedTravelClass = travelClassRepository
-                .findByAllFields(travelClass).orElseThrow(EntityNotFoundException::new);
-        travelClassRepository.delete(persistedTravelClass);
+        return travelClass;
     }
 
     //    TODO: learn about @Transactional
     @Override
     @Transactional(readOnly = true)
-    public TravelClass findById(Integer id) {
+    public TravelClass findById(Long id) {
         return travelClassRepository.findById(id)
                 .orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
-    public TravelClass updateById(Integer id, TravelClass travelClass) {
+    public TravelClass updateById(Long id, TravelClass travelClass) {
         return travelClassRepository.findById(id).map(persistedTravelClass -> {
             travelClassMapper.updateTravelClassPartial(persistedTravelClass, travelClass);
             return travelClassRepository.save(persistedTravelClass);
@@ -64,7 +56,7 @@ public class TravelClassService implements AbstractTravelClassService {
     }
 
     @Override
-    public TravelClass updateOrCreateById(Integer id, TravelClass travelClass) {
+    public TravelClass updateOrCreateById(Long id, TravelClass travelClass) {
         return travelClassRepository.findById(id).map(persistedTravelClass -> {
             travelClassMapper.updateTravelClassPartial(persistedTravelClass, travelClass);
             return travelClassRepository.save(persistedTravelClass);

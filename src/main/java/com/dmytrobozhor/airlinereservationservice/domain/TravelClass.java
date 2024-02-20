@@ -26,4 +26,16 @@ public class TravelClass {
     @Column(nullable = false)
     private Integer capacity;
 
+    @Builder.Default
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @OneToMany(mappedBy = "travelClass")
+    private List<SeatDetail> seatDetails = new ArrayList<>();
+
+    @Builder.Default
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @OneToMany(mappedBy = "travelClass")
+    private List<ServiceOffering> serviceOfferings = new ArrayList<>();
+
 }
