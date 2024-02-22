@@ -4,7 +4,7 @@ import com.dmytrobozhor.airlinereservationservice.dto.FlightDetailDto;
 import com.dmytrobozhor.airlinereservationservice.dto.FlightDetailPartialUpdateDto;
 import com.dmytrobozhor.airlinereservationservice.dto.FlightDetailSaveDto;
 import com.dmytrobozhor.airlinereservationservice.service.AbstractFlightDetailService;
-import com.dmytrobozhor.airlinereservationservice.util.mappers.FlightDetailMapper;
+import com.dmytrobozhor.airlinereservationservice.util.mappers.other.FlightDetailMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

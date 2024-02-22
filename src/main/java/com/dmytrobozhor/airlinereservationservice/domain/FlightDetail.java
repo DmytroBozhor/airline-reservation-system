@@ -30,10 +30,10 @@ public class FlightDetail {
     @Column(nullable = false)
     private AirplaneType airplaneType;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Airport sourceAirport;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Airport destinationAirport;
 
     @Builder.Default

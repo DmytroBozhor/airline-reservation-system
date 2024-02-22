@@ -4,16 +4,14 @@ import com.dmytrobozhor.airlinereservationservice.domain.FlightDetail;
 import com.dmytrobozhor.airlinereservationservice.repository.AirportRepository;
 import com.dmytrobozhor.airlinereservationservice.repository.FlightDetailRepository;
 import com.dmytrobozhor.airlinereservationservice.service.entity.manager.FlightDetailServiceEM;
-import com.dmytrobozhor.airlinereservationservice.util.mappers.FlightDetailMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.function.Function;
 
 @Service
 @Transactional
@@ -23,6 +21,8 @@ public class FlightDetailService implements AbstractFlightDetailService {
 
     private final FlightDetailRepository flightDetailRepository;
 
+    private final AirportRepository airportRepository;
+
     private final FlightDetailServiceEM flightDetailServiceEM;
 
     @Override
@@ -31,16 +31,28 @@ public class FlightDetailService implements AbstractFlightDetailService {
         return flightDetailRepository.findAll();
     }
 
+    @SneakyThrows
     @Override
     public FlightDetail save(FlightDetail flightDetail) {
-        return flightDetailServiceEM.save(flightDetail);
+        /*var sourceAirportId = flightDetail.getSourceAirport().getId();
+        var sourceAirport = airportRepository.findById(sourceAirportId)
+                .orElseThrow(() -> new EntityNotFoundException("No source airport found by id" + sourceAirportId));
+
+        var destinationAirportId = flightDetail.getDestinationAirport().getId();
+        var destinationAirport = airportRepository.findById(destinationAirportId)
+                .orElseThrow(() -> new EntityNotFoundException("No destination airport found by id" + destinationAirportId));
+
+        flightDetail.setSourceAirport(sourceAirport);
+        flightDetail.setDestinationAirport(destinationAirport);*/
+        return flightDetailRepository.save(flightDetail);
     }
 
     @Override
     public FlightDetail deleteById(Long id) {
-        var flightDetailOptional = flightDetailRepository.findById(id);
-        flightDetailOptional.ifPresent(flightDetailRepository::delete);
-        return flightDetailOptional.orElseThrow(EntityNotFoundException::new);
+        var flightDetail = flightDetailRepository.findById(id)
+                .orElseThrow(EntityNotFoundException::new);
+        flightDetailRepository.delete(flightDetail);
+        return flightDetail;
     }
 
     @Override
@@ -53,25 +65,19 @@ public class FlightDetailService implements AbstractFlightDetailService {
     @Override
     public FlightDetail updateById(Long id, FlightDetail flightDetail) {
         return flightDetailRepository.findById(id)
-                .map(persistedFlightDetail ->
-                        {
-                            flightDetail.setId(id);
-                            return flightDetailServiceEM.update(flightDetail);
-                        }
-                )
-                .orElseThrow(EntityNotFoundException::new);
+                .map(persistedFlightDetail -> {
+                    flightDetail.setId(id);
+                    return flightDetailServiceEM.update(flightDetail);
+                }).orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
     public FlightDetail updateOrCreateById(Long id, FlightDetail flightDetail) {
         return flightDetailRepository.findById(id)
-                .map(persistedFlightDetail ->
-                        {
-                            flightDetail.setId(id);
-                            return flightDetailServiceEM.update(flightDetail);
-                        }
-                )
-                .orElseGet(() -> flightDetailServiceEM.save(flightDetail));
+                .map(persistedFlightDetail -> {
+                    flightDetail.setId(id);
+                    return flightDetailServiceEM.update(flightDetail);
+                }).orElseGet(() -> flightDetailServiceEM.save(flightDetail));
     }
 
     @Override
