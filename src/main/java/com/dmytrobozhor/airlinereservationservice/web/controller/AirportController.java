@@ -4,7 +4,7 @@ import com.dmytrobozhor.airlinereservationservice.dto.AirportDto;
 import com.dmytrobozhor.airlinereservationservice.dto.AirportSaveDto;
 import com.dmytrobozhor.airlinereservationservice.dto.AirportPartialUpdateDto;
 import com.dmytrobozhor.airlinereservationservice.service.AbstractAirportService;
-import com.dmytrobozhor.airlinereservationservice.util.mappers.AirportMapper;
+import com.dmytrobozhor.airlinereservationservice.util.mappers.airport.AirportMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -1,9 +1,8 @@
 package com.dmytrobozhor.airlinereservationservice.service;
 
 import com.dmytrobozhor.airlinereservationservice.domain.FlightDetail;
-import com.dmytrobozhor.airlinereservationservice.repository.AirportRepository;
 import com.dmytrobozhor.airlinereservationservice.repository.FlightDetailRepository;
-import com.dmytrobozhor.airlinereservationservice.service.entity.manager.FlightDetailServiceEM;
+import com.dmytrobozhor.airlinereservationservice.util.mappers.flightdetail.FlightDetailMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -21,9 +20,7 @@ public class FlightDetailService implements AbstractFlightDetailService {
 
     private final FlightDetailRepository flightDetailRepository;
 
-    private final AirportRepository airportRepository;
-
-    private final FlightDetailServiceEM flightDetailServiceEM;
+    private final FlightDetailMapper flightDetailMapper;
 
     @Override
     @Transactional(readOnly = true)
@@ -34,16 +31,6 @@ public class FlightDetailService implements AbstractFlightDetailService {
     @SneakyThrows
     @Override
     public FlightDetail save(FlightDetail flightDetail) {
-        /*var sourceAirportId = flightDetail.getSourceAirport().getId();
-        var sourceAirport = airportRepository.findById(sourceAirportId)
-                .orElseThrow(() -> new EntityNotFoundException("No source airport found by id" + sourceAirportId));
-
-        var destinationAirportId = flightDetail.getDestinationAirport().getId();
-        var destinationAirport = airportRepository.findById(destinationAirportId)
-                .orElseThrow(() -> new EntityNotFoundException("No destination airport found by id" + destinationAirportId));
-
-        flightDetail.setSourceAirport(sourceAirport);
-        flightDetail.setDestinationAirport(destinationAirport);*/
         return flightDetailRepository.save(flightDetail);
     }
 
@@ -65,19 +52,17 @@ public class FlightDetailService implements AbstractFlightDetailService {
     @Override
     public FlightDetail updateById(Long id, FlightDetail flightDetail) {
         return flightDetailRepository.findById(id)
-                .map(persistedFlightDetail -> {
-                    flightDetail.setId(id);
-                    return flightDetailServiceEM.update(flightDetail);
-                }).orElseThrow(EntityNotFoundException::new);
+                .map(persistedFlightDetail -> flightDetailMapper
+                        .updateFlightDetailPartially(persistedFlightDetail, flightDetail))
+                .orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
     public FlightDetail updateOrCreateById(Long id, FlightDetail flightDetail) {
         return flightDetailRepository.findById(id)
-                .map(persistedFlightDetail -> {
-                    flightDetail.setId(id);
-                    return flightDetailServiceEM.update(flightDetail);
-                }).orElseGet(() -> flightDetailServiceEM.save(flightDetail));
+                .map(persistedFlightDetail -> flightDetailMapper
+                        .updateFlightDetailPartially(persistedFlightDetail, flightDetail))
+                .orElseGet(() -> flightDetailRepository.save(flightDetail));
     }
 
     @Override

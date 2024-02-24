@@ -9,9 +9,7 @@ public interface AbstractCrudService<T, ID> {
 
     T save(T entity);
 
-    void deleteById(ID id);
-
-    void delete(T entity);
+    T deleteById(ID id);
 
     T findById(ID id);
 

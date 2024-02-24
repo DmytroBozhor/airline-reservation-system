@@ -1,6 +1,5 @@
 package com.dmytrobozhor.airlinereservationservice.dto;
 
-import com.dmytrobozhor.airlinereservationservice.util.annotations.AirportConstraint;
 import com.dmytrobozhor.airlinereservationservice.util.annotations.DateConstraint;
 import com.dmytrobozhor.airlinereservationservice.util.annotations.EnumBasedString;
 import com.dmytrobozhor.airlinereservationservice.util.enums.AirplaneType;
@@ -16,7 +15,7 @@ import java.sql.Timestamp;
 public record FlightDetailDto(
 
         @NotNull
-        Integer id,
+        Long id,
 
         @NotNull
         Timestamp departureDateTime,
@@ -31,12 +30,10 @@ public record FlightDetailDto(
         AirplaneType airplaneType,
 
         @NotNull
-        @Valid
-        AirportDto sourceAirport,
+        Long sourceAirportId,
 
         @NotNull
-        @Valid
-        AirportDto destinationAirport
+        Long destinationAirportId
 
 ) {
 }

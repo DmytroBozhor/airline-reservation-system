@@ -11,7 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-public class Airport {
+public class Airport implements BaseEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,5 +37,15 @@ public class Airport {
     @EqualsAndHashCode.Exclude
     @OneToMany(mappedBy = "destinationAirport")
     private List<FlightDetail> flightDetailsAsDestination = new ArrayList<>();
+
+    public void addFlightDetailSource(FlightDetail flightDetail){
+        this.flightDetailsAsSource.add(flightDetail);
+        flightDetail.setSourceAirport(this);
+    }
+
+    public void addFlightDetailDestination(FlightDetail flightDetail){
+        this.flightDetailsAsDestination.add(flightDetail);
+        flightDetail.setDestinationAirport(this);
+    }
 
 }

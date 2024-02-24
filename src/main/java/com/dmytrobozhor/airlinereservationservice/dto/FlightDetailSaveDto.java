@@ -1,6 +1,5 @@
 package com.dmytrobozhor.airlinereservationservice.dto;
 
-import com.dmytrobozhor.airlinereservationservice.util.annotations.AirportConstraint;
 import com.dmytrobozhor.airlinereservationservice.util.annotations.DateConstraint;
 import com.dmytrobozhor.airlinereservationservice.util.annotations.EnumBasedString;
 import com.dmytrobozhor.airlinereservationservice.util.enums.AirplaneType;
@@ -29,12 +28,10 @@ public record FlightDetailSaveDto(
         AirplaneType airplaneType,
 
         @NotNull
-        @Valid
-        AirportDto sourceAirport,
+        Long sourceAirportId,
 
         @NotNull
-        @Valid
-        AirportDto destinationAirport
+        Long destinationAirportId
 
 ) {
 }

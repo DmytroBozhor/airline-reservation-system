@@ -1,4 +1,4 @@
-package com.dmytrobozhor.airlinereservationservice.util.mappers;
+package com.dmytrobozhor.airlinereservationservice.util.mappers.config;
 
 import com.dmytrobozhor.airlinereservationservice.domain.BaseEntity;
 import jakarta.persistence.EntityManager;
@@ -19,15 +19,13 @@ public class AssociationMapper {
     private EntityManager entityManager;
 
     public <T extends BaseEntity<Long>> T findAssociationEntity(Long entityIdentifier, @TargetType Class<T> entityClass) {
-        if (entityIdentifier == null) {
-            return null;
-        }
-
+        if (entityIdentifier == null) return null;
         return Optional.ofNullable(entityManager.find(entityClass, entityIdentifier))
                 .orElseThrow(() -> new EntityNotFoundException("No entity found by id " + entityIdentifier));
     }
 
-    public Long getEntityIdentifier(BaseEntity<Long> entity){
+    public Long getEntityIdentifier(BaseEntity<Long> entity) {
+        if (entity == null) return null;
         return entity.getId();
     }
 
