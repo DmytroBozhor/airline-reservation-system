@@ -4,6 +4,7 @@ import com.dmytrobozhor.airlinereservationservice.domain.FlightDetail;
 import com.dmytrobozhor.airlinereservationservice.dto.FlightDetailDto;
 import com.dmytrobozhor.airlinereservationservice.dto.FlightDetailPartialUpdateDto;
 import com.dmytrobozhor.airlinereservationservice.dto.FlightDetailSaveDto;
+import com.dmytrobozhor.airlinereservationservice.util.mappers.config.AbstractMapper;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.config.CentralMappingConfig;
 import org.mapstruct.*;
 
