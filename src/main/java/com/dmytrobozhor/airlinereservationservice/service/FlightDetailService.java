@@ -2,72 +2,26 @@ package com.dmytrobozhor.airlinereservationservice.service;
 
 import com.dmytrobozhor.airlinereservationservice.domain.FlightDetail;
 import com.dmytrobozhor.airlinereservationservice.repository.FlightDetailRepository;
+import com.dmytrobozhor.airlinereservationservice.service.service.ServiceBase;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.flightdetail.FlightDetailMapper;
-import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
 @Transactional
-@RequiredArgsConstructor
 @Slf4j
-public class FlightDetailService implements AbstractFlightDetailService {
+public class FlightDetailService extends ServiceBase<FlightDetail, Long> {
 
     private final FlightDetailRepository flightDetailRepository;
 
     private final FlightDetailMapper flightDetailMapper;
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<FlightDetail> findAll() {
-        return flightDetailRepository.findAll();
+    @Autowired
+    public FlightDetailService(FlightDetailRepository flightDetailRepository, FlightDetailMapper flightDetailMapper){
+        super(flightDetailRepository, flightDetailMapper);
+        this.flightDetailRepository = flightDetailRepository;
+        this.flightDetailMapper = flightDetailMapper;
     }
-
-    @SneakyThrows
-    @Override
-    public FlightDetail save(FlightDetail flightDetail) {
-        return flightDetailRepository.save(flightDetail);
-    }
-
-    @Override
-    public FlightDetail deleteById(Long id) {
-        var flightDetail = flightDetailRepository.findById(id)
-                .orElseThrow(EntityNotFoundException::new);
-        flightDetailRepository.delete(flightDetail);
-        return flightDetail;
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public FlightDetail findById(Long id) {
-        return flightDetailRepository.findById(id)
-                .orElseThrow(EntityNotFoundException::new);
-    }
-
-    @Override
-    public FlightDetail updateById(Long id, FlightDetail flightDetail) {
-        return flightDetailRepository.findById(id)
-                .map(persistedFlightDetail -> flightDetailMapper
-                        .updateFlightDetailPartially(persistedFlightDetail, flightDetail))
-                .orElseThrow(EntityNotFoundException::new);
-    }
-
-    @Override
-    public FlightDetail updateOrCreateById(Long id, FlightDetail flightDetail) {
-        return flightDetailRepository.findById(id)
-                .map(persistedFlightDetail -> flightDetailMapper
-                        .updateFlightDetailPartially(persistedFlightDetail, flightDetail))
-                .orElseGet(() -> flightDetailRepository.save(flightDetail));
-    }
-
-    @Override
-    public List<FlightDetail> saveAll(List<FlightDetail> flightDetails) {
-        return flightDetailRepository.saveAll(flightDetails);
-    }
-
 }

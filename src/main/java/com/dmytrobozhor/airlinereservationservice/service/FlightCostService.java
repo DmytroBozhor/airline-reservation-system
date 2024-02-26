@@ -2,74 +2,26 @@ package com.dmytrobozhor.airlinereservationservice.service;
 
 import com.dmytrobozhor.airlinereservationservice.domain.FlightCost;
 import com.dmytrobozhor.airlinereservationservice.repository.FlightCostRepository;
-import com.dmytrobozhor.airlinereservationservice.domain.compositeid.FlightCostId;
+import com.dmytrobozhor.airlinereservationservice.service.service.ServiceBase;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.FlightCostMapper;
-import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
-@RequiredArgsConstructor
 @Transactional
-public class FlightCostService implements AbstractFlightCostService {
+@Slf4j
+public class FlightCostService extends ServiceBase<FlightCost, Long> {
 
     private final FlightCostRepository flightCostRepository;
 
     private final FlightCostMapper flightCostMapper;
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<FlightCost> findAll() {
-        return flightCostRepository.findAll();
+    @Autowired
+    public FlightCostService(FlightCostRepository flightCostRepository, FlightCostMapper flightCostMapper) {
+        super(flightCostRepository, flightCostMapper);
+        this.flightCostRepository = flightCostRepository;
+        this.flightCostMapper = flightCostMapper;
     }
-
-    @Override
-    public FlightCost save(FlightCost flightCost) {
-        return flightCostRepository.save(flightCost);
-    }
-
-    @Override
-    public void deleteById(FlightCostId id) {
-        FlightCost flightCost = flightCostRepository
-                .findById(id).orElseThrow(EntityNotFoundException::new);
-        flightCostRepository.delete(flightCost);
-    }
-
-    @Override
-    public void delete(FlightCost flightCost) {
-        FlightCost persistedFlightCost = flightCostRepository
-                .findByAllFields(flightCost).orElseThrow(EntityNotFoundException::new);
-        flightCostRepository.delete(persistedFlightCost);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public FlightCost findById(FlightCostId id) {
-        return flightCostRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-    }
-
-    @Override
-    public FlightCost updateById(FlightCostId id, FlightCost flightCost) {
-        return flightCostRepository.findById(id).map(persistedFlightCost -> {
-            flightCostMapper.updateFlightCostPartial(persistedFlightCost, flightCost);
-            return flightCostRepository.save(persistedFlightCost);
-        }).orElseThrow(EntityNotFoundException::new);
-    }
-
-    @Override
-    public FlightCost updateOrCreateById(FlightCostId id, FlightCost flightCost) {
-        return flightCostRepository.findById(id).map(persistedFlightCost -> {
-            flightCostMapper.updateFlightCostPartial(persistedFlightCost, flightCost);
-            return flightCostRepository.save(persistedFlightCost);
-        }).orElseGet(() -> flightCostRepository.save(flightCost));
-    }
-
-    @Override
-    public List<FlightCost> saveAll(List<FlightCost> flightCosts) {
-        return flightCostRepository.saveAll(flightCosts);
-    }
-
 }

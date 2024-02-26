@@ -27,6 +27,7 @@ public class FlightDetailServiceEM implements AbstractFlightDetailServiceEM {
     @SneakyThrows
     @Override
     public FlightDetail save(FlightDetail flightDetail) {
+//        var session = entityManager.unwrap(Session.class);
         mergeAirports(flightDetail);
         entityManager.persist(flightDetail);
         return flightDetail;

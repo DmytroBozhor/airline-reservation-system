@@ -2,74 +2,27 @@ package com.dmytrobozhor.airlinereservationservice.service;
 
 import com.dmytrobozhor.airlinereservationservice.domain.PaymentStatus;
 import com.dmytrobozhor.airlinereservationservice.repository.PaymentStatusRepository;
+import com.dmytrobozhor.airlinereservationservice.service.service.ServiceBase;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.PaymentStatusMapper;
-import jakarta.persistence.EntityNotFoundException;
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.function.Supplier;
 
 @Service
-@RequiredArgsConstructor
 @Transactional
-public class PaymentStatusService implements AbstractPaymentStatusService {
+@Slf4j
+public class PaymentStatusService extends ServiceBase<PaymentStatus, Long> {
 
     private final PaymentStatusRepository paymentStatusRepository;
 
     private final PaymentStatusMapper paymentStatusMapper;
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<PaymentStatus> findAll() {
-        return paymentStatusRepository.findAll();
-    }
-
-    @Override
-    public PaymentStatus save(PaymentStatus paymentStatus) {
-        return paymentStatusRepository.save(paymentStatus);
-    }
-
-    @Override
-    public void deleteById(Integer id) {
-        PaymentStatus paymentStatus = paymentStatusRepository
-                .findById(id).orElseThrow(EntityNotFoundException::new);
-        paymentStatusRepository.delete(paymentStatus);
-    }
-
-    @Override
-    public void delete(PaymentStatus paymentStatus) {
-        PaymentStatus persistedPaymentStatus = paymentStatusRepository
-                .findByAllFields(paymentStatus).orElseThrow(EntityNotFoundException::new);
-        paymentStatusRepository.delete(persistedPaymentStatus);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public PaymentStatus findById(Integer id) {
-        return paymentStatusRepository.findById(id)
-                .orElseThrow(EntityNotFoundException::new);
-    }
-
-    @Override
-    public PaymentStatus updateById(Integer id, PaymentStatus paymentStatus) {
-        return paymentStatusRepository.findById(id).map(persistedPaymentStatus -> {
-            paymentStatusMapper.updatePaymentStatusPartial(persistedPaymentStatus, paymentStatus);
-            return paymentStatusRepository.save(persistedPaymentStatus);
-        }).orElseThrow(EntityNotFoundException::new);
-    }
-
-    @Override
-    public PaymentStatus updateOrCreateById(Integer id, PaymentStatus paymentStatus) {
-        return paymentStatusRepository.findById(id).map(persistedPaymentStatus -> {
-            paymentStatusMapper.updatePaymentStatusPartial(persistedPaymentStatus, paymentStatus);
-            return paymentStatusRepository.save(persistedPaymentStatus);
-        }).orElseGet(() -> paymentStatusRepository.save(paymentStatus));
-    }
-
-    @Override
-    public List<PaymentStatus> saveAll(List<PaymentStatus> paymentStatuses) {
-        return paymentStatusRepository.saveAll(paymentStatuses);
+    @Autowired
+    public PaymentStatusService(PaymentStatusRepository paymentStatusRepository, PaymentStatusMapper paymentStatusMapper) {
+        super(paymentStatusRepository, paymentStatusMapper);
+        this.paymentStatusRepository = paymentStatusRepository;
+        this.paymentStatusMapper = paymentStatusMapper;
     }
 }
