@@ -10,5 +10,5 @@ import static com.dmytrobozhor.airlinereservationservice.util.mappers.flightdeta
 @Retention(RetentionPolicy.CLASS)
 @Mapping(source = SOURCE_AIRPORT_ID, target = SOURCE_AIRPORT)
 @Mapping(source = DESTINATION_AIRPORT_ID, target = DESTINATION_AIRPORT)
-public @interface AssociationFromIdToEntity {
+public @interface FlightDetailAssociationMapping {
 }

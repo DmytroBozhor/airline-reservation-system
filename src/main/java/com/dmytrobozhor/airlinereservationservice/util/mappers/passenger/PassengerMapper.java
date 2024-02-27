@@ -1,36 +1,34 @@
 package com.dmytrobozhor.airlinereservationservice.util.mappers.passenger;
 
 import com.dmytrobozhor.airlinereservationservice.domain.Passenger;
-import com.dmytrobozhor.airlinereservationservice.dto.PassengerDto;
+import com.dmytrobozhor.airlinereservationservice.dto.PassengerCreateDto;
+import com.dmytrobozhor.airlinereservationservice.dto.PassengerReadDto;
 import com.dmytrobozhor.airlinereservationservice.dto.PassengerPartialUpdateDto;
-import com.dmytrobozhor.airlinereservationservice.dto.PassengerSaveDto;
-import com.dmytrobozhor.airlinereservationservice.util.mappers.config.AbstractMapper;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.config.CentralMappingConfig;
+import com.dmytrobozhor.airlinereservationservice.util.mappers.config.UpdatePartiallyMapper;
 import org.mapstruct.*;
 
 import java.util.List;
 
-import static com.dmytrobozhor.airlinereservationservice.util.mappers.passenger.PassengerMappingConstants.*;
-
 @Mapper(config = CentralMappingConfig.class)
-public interface PassengerMapper {
+public interface PassengerMapper extends UpdatePartiallyMapper<Passenger, Long> {
 
     @PassengerEmbeddedComponentsMapping
-    Passenger toPassenger(PassengerDto passengerDto);
+    Passenger toPassenger(PassengerReadDto passengerDto);
 
     @PassengerEmbeddedComponentsMapping
-    Passenger toPassenger(PassengerSaveDto passengerDto);
+    Passenger toPassenger(PassengerCreateDto passengerDto);
 
     @PassengerEmbeddedComponentsMapping
     Passenger toPassenger(PassengerPartialUpdateDto passengerDto);
 
     @BeanMapping(ignoreByDefault = true, nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     @PassengerPartialUpdateMapping
-    Passenger updatePassengerPartially(@MappingTarget Passenger persitedPassenger, Passenger passenger);
+    Passenger updatePartially(@MappingTarget Passenger persitedPassenger, Passenger passenger);
 
-    List<PassengerDto> toPassengerDto(List<Passenger> passengers);
+    List<PassengerReadDto> toPassengerDto(List<Passenger> passengers);
 
     @InheritInverseConfiguration
-    PassengerDto toPassengerDto(Passenger passenger);
+    PassengerReadDto toPassengerDto(Passenger passenger);
 
 }

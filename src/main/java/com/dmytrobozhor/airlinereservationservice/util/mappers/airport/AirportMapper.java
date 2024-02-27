@@ -1,11 +1,10 @@
 package com.dmytrobozhor.airlinereservationservice.util.mappers.airport;
 
 import com.dmytrobozhor.airlinereservationservice.domain.Airport;
-import com.dmytrobozhor.airlinereservationservice.dto.AirportDto;
-import com.dmytrobozhor.airlinereservationservice.dto.AirportSaveDto;
+import com.dmytrobozhor.airlinereservationservice.dto.AirportReadDto;
+import com.dmytrobozhor.airlinereservationservice.dto.AirportCreateDto;
 import com.dmytrobozhor.airlinereservationservice.dto.AirportPartialUpdateDto;
-import com.dmytrobozhor.airlinereservationservice.service.AbstractAirportService;
-import com.dmytrobozhor.airlinereservationservice.util.mappers.config.AbstractMapper;
+import com.dmytrobozhor.airlinereservationservice.util.mappers.config.UpdatePartiallyMapper;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.config.CentralMappingConfig;
 import org.mapstruct.*;
 
@@ -14,11 +13,11 @@ import java.util.List;
 import static com.dmytrobozhor.airlinereservationservice.util.mappers.airport.AirportMappingConstants.*;
 
 @Mapper(config = CentralMappingConfig.class)
-public interface AirportMapper extends AbstractMapper<Airport, Long> {
+public interface AirportMapper extends UpdatePartiallyMapper<Airport, Long> {
 
-    Airport toAirport(AirportDto airportDto);
+    Airport toAirport(AirportReadDto airportDto);
 
-    Airport toAirport(AirportSaveDto airportDto);
+    Airport toAirport(AirportCreateDto airportDto);
 
     Airport toAirport(AirportPartialUpdateDto airportDto);
 
@@ -28,8 +27,8 @@ public interface AirportMapper extends AbstractMapper<Airport, Long> {
     @Mapping(target = FLIGHT_DETAILS_AS_DESTINATION, ignore = true)
     Airport updatePartially(@MappingTarget Airport persistedAirport, Airport airport);
 
-    List<AirportDto> toAirportDto(List<Airport> airports);
+    List<AirportReadDto> toAirportDto(List<Airport> airports);
 
-    AirportDto toAirportDto(Airport airport);
+    AirportReadDto toAirportDto(Airport airport);
 
 }
