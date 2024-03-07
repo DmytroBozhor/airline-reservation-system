@@ -16,24 +16,23 @@ import java.sql.Date;
 @Builder
 @Entity
 @Table(name = "payment_status")
-public class PaymentStatus {
+public class PaymentStatus implements BaseEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Status status;
 
-    @Column(name = "due_date", nullable = false)
+    @Column(nullable = false)
     private Date dueDate;
 
-    @Column(name = "amount", nullable = false, precision = 12, scale = 2)
+    @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal amount;
 
-    @ManyToOne(cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "reservation_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne(optional = false)
     private Reservation reservation;
 
 }
