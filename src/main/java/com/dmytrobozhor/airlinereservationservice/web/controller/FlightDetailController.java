@@ -1,10 +1,10 @@
 package com.dmytrobozhor.airlinereservationservice.web.controller;
 
-import com.dmytrobozhor.airlinereservationservice.dto.FlightDetailDto;
+import com.dmytrobozhor.airlinereservationservice.dto.FlightDetailCreateDto;
+import com.dmytrobozhor.airlinereservationservice.dto.FlightDetailReadDto;
 import com.dmytrobozhor.airlinereservationservice.dto.FlightDetailPartialUpdateDto;
-import com.dmytrobozhor.airlinereservationservice.dto.FlightDetailSaveDto;
-import com.dmytrobozhor.airlinereservationservice.service.AbstractFlightDetailService;
-import com.dmytrobozhor.airlinereservationservice.util.mappers.other.FlightDetailMapper;
+import com.dmytrobozhor.airlinereservationservice.service.FlightDetailService;
+import com.dmytrobozhor.airlinereservationservice.util.mappers.flightdetail.FlightDetailMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,38 +19,38 @@ import java.util.List;
 @Slf4j
 public class FlightDetailController {
 
-    private final AbstractFlightDetailService flightDetailService;
+    private final FlightDetailService flightDetailService;
 
     private final FlightDetailMapper flightDetailMapper;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<FlightDetailDto> getAllFlightDetails() {
+    public List<FlightDetailReadDto> getAllFlightDetails() {
         return flightDetailMapper.toFlightDetailDto(flightDetailService.findAll());
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public FlightDetailDto saveFlightDetail(@RequestBody @Valid FlightDetailSaveDto flightDetailDto) {
+    public FlightDetailReadDto saveFlightDetail(@RequestBody @Valid FlightDetailCreateDto flightDetailDto) {
         var flightDetail = flightDetailMapper.toFlightDetail(flightDetailDto);
         return flightDetailMapper.toFlightDetailDto(flightDetailService.save(flightDetail));
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public FlightDetailDto getFlightDetailById(@PathVariable Long id) {
+    public FlightDetailReadDto getFlightDetailById(@PathVariable Long id) {
         return flightDetailMapper.toFlightDetailDto(flightDetailService.findById(id));
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public FlightDetailDto deleteFlightDetailById(@PathVariable Long id) {
+    public FlightDetailReadDto deleteFlightDetailById(@PathVariable Long id) {
         return flightDetailMapper.toFlightDetailDto(flightDetailService.deleteById(id));
     }
 
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public FlightDetailDto updateFlightDetail(
+    public FlightDetailReadDto updateFlightDetail(
             @RequestBody @Valid FlightDetailPartialUpdateDto flightDetailDto, @PathVariable Long id) {
         var flightDetail = flightDetailMapper.toFlightDetail(flightDetailDto);
         return flightDetailMapper.toFlightDetailDto(flightDetailService.updateById(id, flightDetail));
@@ -58,8 +58,8 @@ public class FlightDetailController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public FlightDetailDto updateOrCreateFlightDetail(
-            @RequestBody @Valid FlightDetailSaveDto flightDetailDto, @PathVariable Long id) {
+    public FlightDetailReadDto updateOrCreateFlightDetail(
+            @RequestBody @Valid FlightDetailCreateDto flightDetailDto, @PathVariable Long id) {
         var flightDetail = flightDetailMapper.toFlightDetail(flightDetailDto);
         return flightDetailMapper.toFlightDetailDto(flightDetailService.updateOrCreateById(id, flightDetail));
     }

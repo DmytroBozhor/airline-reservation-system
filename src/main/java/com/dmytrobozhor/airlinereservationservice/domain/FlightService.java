@@ -14,16 +14,22 @@ import java.util.List;
 @Builder
 @Entity
 @Table(name = "flight_service")
-public class FlightService {
+public class FlightService implements BaseEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "service_name", nullable = false)
+    @Column(nullable = false)
     private String serviceName;
 
     @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal cost;
+
+    @Builder.Default
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @OneToMany(mappedBy = "flightService")
+    private List<ServiceOffering> serviceOfferings = new ArrayList<>();
 
 }

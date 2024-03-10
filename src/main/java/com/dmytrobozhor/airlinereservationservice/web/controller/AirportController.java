@@ -1,9 +1,9 @@
 package com.dmytrobozhor.airlinereservationservice.web.controller;
 
-import com.dmytrobozhor.airlinereservationservice.dto.AirportDto;
-import com.dmytrobozhor.airlinereservationservice.dto.AirportSaveDto;
+import com.dmytrobozhor.airlinereservationservice.dto.AirportReadDto;
+import com.dmytrobozhor.airlinereservationservice.dto.AirportCreateDto;
 import com.dmytrobozhor.airlinereservationservice.dto.AirportPartialUpdateDto;
-import com.dmytrobozhor.airlinereservationservice.service.AbstractAirportService;
+import com.dmytrobozhor.airlinereservationservice.service.AirportService;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.airport.AirportMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,38 +19,38 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AirportController {
 
-    private final AbstractAirportService airportService;
+    private final AirportService airportService;
 
     private final AirportMapper airportMapper;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<AirportDto> getAllAirports() {
+    public List<AirportReadDto> getAllAirports() {
         return airportMapper.toAirportDto(airportService.findAll());
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public AirportDto saveAirport(@RequestBody @Valid AirportSaveDto airportDto) {
+    public AirportReadDto saveAirport(@RequestBody @Valid AirportCreateDto airportDto) {
         var airport = airportMapper.toAirport(airportDto);
         return airportMapper.toAirportDto(airportService.save(airport));
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public AirportDto getAirportById(@PathVariable Long id) {
+    public AirportReadDto getAirportById(@PathVariable Long id) {
         return airportMapper.toAirportDto(airportService.findById(id));
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public AirportDto deleteAirportById(@PathVariable Long id) {
+    public AirportReadDto deleteAirportById(@PathVariable Long id) {
         return airportMapper.toAirportDto(airportService.deleteById(id));
     }
 
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public AirportDto updateAirport(
+    public AirportReadDto updateAirport(
             @RequestBody @Valid AirportPartialUpdateDto airportDto, @PathVariable Long id) {
         var airport = airportMapper.toAirport(airportDto);
         return airportMapper.toAirportDto(airportService.updateById(id, airport));
@@ -58,8 +58,8 @@ public class AirportController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public AirportDto updateOrCreateAirport(
-            @RequestBody @Valid AirportSaveDto airportDto, @PathVariable Long id) {
+    public AirportReadDto updateOrCreateAirport(
+            @RequestBody @Valid AirportCreateDto airportDto, @PathVariable Long id) {
         var airport = airportMapper.toAirport(airportDto);
         return airportMapper.toAirportDto(airportService.updateOrCreateById(id, airport));
     }

@@ -1,7 +1,6 @@
-package com.dmytrobozhor.airlinereservationservice.service.service;
+package com.dmytrobozhor.airlinereservationservice.service.base;
 
 import com.dmytrobozhor.airlinereservationservice.domain.BaseEntity;
-import com.dmytrobozhor.airlinereservationservice.service.service.AbstractCrudService;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.config.UpdatePartiallyMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;

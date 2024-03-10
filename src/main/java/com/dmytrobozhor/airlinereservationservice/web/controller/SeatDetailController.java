@@ -1,10 +1,10 @@
 package com.dmytrobozhor.airlinereservationservice.web.controller;
 
-import com.dmytrobozhor.airlinereservationservice.dto.SeatDetailDto;
-import com.dmytrobozhor.airlinereservationservice.dto.SeatDetailSaveDto;
+import com.dmytrobozhor.airlinereservationservice.dto.SeatDetailReadDto;
+import com.dmytrobozhor.airlinereservationservice.dto.SeatDetailCreateDto;
 import com.dmytrobozhor.airlinereservationservice.dto.SeatDetailPartialUpdateDto;
-import com.dmytrobozhor.airlinereservationservice.service.AbstractSeatDetailService;
-import com.dmytrobozhor.airlinereservationservice.util.mappers.SeatDetailMapper;
+import com.dmytrobozhor.airlinereservationservice.service.SeatDetailService;
+import com.dmytrobozhor.airlinereservationservice.util.mappers.seatdetail.SeatDetailMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,48 +17,48 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SeatDetailController {
 
-    private final AbstractSeatDetailService seatDetailService;
+    private final SeatDetailService seatDetailService;
 
     private final SeatDetailMapper seatDetailMapper;
 
     //    TODO: makes a lot of queries -> fix
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<SeatDetailDto> getAllSeatDetails() {
+    public List<SeatDetailReadDto> getAllSeatDetails() {
         return seatDetailMapper.toSeatDetailDto(seatDetailService.findAll());
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public SeatDetailDto saveSeatDetail(@RequestBody @Valid SeatDetailSaveDto seatDetailDto) {
+    public SeatDetailReadDto saveSeatDetail(@RequestBody @Valid SeatDetailCreateDto seatDetailDto) {
         var seatDetail = seatDetailMapper.toSeatDetail(seatDetailDto);
         return seatDetailMapper.toSeatDetailDto(seatDetailService.save(seatDetail));
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public SeatDetailDto getSeatDetailById(@PathVariable Integer id) {
+    public SeatDetailReadDto getSeatDetailById(@PathVariable Long id) {
         return seatDetailMapper.toSeatDetailDto(seatDetailService.findById(id));
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteSeatDetailById(@PathVariable Integer id) {
-        seatDetailService.deleteById(id);
+    @ResponseStatus(HttpStatus.OK)
+    public SeatDetailReadDto deleteSeatDetailById(@PathVariable Long id) {
+        return seatDetailMapper.toSeatDetailDto(seatDetailService.deleteById(id));
     }
 
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public SeatDetailDto updateSeatDetail(@RequestBody @Valid SeatDetailPartialUpdateDto seatDetailDto,
-                                          @PathVariable Integer id) {
+    public SeatDetailReadDto updateSeatDetail(
+            @RequestBody @Valid SeatDetailPartialUpdateDto seatDetailDto, @PathVariable Long id) {
         var seatDetail = seatDetailMapper.toSeatDetail(seatDetailDto);
         return seatDetailMapper.toSeatDetailDto(seatDetailService.updateById(id, seatDetail));
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public SeatDetailDto updateOrCreateSeatDetail(@RequestBody @Valid SeatDetailSaveDto seatDetailDto,
-                                                  @PathVariable Integer id) {
+    public SeatDetailReadDto updateOrCreateSeatDetail(
+            @RequestBody @Valid SeatDetailCreateDto seatDetailDto, @PathVariable Long id) {
         var seatDetail = seatDetailMapper.toSeatDetail(seatDetailDto);
         return seatDetailMapper.toSeatDetailDto(seatDetailService.updateOrCreateById(id, seatDetail));
     }

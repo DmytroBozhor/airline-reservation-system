@@ -1,10 +1,10 @@
 package com.dmytrobozhor.airlinereservationservice.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -12,18 +12,30 @@ import lombok.NoArgsConstructor;
 @Builder
 @Entity
 @Table(name = "seat_details")
-public class SeatDetail {
+public class SeatDetail implements BaseEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "travel_class_id", referencedColumnName = "id", nullable = false)
+    @ManyToOne(optional = false)
     private TravelClass travelClass;
 
-    @ManyToOne(cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "flight_details_id", referencedColumnName = "id", nullable = false)
+//    TODO: Change in flyway the name of the table field so it can automap
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "flight_details_id")
     private FlightDetail flightDetail;
+
+    @Builder.Default
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @OneToMany(mappedBy = "seatDetail")
+    private List<Reservation> reservations = new ArrayList<>();
+
+    @Builder.Default
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @OneToMany(mappedBy = "seatDetail")
+    private List<FlightCost> flightCosts = new ArrayList<>();
 
 }

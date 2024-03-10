@@ -1,12 +1,11 @@
 package com.dmytrobozhor.airlinereservationservice.web.controller;
 
-import com.dmytrobozhor.airlinereservationservice.domain.FlightService;
-import com.dmytrobozhor.airlinereservationservice.dto.FlightServiceDto;
-import com.dmytrobozhor.airlinereservationservice.dto.FlightServiceSaveDto;
-import com.dmytrobozhor.airlinereservationservice.dto.TravelClassDto;
-import com.dmytrobozhor.airlinereservationservice.service.AbstractFlightServiceService;
-import com.dmytrobozhor.airlinereservationservice.util.mappers.FlightServiceMapper;
-import com.dmytrobozhor.airlinereservationservice.util.mappers.TravelClassMapper;
+import com.dmytrobozhor.airlinereservationservice.dto.FlightServiceCreateDto;
+import com.dmytrobozhor.airlinereservationservice.dto.FlightServicePartialUpdateDto;
+import com.dmytrobozhor.airlinereservationservice.dto.FlightServiceReadDto;
+import com.dmytrobozhor.airlinereservationservice.service.FlightServiceService;
+import com.dmytrobozhor.airlinereservationservice.util.mappers.flightservice.FlightServiceMapper;
+import com.dmytrobozhor.airlinereservationservice.util.mappers.travelclass.TravelClassMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,60 +18,60 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FlightServiceController {
 
-    private final AbstractFlightServiceService flightServiceService;
+    private final FlightServiceService flightServiceService;
 
     private final FlightServiceMapper flightServiceMapper;
 
-    private final TravelClassMapper travelClassMapper;
+//    private final TravelClassMapper travelClassMapper;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<FlightServiceDto> getAllFlightServices() {
+    public List<FlightServiceReadDto> getAllFlightServices() {
         return flightServiceMapper.toFlightServiceDto(flightServiceService.findAll());
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public FlightServiceDto saveFlightService(
-            @RequestBody @Valid FlightServiceSaveDto flightServiceDto) {
+    public FlightServiceReadDto saveFlightService(
+            @RequestBody @Valid FlightServiceCreateDto flightServiceDto) {
         var flightService = flightServiceMapper.toFlightService(flightServiceDto);
         return flightServiceMapper.toFlightServiceDto(flightServiceService.save(flightService));
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public FlightServiceDto getFlightServiceById(@PathVariable Integer id) {
+    public FlightServiceReadDto getFlightServiceById(@PathVariable Long id) {
         return flightServiceMapper.toFlightServiceDto(flightServiceService.findById(id));
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteFlightServiceById(@PathVariable Integer id) {
-        flightServiceService.deleteById(id);
+    @ResponseStatus(HttpStatus.OK)
+    public FlightServiceReadDto deleteFlightServiceById(@PathVariable Long id) {
+        return flightServiceMapper.toFlightServiceDto(flightServiceService.deleteById(id));
     }
 
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public FlightServiceDto updateFlightService(
-            @RequestBody @Valid FlightServiceSaveDto flightServiceDto, @PathVariable Integer id) {
+    public FlightServiceReadDto updateFlightService(
+            @RequestBody @Valid FlightServicePartialUpdateDto flightServiceDto, @PathVariable Long id) {
         var flightService = flightServiceMapper.toFlightService(flightServiceDto);
         return flightServiceMapper.toFlightServiceDto(flightServiceService.updateById(id, flightService));
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public FlightServiceDto updateOrCreateFlightService(
-            @RequestBody @Valid FlightServiceSaveDto flightServiceDto, @PathVariable Integer id) {
+    public FlightServiceReadDto updateOrCreateFlightService(
+            @RequestBody @Valid FlightServiceCreateDto flightServiceDto, @PathVariable Long id) {
         var flightService = flightServiceMapper.toFlightService(flightServiceDto);
         return flightServiceMapper.toFlightServiceDto(
                 flightServiceService.updateOrCreateById(id, flightService));
     }
 
-    @GetMapping("/{id}/get-travel-classes")
+    /*@GetMapping("/{id}/get-travel-classes")
     @ResponseStatus(HttpStatus.OK)
-    public List<TravelClassDto> getTravelClassesByFlightServiceId(@PathVariable Integer id) {
+    public List<TravelClassDto> getTravelClassesByFlightServiceId(@PathVariable Long id) {
         var flightService = flightServiceService.findById(id);
         return travelClassMapper.toTravelClassDto(flightService.getTravelClasses());
-    }
+    }*/
 
 }

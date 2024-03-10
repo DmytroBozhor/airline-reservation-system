@@ -43,10 +43,10 @@ public class FlightDetailServiceEM implements AbstractFlightDetailServiceEM {
 //    @Override
 //    public FlightDetail delete(Long id) {
 //        String sql = "DELETE FROM flight_details WHERE id = :id RETURNING *";
-//        var flightDetail = entityManager.createNativeQuery(sql, FlightDetail.class)
+//        var flightDetailId = entityManager.createNativeQuery(sql, FlightDetail.class)
 //                .setParameter("id", id)
 //                .getSingleResult();
-//        return (FlightDetail) flightDetail;
+//        return (FlightDetail) flightDetailId;
 //    }
 
     private void mergeAirports(FlightDetail flightDetail) throws Throwable {

@@ -1,4 +1,4 @@
-package com.dmytrobozhor.airlinereservationservice.service.service;
+package com.dmytrobozhor.airlinereservationservice.service.base;
 
 import com.dmytrobozhor.airlinereservationservice.domain.BaseEntity;
 

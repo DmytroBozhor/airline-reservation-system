@@ -2,7 +2,7 @@ package com.dmytrobozhor.airlinereservationservice.service;
 
 import com.dmytrobozhor.airlinereservationservice.domain.TravelClass;
 import com.dmytrobozhor.airlinereservationservice.repository.TravelClassRepository;
-import com.dmytrobozhor.airlinereservationservice.service.service.ServiceBase;
+import com.dmytrobozhor.airlinereservationservice.service.base.ServiceBase;
 import com.dmytrobozhor.airlinereservationservice.util.mappers.travelclass.TravelClassMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
