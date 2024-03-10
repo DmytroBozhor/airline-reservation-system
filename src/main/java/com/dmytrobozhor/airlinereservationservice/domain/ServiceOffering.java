@@ -15,7 +15,7 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "service_offering", uniqueConstraints =
 @UniqueConstraint(columnNames = {"travel_class_id", "flight_service_id"}))
-public class ServiceOffering {
+public class ServiceOffering implements BaseEntity<Long> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,20 +24,14 @@ public class ServiceOffering {
     @Column(nullable = false)
     private Boolean offered;
 
-    @Column(name = "from_date")
-    private Timestamp formDate;
+    private Timestamp fromDate;
 
-    @Column(name = "to_date")
     private Timestamp toDate;
 
-    @ManyToOne(cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "travel_class_id", referencedColumnName = "id",
-            nullable = false, insertable = false, updatable = false)
+    @ManyToOne(optional = false)
     private TravelClass travelClass;
 
-    @ManyToOne(cascade = {CascadeType.MERGE})
-    @JoinColumn(name = "flight_service_id", referencedColumnName = "id",
-            nullable = false, insertable = false, updatable = false)
+    @ManyToOne(optional = false)
     private FlightService flightService;
 
 }
