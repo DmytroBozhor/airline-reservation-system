@@ -34,7 +34,11 @@ logging:
       hibernate: info
       flywaydb: info
     com:
-      dmytrobozhor:airlinereservationservice: debug
+      dmytrobozhor.airlinereservationservice: debug
 
 server:
   port: 8080
+
+springdoc:
+  swagger-ui:
+    url: /api-docs.yaml
