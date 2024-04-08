@@ -2,8 +2,8 @@ package com.dmytrobozhor.airlinereservationservice.service;
 
 import com.dmytrobozhor.airlinereservationservice.domain.Calendar;
 import com.dmytrobozhor.airlinereservationservice.repository.CalendarRepository;
-import com.dmytrobozhor.airlinereservationservice.service.service.ServiceBase;
-import com.dmytrobozhor.airlinereservationservice.util.mappers.CalendarMapper;
+import com.dmytrobozhor.airlinereservationservice.service.base.ServiceBase;
+import com.dmytrobozhor.airlinereservationservice.util.mappers.calendar.CalendarMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

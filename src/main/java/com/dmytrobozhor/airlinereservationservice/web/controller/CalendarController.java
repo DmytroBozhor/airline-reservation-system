@@ -1,15 +1,15 @@
 package com.dmytrobozhor.airlinereservationservice.web.controller;
 
-import com.dmytrobozhor.airlinereservationservice.dto.CalendarDto;
+import com.dmytrobozhor.airlinereservationservice.dto.CalendarCreateDto;
 import com.dmytrobozhor.airlinereservationservice.dto.CalendarPartialUpdateDto;
-import com.dmytrobozhor.airlinereservationservice.service.AbstractCalendarService;
-import com.dmytrobozhor.airlinereservationservice.util.mappers.CalendarMapper;
+import com.dmytrobozhor.airlinereservationservice.dto.CalendarReadDto;
+import com.dmytrobozhor.airlinereservationservice.service.CalendarService;
+import com.dmytrobozhor.airlinereservationservice.util.mappers.calendar.CalendarMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Date;
 import java.util.List;
 
 @RestController
@@ -17,47 +17,47 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CalendarController {
 
-    private final AbstractCalendarService calendarService;
+    private final CalendarService calendarService;
 
     private final CalendarMapper calendarMapper;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<CalendarDto> getAllCalendars() {
+    public List<CalendarReadDto> getAllCalendars() {
         return calendarMapper.toCalendarDto(calendarService.findAll());
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CalendarDto saveCalendar(@RequestBody @Valid CalendarDto calendarDto) {
+    public CalendarReadDto saveCalendar(@RequestBody @Valid CalendarCreateDto calendarDto) {
         var calendar = calendarMapper.toCalendar(calendarDto);
         return calendarMapper.toCalendarDto(calendarService.save(calendar));
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public CalendarDto getCalendarById(@PathVariable Date id) {
+    public CalendarReadDto getCalendarById(@PathVariable Long id) {
         return calendarMapper.toCalendarDto(calendarService.findById(id));
     }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteCalendarById(@PathVariable Date id) {
-        calendarService.deleteById(id);
+    @ResponseStatus(HttpStatus.OK)
+    public CalendarReadDto deleteCalendarById(@PathVariable Long id) {
+        return calendarMapper.toCalendarDto(calendarService.deleteById(id));
     }
 
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public CalendarDto updateCalendar(
-            @RequestBody @Valid CalendarPartialUpdateDto calendarDto, @PathVariable Date id) {
+    public CalendarReadDto updateCalendar(
+            @RequestBody @Valid CalendarPartialUpdateDto calendarDto, @PathVariable Long id) {
         var calendar = calendarMapper.toCalendar(calendarDto);
         return calendarMapper.toCalendarDto(calendarService.updateById(id, calendar));
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public CalendarDto updateOrCreateCalendar(
-            @RequestBody @Valid CalendarDto calendarDto, @PathVariable Date id) {
+    public CalendarReadDto updateOrCreateCalendar(
+            @RequestBody @Valid CalendarCreateDto calendarDto, @PathVariable Long id) {
         var calendar = calendarMapper.toCalendar(calendarDto);
         return calendarMapper.toCalendarDto(calendarService.updateOrCreateById(id, calendar));
     }
