@@ -5,14 +5,19 @@ import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 
-public record FlightCostPartialUpdateDto(
+public record FlightCostCreateDto(
 
+        @NotNull
         Long seatDetail,
 
+//        TODO: validate that validFromDate < validToDate
+        @NotNull
         Long validFromDate,
 
+        @NotNull
         Long validToDate,
 
+        @NotNull
         BigDecimal cost
 
 ) {

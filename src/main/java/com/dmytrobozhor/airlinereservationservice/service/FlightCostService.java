@@ -2,8 +2,8 @@ package com.dmytrobozhor.airlinereservationservice.service;
 
 import com.dmytrobozhor.airlinereservationservice.domain.FlightCost;
 import com.dmytrobozhor.airlinereservationservice.repository.FlightCostRepository;
-import com.dmytrobozhor.airlinereservationservice.service.service.ServiceBase;
-import com.dmytrobozhor.airlinereservationservice.util.mappers.FlightCostMapper;
+import com.dmytrobozhor.airlinereservationservice.service.base.ServiceBase;
+import com.dmytrobozhor.airlinereservationservice.util.mappers.flightcost.FlightCostMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
